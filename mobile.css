@@ -1,0 +1,35 @@
+@media (max-width: 600px) {
+  /* index */
+  header { padding: 16px; }
+  header h1 { font-size: 1.1rem; }
+  main { padding: 16px 10px; }
+  .grid { grid-template-columns: 1fr; }
+
+  /* login */
+  .card { padding: 32px 20px; }
+
+  /* tests & generator */
+  .qc, .question-card { padding: 18px 14px !important; }
+  .qt, .q-text { font-size: 0.95rem !important; }
+  .opt, .option { font-size: 0.88rem !important; padding: 9px 11px !important; }
+  .qnav, .q-nav { flex-wrap: wrap; gap: 8px; }
+  .qnav .btn, .q-nav .btn-nav { flex: 1; min-width: 80px; font-size: 0.82rem; padding: 8px 10px; }
+  .btn-generate { font-size: 0.92rem; padding: 12px; }
+  .form-grid { grid-template-columns: 1fr !important; }
+  .form-group.full { grid-column: 1 !important; }
+  .results-card { padding: 20px 14px; }
+  .score-row { flex-direction: column; gap: 16px; text-align: center; }
+  .level-desc { max-width: 100%; }
+  .skills-grid, .sg { grid-template-columns: 1fr 1fr !important; }
+  .h-item { flex-wrap: wrap; gap: 8px; }
+  .h-actions { width: 100%; justify-content: flex-end; }
+  .results-actions { flex-direction: column; }
+  .results-actions button { min-width: unset; width: 100%; }
+
+  /* history panel in generator */
+  .history-toggle { font-size: 0.75rem; padding: 5px 8px; }
+  #history-panel { margin: 0 0 12px; }
+
+  /* generator header */
+  header { flex-wrap: wrap; gap: 8px; }
+}

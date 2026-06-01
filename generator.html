@@ -6,6 +6,8 @@
 <title>English Test Generator</title>
 <script src="auth.js"></script>
 <script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link rel="stylesheet" href="mobile.css">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #2d3748; min-height: 100vh; }
@@ -176,6 +178,27 @@ textarea { resize: vertical; min-height: 70px; }
 .btn-gdrive.connected { border-color: #38a169; color: #276749; background: #f0fff4; }
 .btn-gdrive svg { flex-shrink: 0; }
 .gd-sync-status { font-size: 0.74rem; color: #a0aec0; margin-top: 2px; }
+
+/* ---- MODE TABS ---- */
+.mode-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.mode-tab { flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; text-align: center; font-size: 0.9rem; font-weight: 700; color: #718096; transition: all 0.13s; }
+.mode-tab:hover { border-color: #4299e1; }
+.mode-tab.active { border-color: #2b6cb0; background: #ebf8ff; color: #2b6cb0; }
+.mode-tab .mt-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+/* ---- PDF UPLOAD ---- */
+#pdf-panel { display: none; }
+#pdf-panel.show { display: block; }
+.drop-zone { border: 2px dashed #cbd5e0; border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.15s; background: #f7fafc; }
+.drop-zone:hover, .drop-zone.dragover { border-color: #4299e1; background: #ebf8ff; }
+.drop-zone .dz-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.drop-zone .dz-text { font-size: 0.95rem; font-weight: 600; color: #4a5568; }
+.drop-zone .dz-sub { font-size: 0.8rem; color: #a0aec0; margin-top: 4px; }
+.pdf-file { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 8px; margin-top: 12px; }
+.pdf-file .pf-name { flex: 1; font-size: 0.88rem; font-weight: 600; color: #2c5282; }
+.pdf-file .pf-remove { background: none; border: none; color: #718096; cursor: pointer; font-size: 1.1rem; }
+.pdf-extracted { margin-top: 12px; font-size: 0.78rem; color: #718096; max-height: 120px; overflow-y: auto; background: #f7fafc; border-radius: 8px; padding: 10px 12px; white-space: pre-wrap; display: none; }
+.pdf-extracted.show { display: block; }
 </style>
 </head>
 <body>
@@ -186,6 +209,7 @@ textarea { resize: vertical; min-height: 70px; }
   <div style="flex:1">
     <h1>English Test Generator</h1>
     <span>Powered by OpenRouter · Free models · No credit card</span>
+    <a href="index.html" style="color:white;opacity:.75;font-size:.8rem;text-decoration:none;white-space:nowrap">← Tests</a>
   </div>
   <button class="history-toggle" onclick="toggleHistory()">📋 History (<span id="history-count">0</span>)</button>
 </header>
@@ -223,6 +247,33 @@ textarea { resize: vertical; min-height: 70px; }
       <div class="key-hint">
         Get a free key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> · Sign up with Google · No credit card · Key never leaves this browser.
       </div>
+    </div>
+  </div>
+
+  <!-- MODE TABS -->
+  <div class="mode-tabs">
+    <div class="mode-tab active" id="tab-ai" onclick="setMode('ai')">
+      <span class="mt-icon">✨</span>Generate with AI
+    </div>
+    <div class="mode-tab" id="tab-pdf" onclick="setMode('pdf')">
+      <span class="mt-icon">📄</span>Import from PDF
+    </div>
+  </div>
+
+  <!-- PDF PANEL -->
+  <div class="panel" id="pdf-panel">
+    <div class="panel-title">Upload a PDF test</div>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('pdf-input').click()">
+      <div class="dz-icon">📄</div>
+      <div class="dz-text">Click to choose a PDF or drag it here</div>
+      <div class="dz-sub">The AI will read the questions and rebuild them as an interactive test</div>
+    </div>
+    <input type="file" id="pdf-input" accept="application/pdf" style="display:none">
+    <div id="pdf-file-info"></div>
+    <div class="pdf-extracted" id="pdf-extracted"></div>
+    <div class="form-group full" style="margin-top:14px">
+      <label>Extra instructions <span style="font-weight:400;color:#a0aec0">(optional)</span></label>
+      <textarea id="pdf-extra" placeholder="e.g. The answer key is on the last page. Keep the questions in the original order."></textarea>
     </div>
   </div>
 
@@ -356,7 +407,8 @@ function saveToHistory(correct, total, pct, level) {
     score: `${correct}/${total}`,
     pct,
     level,
-    questions: TEST.questions
+    questions: TEST.questions,
+    userAnswers: {...answers}
   });
   if (h.length > 50) h.pop(); // keep last 50
   saveHistory(h);
@@ -569,9 +621,120 @@ function toggleKey() {
 }
 
 // ---- generate ----
-async function generateTest() {
+// ---- MODE (AI / PDF) ----
+let currentMode = 'ai';
+let pdfText = '';
+let pdfFileName = '';
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('tab-ai').classList.toggle('active', mode === 'ai');
+  document.getElementById('tab-pdf').classList.toggle('active', mode === 'pdf');
+  document.getElementById('pdf-panel').classList.toggle('show', mode === 'pdf');
+  // hide AI-specific config when in PDF mode (topic/skills not needed)
+  document.getElementById('options-panel').style.display = mode === 'pdf' ? 'none' : '';
+  document.getElementById('btn-gen').innerHTML = mode === 'pdf'
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDF to Test'
+    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg> Generate Test';
+}
+
+// PDF.js worker
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+// drag & drop
+const dropZone = document.getElementById('drop-zone');
+const pdfInput = document.getElementById('pdf-input');
+if (dropZone) {
+  ['dragover','dragenter'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('dragover'); }));
+  dropZone.addEventListener('drop', e => { if (e.dataTransfer.files[0]) handlePdf(e.dataTransfer.files[0]); });
+  pdfInput.addEventListener('change', e => { if (e.target.files[0]) handlePdf(e.target.files[0]); });
+}
+
+async function handlePdf(file) {
+  if (file.type !== 'application/pdf') { showError('Please choose a PDF file.'); return; }
+  pdfFileName = file.name;
+  document.getElementById('pdf-file-info').innerHTML =
+    `<div class="pdf-file"><span class="pf-name">📄 ${file.name}</span><span style="font-size:0.78rem;color:#718096" id="pf-status">Reading…</span><button class="pf-remove" onclick="clearPdf()">✕</button></div>`;
+  try {
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map(it => it.str).join(' ') + '\n';
+    }
+    pdfText = text.trim();
+    document.getElementById('pf-status').textContent = `${pdf.numPages} pages · ${pdfText.length} chars`;
+    const ex = document.getElementById('pdf-extracted');
+    ex.textContent = pdfText.slice(0, 800) + (pdfText.length > 800 ? '…' : '');
+    ex.classList.add('show');
+  } catch (e) {
+    showError('Could not read PDF: ' + e.message);
+    clearPdf();
+  }
+}
+
+function clearPdf() {
+  pdfText = ''; pdfFileName = '';
+  document.getElementById('pdf-file-info').innerHTML = '';
+  document.getElementById('pdf-extracted').classList.remove('show');
+  pdfInput.value = '';
+}
+
+function buildPdfPrompt(text, extra) {
+  return `You are an expert English test parser. Below is the raw text extracted from a PDF containing an English test (questions and possibly an answer key).
+
+Convert it into a structured JSON array of multiple-choice questions.
+
+Rules:
+- Extract EVERY question you find, keeping the original wording.
+- Each question must have: "skill" (classify: Grammar, Vocabulary, Phrasal Verbs, Reading, Use of English, or similar), "text" (the question with a … where the gap is, or the full question), "context" (optional sentence to analyse, or empty string), "options" (array of the answer choices), "correct" (0-based index of the correct answer), "explanation" (2-3 sentences in English explaining why the answer is right and others wrong — generate this yourself based on English grammar/usage).
+- If the PDF includes an answer key (often at the end, sometimes highlighted), use it to set "correct". If no answer key exists, determine the correct answer yourself using your English expertise.
+- Preserve the original question order.
+${extra ? 'Extra instructions: ' + extra : ''}
+
+Respond with ONLY a valid JSON array, no markdown, no code fences, no extra text.
+
+PDF TEXT:
+"""
+${text.slice(0, 12000)}
+"""
+
+Generate the JSON array now:`;
+}
+
+async function convertPdf() {
   const key = document.getElementById('api-key').value.trim();
-  if (!key) { showError('Please enter your Gemini API key.'); return; }
+  if (!key) { showError('Please enter your OpenRouter API key.'); return; }
+  if (!pdfText) { showError('Please upload a PDF first.'); return; }
+
+  const extra = document.getElementById('pdf-extra').value.trim();
+  setLoading(true);
+  fakeProgress();
+  document.getElementById('status-text').textContent = 'Reading PDF and rebuilding the test…';
+
+  try {
+    const raw = await callGemini(key, buildPdfPrompt(pdfText, extra));
+    const data = parseResponse(raw);
+    const cleanName = pdfFileName.replace(/\.pdf$/i, '');
+    TEST = { title: cleanName, subtitle: `From PDF · ${data.length} questions`, questions: data };
+    setLoading(false);
+    renderTest();
+    showTest();
+  } catch (e) {
+    setLoading(false);
+    showError(e.message);
+  }
+}
+
+async function generateTest() {
+  if (currentMode === 'pdf') { convertPdf(); return; }
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) { showError('Please enter your OpenRouter API key.'); return; }
 
   const topic = document.getElementById('topic').value.trim() || 'General English';
   const level = document.getElementById('level').value;

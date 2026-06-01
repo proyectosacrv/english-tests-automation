@@ -3,182 +3,757 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C1 English Grammar Tests — Index</title>
+<title>English Test Battery</title>
 <script>
 const ALLOWED=['proyectosacrv@gmail.com','solgncd@gmail.com','alexciuvi6@gmail.com'];
+const ADMINS=['proyectosacrv@gmail.com'];
 const email=sessionStorage.getItem('auth_email');
 if(!email||!ALLOWED.includes(email.toLowerCase())){sessionStorage.setItem('auth_dest','index.html');window.location.href='login.html';}
 </script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh}
-header{background:#1a365d;color:white;padding:24px 32px}
-header h1{font-size:1.4rem;font-weight:800}
-header p{opacity:.75;font-size:.88rem;margin-top:4px}
-main{max-width:860px;margin:0 auto;padding:32px 16px}
-h2{font-size:.78rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;margin-top:28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-a.card{
-  display:block;background:white;border-radius:10px;padding:16px 18px;
-  text-decoration:none;color:#2d3748;border:2px solid #e2e8f0;
-  transition:all .15s;
+body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── TOPBAR ── */
+.topbar{background:#1a365d;color:white;height:56px;display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-size:1rem;font-weight:800;flex:1}
+.topbar-logo span{opacity:.6;font-weight:400;font-size:.8rem;margin-left:6px}
+.topbar-user{display:flex;align-items:center;gap:8px;font-size:.82rem;opacity:.85}
+.topbar-user img{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.3)}
+.btn-menu{background:none;border:none;color:white;cursor:pointer;padding:6px;border-radius:6px;display:flex;align-items:center}
+.btn-menu:hover{background:rgba(255,255,255,.1)}
+
+/* ── LAYOUT ── */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;background:#1e2a3a;color:white;display:flex;flex-direction:column;transition:transform .25s;flex-shrink:0;overflow-y:auto}
+.sidebar.collapsed{transform:translateX(-260px);position:fixed;top:56px;left:0;height:calc(100vh - 56px);z-index:90}
+.sidebar.open{transform:translateX(0)}
+
+.sidebar-section{padding:8px 0}
+.sidebar-section-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#4a6080;padding:10px 18px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;font-size:.88rem;color:#b0c4d8;border-left:3px solid transparent;transition:all .12s;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.06);color:white}
+.nav-item.active{background:rgba(66,153,225,.15);color:#90cdf4;border-left-color:#4299e1}
+.nav-item svg{flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-count{margin-left:auto;background:rgba(255,255,255,.1);color:#90cdf4;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:10px}
+
+.sidebar-divider{height:1px;background:rgba(255,255,255,.06);margin:4px 0}
+
+/* ── MAIN CONTENT ── */
+.main{flex:1;overflow-y:auto;padding:28px 24px;max-width:900px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:89}
+.overlay.show{display:block}
+
+/* ── SECTIONS ── */
+.section{display:none}
+.section.active{display:block}
+.section-header{margin-bottom:24px}
+.section-header h1{font-size:1.3rem;font-weight:800;color:#1a365d}
+.section-header p{color:#718096;font-size:.88rem;margin-top:4px}
+
+/* ── GRID ── */
+.test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.test-card{background:white;border-radius:10px;padding:16px 18px;text-decoration:none;color:#2d3748;border:2px solid #e2e8f0;transition:all .15s;display:block}
+.test-card:hover{border-color:#4299e1;background:#ebf8ff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(66,153,225,.18)}
+.tc-num{font-size:.7rem;font-weight:700;color:#a0aec0;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.tc-title{font-size:.95rem;font-weight:700;margin-bottom:3px}
+.tc-sub{font-size:.78rem;color:#718096;line-height:1.4}
+.tc-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.68rem;font-weight:700;margin-top:6px}
+.badge-c1{background:#bee3f8;color:#2c5282}
+.badge-pdf{background:#c6f6d5;color:#276749}
+.badge-ai{background:#2b6cb0;color:white}
+
+/* ── AI GENERATOR CARD ── */
+.gen-card{background:linear-gradient(135deg,#1a365d,#2b6cb0);border-radius:14px;padding:28px;color:white;margin-bottom:24px;display:flex;align-items:center;gap:20px}
+.gen-card-icon{font-size:2.5rem;flex-shrink:0}
+.gen-card h2{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.gen-card p{opacity:.8;font-size:.88rem;line-height:1.5}
+.btn-go-gen{margin-top:12px;padding:9px 20px;background:white;color:#1a365d;border:none;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+.btn-go-gen:hover{opacity:.9}
+
+/* ── HISTORY LIST ── */
+.history-empty{color:#a0aec0;text-align:center;padding:40px 0;font-size:.9rem}
+.h-card{background:white;border-radius:10px;padding:14px 16px;margin-bottom:10px;border:2px solid #e2e8f0;display:flex;align-items:center;gap:12px}
+.h-card-info{flex:1;min-width:0}
+.h-card-title{font-size:.9rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-card-meta{font-size:.75rem;color:#718096;margin-top:2px}
+.h-card-score{font-size:.8rem;font-weight:700;padding:3px 9px;border-radius:10px;background:#bee3f8;color:#2c5282;flex-shrink:0}
+.h-card-actions{display:flex;gap:6px;flex-shrink:0}
+.h-btn{padding:5px 10px;border:none;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer}
+.h-btn-redo{background:#2b6cb0;color:white}
+.h-btn-dl{background:#276749;color:white}
+.h-btn-del{background:#e2e8f0;color:#718096}
+.h-btn-review{background:#805ad5;color:white}
+
+/* ── REVIEW MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal{background:white;border-radius:14px;max-width:740px;width:100%;padding:28px;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.modal-head h2{font-size:1.2rem;font-weight:800;color:#1a365d}
+.modal-head .mh-meta{font-size:.82rem;color:#718096;margin-top:3px}
+.modal-close{background:#e2e8f0;border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:#4a5568;flex-shrink:0}
+.rev-q{padding:14px 16px;border-radius:10px;margin-bottom:10px;border-left:4px solid}
+.rev-q.ok{border-color:#38a169;background:#f0fff4}
+.rev-q.fail{border-color:#e53e3e;background:#fff5f5}
+.rev-q-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.rev-q-text{font-size:.9rem;font-weight:600;flex:1}
+.rev-q-badge{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0;height:fit-content}
+.ok .rev-q-badge{background:#9ae6b4;color:#276749}
+.fail .rev-q-badge{background:#feb2b2;color:#c53030}
+.rev-opt{font-size:.85rem;padding:6px 10px;border-radius:6px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.rev-opt.correct{background:#c6f6d5;color:#276749;font-weight:600}
+.rev-opt.chosen-wrong{background:#fed7d7;color:#c53030;font-weight:600}
+.rev-opt .ro-mark{font-size:.78rem;flex-shrink:0}
+.rev-exp{font-size:.8rem;color:#718096;margin-top:8px;line-height:1.5;font-style:italic}
+
+/* ── SETTINGS ── */
+.settings-block{background:white;border-radius:10px;padding:20px 22px;margin-bottom:14px;border:2px solid #e2e8f0}
+.settings-block h3{font-size:.85rem;font-weight:700;margin-bottom:14px;color:#4a5568;text-transform:uppercase;letter-spacing:.05em}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4f8}
+.setting-row:last-child{border-bottom:none}
+.setting-label{font-size:.88rem;color:#2d3748}
+.setting-desc{font-size:.75rem;color:#a0aec0;margin-top:2px}
+.gdrive-status{font-size:.78rem;color:#38a169;font-weight:600}
+.gdrive-status.off{color:#a0aec0}
+.btn-setting{padding:6px 14px;border:2px solid #e2e8f0;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer;background:white;color:#4a5568;transition:all .12s}
+.btn-setting:hover{border-color:#4299e1;color:#2b6cb0}
+.btn-setting.danger{border-color:#feb2b2;color:#c53030}
+.btn-setting.danger:hover{background:#fff5f5}
+.btn-setting.primary{background:#2b6cb0;color:white;border-color:#2b6cb0}
+
+/* ── ADMIN ── */
+.admin-hidden{display:none}
+.user-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f4f8}
+.user-row:last-child{border-bottom:none}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:#bee3f8;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#2c5282;flex-shrink:0}
+.user-email{font-size:.85rem;flex:1}
+.user-badge{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:8px;background:#e9d8fd;color:#553c9a}
+.user-badge.admin{background:#fefcbf;color:#744210}
+input.add-email{flex:1;padding:8px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:.88rem;font-family:inherit}
+input.add-email:focus{outline:none;border-color:#4299e1}
+
+/* ── GOOGLE DRIVE BAR ── */
+.gdrive-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:#f7fafc;border:1px solid #e2e8f0;margin-bottom:14px}
+.gdrive-bar .gd-info{flex:1;font-size:.82rem;color:#4a5568}
+.gdrive-bar .gd-info span{font-weight:700;color:#2d3748;display:block}
+.gdrive-bar .gd-sync{font-size:.72rem;color:#a0aec0;margin-top:1px}
+.btn-gdrive{padding:6px 14px;border:2px solid #e2e8f0;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;background:white;color:#4a5568;white-space:nowrap}
+.btn-gdrive.connected{border-color:#38a169;color:#276749;background:#f0fff4}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .sidebar{position:fixed;top:56px;left:0;height:calc(100vh - 56px);z-index:90;transform:translateX(-260px)}
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:16px 12px}
+  .test-grid{grid-template-columns:1fr 1fr}
+  .gen-card{flex-direction:column;gap:12px;padding:20px}
+  .h-card{flex-wrap:wrap}
+  .h-card-actions{width:100%;justify-content:flex-end}
 }
-a.card:hover{border-color:#4299e1;background:#ebf8ff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(66,153,225,.15)}
-.card-num{font-size:.72rem;font-weight:700;color:#a0aec0;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.card-title{font-size:.97rem;font-weight:700;margin-bottom:2px}
-.card-sub{font-size:.8rem;color:#718096}
-.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.72rem;font-weight:700;margin-top:6px}
-.bc1{background:#bee3f8;color:#2c5282}
-.bpdf{background:#c6f6d5;color:#276749}
+@media(max-width:400px){
+  .test-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>C1 Advanced English Grammar — Test Battery</h1>
-  <p>20 tests · 20 questions each · Click to start any test · No internet required</p>
-</header>
-<main>
 
-<h2>AI Test Generator</h2>
-<div class="grid" style="margin-bottom:28px">
-  <a class="card" href="generator.html" style="border-color:#4299e1;background:linear-gradient(135deg,#ebf8ff,#fff)">
-    <div class="card-num" style="color:#2b6cb0">Generator</div>
-    <div class="card-title">Generate Custom Tests with AI</div>
-    <div class="card-sub">Choose topic, level, skills · Powered by OpenRouter</div>
-    <span class="badge" style="background:#2b6cb0;color:white;margin-top:6px">AI</span>
-  </a>
+<!-- TOPBAR -->
+<div class="topbar">
+  <button class="btn-menu" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="topbar-logo">English Tests <span>C1 Advanced</span></div>
+  <div class="topbar-user">
+    <span id="topbar-email"></span>
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700" id="topbar-avatar">?</div>
+  </div>
 </div>
 
-<h2>From PDF — Original Test</h2>
-<div class="grid">
-  <a class="card" href="test_C1_grammar_01.html">
-    <div class="card-num">Test 01 (PDF)</div>
-    <div class="card-title">Phrasal Verbs (carry) &amp; Work Vocabulary</div>
-    <div class="card-sub">Phrasal verbs · Dismissal idioms · Vocab</div>
-    <span class="badge bpdf">From PDF</span>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="app-body">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tests</div>
+    <a class="nav-item active" onclick="showSection('static')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Static Tests
+      <span class="nav-count">20</span>
+    </a>
+    <a class="nav-item" onclick="showSection('generated')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      AI Generator
+    </a>
+    <a class="nav-item" onclick="showSection('history')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/><polyline points="3 3 3 9 9 9"/></svg>
+      History
+      <span class="nav-count" id="nav-history-count">0</span>
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Account</div>
+    <a class="nav-item" onclick="showSection('settings')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </a>
+    <a class="nav-item admin-hidden" id="nav-admin" onclick="showSection('admin')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Users & Access
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <a class="nav-item" onclick="signOut()" href="#" style="margin-top:auto;color:#fc8181">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    Sign Out
   </a>
+</nav>
+
+<!-- MAIN -->
+<div class="main" id="main">
+
+  <!-- STATIC TESTS -->
+  <div class="section active" id="section-static">
+    <div class="section-header">
+      <h1>Static Tests</h1>
+      <p>20 hand-crafted C1 tests — no internet required once loaded</p>
+    </div>
+    <div class="test-grid">
+      <a class="test-card" href="test_C1_grammar_01.html">
+        <div class="tc-num">Test 01 · PDF</div>
+        <div class="tc-title">Phrasal Verbs (carry) &amp; Work Vocabulary</div>
+        <div class="tc-sub">Phrasal verbs · Dismissal idioms · Vocab</div>
+        <span class="tc-badge badge-pdf">From PDF</span>
+      </a>
+      <a class="test-card" href="test_02_phrasal_verbs_mixed.html">
+        <div class="tc-num">Test 02</div>
+        <div class="tc-title">Phrasal Verbs (Mixed)</div>
+        <div class="tc-sub">20 essential phrasal verbs in context</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_03_conditionals.html">
+        <div class="tc-num">Test 03</div>
+        <div class="tc-title">Conditionals &amp; Wishes</div>
+        <div class="tc-sub">0th–3rd · Mixed · Inversion · Unless · If only</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_04_passive_voice.html">
+        <div class="tc-num">Test 04</div>
+        <div class="tc-title">Passive Voice</div>
+        <div class="tc-sub">All tenses · Modal passives · Causative</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_05_reported_speech.html">
+        <div class="tc-num">Test 05</div>
+        <div class="tc-title">Reported Speech</div>
+        <div class="tc-sub">Backshift · Reporting verbs · Time expressions</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_06_modal_verbs.html">
+        <div class="tc-num">Test 06</div>
+        <div class="tc-title">Modal Verbs</div>
+        <div class="tc-sub">Deduction · Obligation · Permission · Perfect modals</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_07_gerunds_infinitives.html">
+        <div class="tc-num">Test 07</div>
+        <div class="tc-title">Gerunds &amp; Infinitives</div>
+        <div class="tc-sub">Verb patterns · Both forms (different meaning)</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_08_vocabulary_collocations.html">
+        <div class="tc-num">Test 08</div>
+        <div class="tc-title">Vocabulary &amp; Collocations</div>
+        <div class="tc-sub">Verb/noun/adjective collocations</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_09_word_formation.html">
+        <div class="tc-num">Test 09</div>
+        <div class="tc-title">Word Formation</div>
+        <div class="tc-sub">Prefixes · Suffixes · Negative forms</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_10_connectors.html">
+        <div class="tc-num">Test 10</div>
+        <div class="tc-title">Connectors &amp; Discourse Markers</div>
+        <div class="tc-sub">Contrast · Cause · Result · Purpose</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_11_relative_clauses.html">
+        <div class="tc-num">Test 11</div>
+        <div class="tc-title">Relative Clauses</div>
+        <div class="tc-sub">Defining · Non-defining · whom · Reduced</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_12_inversion.html">
+        <div class="tc-num">Test 12</div>
+        <div class="tc-title">Inversion &amp; Emphasis</div>
+        <div class="tc-sub">Never/Rarely/Not only/Hardly/Only…</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_13_tenses_advanced.html">
+        <div class="tc-num">Test 13</div>
+        <div class="tc-title">Advanced Tenses</div>
+        <div class="tc-sub">Past simple vs Perfect · Used to · Future forms</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_14_confusable_words.html">
+        <div class="tc-num">Test 14</div>
+        <div class="tc-title">Confusable Words</div>
+        <div class="tc-sub">affect/effect · lay/lie · fewer/less…</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_15_idioms.html">
+        <div class="tc-num">Test 15</div>
+        <div class="tc-title">Idiomatic Expressions</div>
+        <div class="tc-sub">20 essential C1 idioms in context</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_16_dependent_prepositions.html">
+        <div class="tc-num">Test 16</div>
+        <div class="tc-title">Dependent Prepositions</div>
+        <div class="tc-sub">Verb/adj/noun + preposition collocations</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_17_articles.html">
+        <div class="tc-num">Test 17</div>
+        <div class="tc-title">Articles (a / an / the / Ø)</div>
+        <div class="tc-sub">First mention · Unique · Zero article</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_18_question_tags.html">
+        <div class="tc-num">Test 18</div>
+        <div class="tc-title">Question Tags</div>
+        <div class="tc-sub">Positive/negative · Modals · Imperatives</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_19_prepositions_time_place.html">
+        <div class="tc-num">Test 19</div>
+        <div class="tc-title">Prepositions of Time &amp; Place</div>
+        <div class="tc-sub">at/on/in · by/until · since/for · above/over</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+      <a class="test-card" href="test_20_mixed_C1.html">
+        <div class="tc-num">Test 20</div>
+        <div class="tc-title">Mixed C1 Review</div>
+        <div class="tc-sub">Final revision — all major C1 grammar topics</div>
+        <span class="tc-badge badge-c1">C1</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- AI GENERATOR -->
+  <div class="section" id="section-generated">
+    <div class="section-header">
+      <h1>AI Test Generator</h1>
+      <p>Generate custom tests on any topic using OpenRouter AI</p>
+    </div>
+    <div class="gen-card">
+      <div class="gen-card-icon">✨</div>
+      <div>
+        <h2>Generate a custom test</h2>
+        <p>Choose topic, level, number of questions and skills. The AI generates a full interactive test in seconds.</p>
+        <button class="btn-go-gen" onclick="window.location.href='generator.html'">Open Generator →</button>
+      </div>
+    </div>
+    <div class="section-header" style="margin-top:8px;margin-bottom:16px">
+      <h1 style="font-size:1rem">Previously generated tests</h1>
+      <p>Tests saved from the generator appear here</p>
+    </div>
+    <div id="gen-history-list"></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="section" id="section-history">
+    <div class="section-header">
+      <h1>Test History</h1>
+      <p>All completed tests with scores and results</p>
+    </div>
+    <div class="gdrive-bar">
+      <svg width="20" height="20" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L28.45 51H0c0 1.55.4 3.1 1.2 4.5l5.4 11.35z" fill="#0066DA"/><path d="M43.65 25L29.05 0c-1.35.8-2.5 1.9-3.3 3.3L1.2 46.5C.4 47.9 0 49.45 0 51h28.45L43.65 25z" fill="#00AC47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H58.85L73.55 76.8z" fill="#EA4335"/><path d="M43.65 25L58.25 0H29.05L43.65 25z" fill="#00832D"/><path d="M58.85 51H87.3L73.55 76.8 58.85 51z" fill="#2684FC"/><path d="M58.85 51L43.65 25 28.45 51h30.4z" fill="#00AC47"/></svg>
+      <div class="gd-info">
+        <span id="gd-user-name">Not connected</span>
+        <div class="gd-sync" id="gd-sync-status">Connect to sync history across devices</div>
+      </div>
+      <button class="btn-gdrive" id="btn-gdrive-main" onclick="gdriveToggle()">Connect Google Drive</button>
+    </div>
+    <div id="history-list-main"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="section" id="section-settings">
+    <div class="section-header">
+      <h1>Settings</h1>
+      <p>Account preferences and integrations</p>
+    </div>
+
+    <div class="settings-block">
+      <h3>Account</h3>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label" id="s-email">—</div>
+          <div class="setting-desc">Signed in with Google</div>
+        </div>
+        <button class="btn-setting danger" onclick="signOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>Google Drive Sync</h3>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Sync test history</div>
+          <div class="setting-desc gdrive-status off" id="s-gdrive-status">Not connected</div>
+        </div>
+        <button class="btn-setting" id="btn-gdrive-settings" onclick="gdriveToggle()">Connect</button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>OpenRouter API Key</h3>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">API Key for AI Generator</div>
+          <div class="setting-desc">Stored locally in your browser only</div>
+        </div>
+        <button class="btn-setting primary" onclick="window.location.href='generator.html'">Configure in Generator</button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>Data</h3>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Clear local history</div>
+          <div class="setting-desc">Deletes all saved test results from this device</div>
+        </div>
+        <button class="btn-setting danger" onclick="clearAllHistory()">Clear History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="section admin-hidden" id="section-admin">
+    <div class="section-header">
+      <h1>Users &amp; Access</h1>
+      <p>Manage who can access the platform</p>
+    </div>
+
+    <div class="settings-block">
+      <h3>Authorised Users</h3>
+      <div id="user-list"></div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <input class="add-email" type="email" id="new-email" placeholder="new@email.com">
+        <button class="btn-setting primary" onclick="addUser()">Add</button>
+      </div>
+      <div style="font-size:.75rem;color:#e53e3e;margin-top:8px;display:none" id="admin-note">
+        ⚠️ Changes here only affect this browser session. To make permanent changes, edit <code>auth.js</code> and push to GitHub.
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>Access Info</h3>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Login URL</div>
+          <div class="setting-desc" id="s-url">—</div>
+        </div>
+        <button class="btn-setting" onclick="copyUrl()">Copy</button>
+      </div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Total allowed users</div>
+          <div class="setting-desc" id="s-count">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app-body -->
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="review-modal" onclick="if(event.target===this)closeReview()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="rev-title">Review</h2>
+        <div class="mh-meta" id="rev-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeReview()">✕</button>
+    </div>
+    <div id="rev-body"></div>
+  </div>
 </div>
 
-<h2>Generated Tests</h2>
-<div class="grid">
-  <a class="card" href="test_02_phrasal_verbs_mixed.html">
-    <div class="card-num">Test 02</div>
-    <div class="card-title">Phrasal Verbs (Mixed)</div>
-    <div class="card-sub">20 essential phrasal verbs in context</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_03_conditionals.html">
-    <div class="card-num">Test 03</div>
-    <div class="card-title">Conditionals &amp; Wishes</div>
-    <div class="card-sub">0th–3rd · Mixed · Inversion · Unless · If only</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_04_passive_voice.html">
-    <div class="card-num">Test 04</div>
-    <div class="card-title">Passive Voice</div>
-    <div class="card-sub">All tenses · Modal passives · Causative · Reporting</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_05_reported_speech.html">
-    <div class="card-num">Test 05</div>
-    <div class="card-title">Reported Speech</div>
-    <div class="card-sub">Backshift · Reporting verbs · Time expressions</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_06_modal_verbs.html">
-    <div class="card-num">Test 06</div>
-    <div class="card-title">Modal Verbs</div>
-    <div class="card-sub">Deduction · Obligation · Permission · Perfect modals</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_07_gerunds_infinitives.html">
-    <div class="card-num">Test 07</div>
-    <div class="card-title">Gerunds &amp; Infinitives</div>
-    <div class="card-sub">Verb patterns · Both forms (different meaning)</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_08_vocabulary_collocations.html">
-    <div class="card-num">Test 08</div>
-    <div class="card-title">Vocabulary &amp; Collocations</div>
-    <div class="card-sub">Verb/noun/adjective collocations · Fixed phrases</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_09_word_formation.html">
-    <div class="card-num">Test 09</div>
-    <div class="card-title">Word Formation</div>
-    <div class="card-sub">Prefixes · Suffixes · Negative forms</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_10_connectors.html">
-    <div class="card-num">Test 10</div>
-    <div class="card-title">Connectors &amp; Discourse Markers</div>
-    <div class="card-sub">Contrast · Cause · Result · Purpose · Emphasis</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_11_relative_clauses.html">
-    <div class="card-num">Test 11</div>
-    <div class="card-title">Relative Clauses</div>
-    <div class="card-sub">Defining · Non-defining · whom · Reduced clauses</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_12_inversion.html">
-    <div class="card-num">Test 12</div>
-    <div class="card-title">Inversion &amp; Emphasis</div>
-    <div class="card-sub">Never/Rarely/Not only/Hardly/No sooner/Only…</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_13_tenses_advanced.html">
-    <div class="card-num">Test 13</div>
-    <div class="card-title">Advanced Tenses</div>
-    <div class="card-sub">Past simple vs Perfect · Used to · Future forms</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_14_confusable_words.html">
-    <div class="card-num">Test 14</div>
-    <div class="card-title">Confusable Words</div>
-    <div class="card-sub">affect/effect · lay/lie · fewer/less · sensible/sensitive…</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_15_idioms.html">
-    <div class="card-num">Test 15</div>
-    <div class="card-title">Idiomatic Expressions</div>
-    <div class="card-sub">20 essential C1 idioms used in context</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_16_dependent_prepositions.html">
-    <div class="card-num">Test 16</div>
-    <div class="card-title">Dependent Prepositions</div>
-    <div class="card-sub">Verb/adj/noun + preposition collocations</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_17_articles.html">
-    <div class="card-num">Test 17</div>
-    <div class="card-title">Articles (a / an / the / Ø)</div>
-    <div class="card-sub">First mention · Unique · Zero article · Fixed expressions</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_18_question_tags.html">
-    <div class="card-num">Test 18</div>
-    <div class="card-title">Question Tags</div>
-    <div class="card-sub">Positive/negative · Modals · Imperatives · Irregular</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_19_prepositions_time_place.html">
-    <div class="card-num">Test 19</div>
-    <div class="card-title">Prepositions of Time &amp; Place</div>
-    <div class="card-sub">at/on/in · by/until · since/for · above/over · between/among</div>
-    <span class="badge bc1">C1</span>
-  </a>
-  <a class="card" href="test_20_mixed_C1.html">
-    <div class="card-num">Test 20</div>
-    <div class="card-title">Mixed C1 Review</div>
-    <div class="card-sub">Final revision — all major C1 grammar topics</div>
-    <span class="badge bc1">C1</span>
-  </a>
-</div>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+// ── AUTH ──
+const userEmail = (sessionStorage.getItem('auth_email')||'').toLowerCase();
+const userName  = sessionStorage.getItem('auth_name') || userEmail;
+const isAdmin   = ADMINS.includes(userEmail);
 
-<p style="text-align:center;color:#a0aec0;font-size:.8rem;margin-top:36px">20 tests · 400 questions total · Signed in as <strong id="user-email"></strong> · <a href="login.html" onclick="sessionStorage.clear()" style="color:#4299e1">Sign out</a></p>
-</main>
-<script>document.getElementById('user-email').textContent=sessionStorage.getItem('auth_email')||'';</script>
+document.getElementById('topbar-email').textContent = userName.split('@')[0];
+document.getElementById('topbar-avatar').textContent = (userName[0]||'?').toUpperCase();
+document.getElementById('s-email').textContent = userEmail;
+document.getElementById('s-url').textContent = window.location.origin + window.location.pathname.replace('index.html','') + 'login.html';
+document.getElementById('s-count').textContent = ALLOWED.length + ' users';
+
+if(isAdmin){
+  document.querySelectorAll('.admin-hidden').forEach(el=>el.style.display='flex'||el.classList.remove('admin-hidden'));
+  document.getElementById('nav-admin').style.display='flex';
+  document.getElementById('section-admin').style.display='none'; // managed by showSection
+  renderUserList();
+}
+
+function signOut(){sessionStorage.clear();window.location.href='login.html';}
+
+// ── SIDEBAR ──
+let sidebarOpen = window.innerWidth > 700;
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+if(window.innerWidth <= 700){sidebar.classList.remove('open');}
+else{sidebar.classList.add('open');}
+
+function toggleSidebar(){
+  sidebarOpen=!sidebarOpen;
+  sidebar.classList.toggle('open',sidebarOpen);
+  overlay.classList.toggle('show',sidebarOpen && window.innerWidth<=700);
+}
+function closeSidebar(){sidebarOpen=false;sidebar.classList.remove('open');overlay.classList.remove('show');}
+
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>700){sidebar.classList.add('open');overlay.classList.remove('show');}
+  else{sidebar.classList.remove('open');}
+});
+
+// ── NAVIGATION ──
+function showSection(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec = document.getElementById('section-'+name);
+  if(sec) sec.classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(name==='history') renderHistory();
+  if(name==='generated') renderGenHistory();
+  if(window.innerWidth<=700) closeSidebar();
+}
+
+// ── HISTORY ──
+function getHistory(){try{return JSON.parse(localStorage.getItem('testHistory')||'[]');}catch{return[];}}
+function saveHistory(h){localStorage.setItem('testHistory',JSON.stringify(h));}
+
+function renderHistory(){
+  const h=getHistory();
+  document.getElementById('nav-history-count').textContent=h.length;
+  const el=document.getElementById('history-list-main');
+  if(!h.length){el.innerHTML='<div class="history-empty">No tests completed yet.</div>';return;}
+  el.innerHTML=h.map((item,i)=>`
+    <div class="h-card">
+      <div class="h-card-info">
+        <div class="h-card-title">${item.title}</div>
+        <div class="h-card-meta">${item.date} · ${item.subtitle||''}</div>
+      </div>
+      <span class="h-card-score">${item.score} · ${item.level}</span>
+      <div class="h-card-actions">
+        ${item.userAnswers?`<button class="h-btn h-btn-review" onclick="reviewTest(${i})">🔍 Review</button>`:''}
+        <button class="h-btn h-btn-redo" onclick="redoTest(${i})">↺ Redo</button>
+        <button class="h-btn h-btn-dl" onclick="dlTest(${i})">↓ HTML</button>
+        <button class="h-btn h-btn-del" onclick="delTest(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderGenHistory(){
+  const h=getHistory();
+  const el=document.getElementById('gen-history-list');
+  if(!h.length){el.innerHTML='<div class="history-empty">No AI-generated tests yet. Open the generator to create one.</div>';return;}
+  el.innerHTML=h.map((item,i)=>`
+    <div class="h-card">
+      <div class="h-card-info">
+        <div class="h-card-title">${item.title}</div>
+        <div class="h-card-meta">${item.date} · ${item.questions?.length||0} questions</div>
+      </div>
+      <span class="h-card-score">${item.score} · ${item.level}</span>
+      <div class="h-card-actions">
+        ${item.userAnswers?`<button class="h-btn h-btn-review" onclick="reviewTest(${i})">🔍 Review</button>`:''}
+        <button class="h-btn h-btn-redo" onclick="redoTest(${i})">↺ Redo</button>
+        <button class="h-btn h-btn-dl" onclick="dlTest(${i})">↓ HTML</button>
+        <button class="h-btn h-btn-del" onclick="delTest(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function reviewTest(i){
+  const h=getHistory();
+  const item=h[i];
+  if(!item.userAnswers){alert('No answers stored for this test.');return;}
+  document.getElementById('rev-title').textContent=item.title;
+  document.getElementById('rev-meta').textContent=`${item.date} · Score: ${item.score} (${item.level})`;
+  const L=['A','B','C','D'];
+  document.getElementById('rev-body').innerHTML=item.questions.map((q,qi)=>{
+    const ua=item.userAnswers[qi];
+    const ok=ua===q.correct;
+    const opts=q.options.map((o,oi)=>{
+      let cls='rev-opt',mark='';
+      if(oi===q.correct){cls+=' correct';mark='✓';}
+      else if(oi===ua){cls+=' chosen-wrong';mark='✗ your answer';}
+      return `<div class="${cls}"><span class="ro-mark">${L[oi]}</span><span>${o}</span><span class="ro-mark" style="margin-left:auto">${mark}</span></div>`;
+    }).join('');
+    return `<div class="rev-q ${ok?'ok':'fail'}">
+      <div class="rev-q-head">
+        <span class="rev-q-text">Q${qi+1}: ${q.context?'<em>'+q.context+'</em><br>':''}${q.text}</span>
+        <span class="rev-q-badge">${ok?'✓ Correct':'✗ Wrong'}</span>
+      </div>
+      ${opts}
+      <div class="rev-exp">${q.explanation||''}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('review-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeReview(){
+  document.getElementById('review-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+function redoTest(i){
+  const h=getHistory();
+  const item=h[i];
+  sessionStorage.setItem('redoTest',JSON.stringify({title:item.title,subtitle:item.subtitle,questions:item.questions}));
+  window.location.href='generator.html?redo=1';
+}
+
+function dlTest(i){
+  const h=getHistory();
+  const item=h[i];
+  sessionStorage.setItem('dlTest',JSON.stringify({title:item.title,subtitle:item.subtitle,questions:item.questions}));
+  window.location.href='generator.html?dl=1';
+}
+
+function delTest(i){
+  const h=getHistory();h.splice(i,1);saveHistory(h);renderHistory();renderGenHistory();
+  document.getElementById('nav-history-count').textContent=h.length;
+}
+
+function clearAllHistory(){
+  if(!confirm('Delete all test history from this device?'))return;
+  localStorage.removeItem('testHistory');
+  renderHistory();renderGenHistory();
+  document.getElementById('nav-history-count').textContent=0;
+}
+
+// ── ADMIN ──
+let sessionAllowed=[...ALLOWED];
+function renderUserList(){
+  const el=document.getElementById('user-list');
+  el.innerHTML=sessionAllowed.map((e,i)=>`
+    <div class="user-row">
+      <div class="user-avatar">${e[0].toUpperCase()}</div>
+      <div class="user-email">${e}</div>
+      ${ADMINS.includes(e)?'<span class="user-badge admin">Admin</span>':'<span class="user-badge">User</span>'}
+      ${!ADMINS.includes(e)?`<button class="h-btn h-btn-del" onclick="removeUser(${i})">✕</button>`:''}
+    </div>`).join('');
+}
+function addUser(){
+  const inp=document.getElementById('new-email');
+  const val=inp.value.trim().toLowerCase();
+  if(!val||!val.includes('@'))return;
+  if(sessionAllowed.includes(val))return;
+  sessionAllowed.push(val);
+  inp.value='';
+  document.getElementById('admin-note').style.display='block';
+  renderUserList();
+  document.getElementById('s-count').textContent=sessionAllowed.length+' users';
+}
+function removeUser(i){
+  sessionAllowed.splice(i,1);
+  document.getElementById('admin-note').style.display='block';
+  renderUserList();
+}
+function copyUrl(){
+  navigator.clipboard.writeText(document.getElementById('s-url').textContent);
+  const btn=event.currentTarget;btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',2000);
+}
+
+// ── GOOGLE DRIVE ──
+const GD_CLIENT_ID='249569076351-h9g696r3i0sn02g2qkp9g7bn137uvo30.apps.googleusercontent.com';
+const GD_SCOPE='https://www.googleapis.com/auth/drive.appdata';
+const GD_FILENAME='english_test_history.json';
+let gdToken=null,gdFileId=null;
+
+function gdriveToggle(){gdToken?gdriveDisconnect():gdriveConnect();}
+function gdriveConnect(){
+  const client=google.accounts.oauth2.initTokenClient({client_id:GD_CLIENT_ID,scope:GD_SCOPE,callback:async(resp)=>{
+    if(resp.error)return;
+    gdToken=resp.access_token;
+    await gdriveLoadUser();
+    await gdrivePull();
+  }});
+  client.requestAccessToken();
+}
+function gdriveDisconnect(){
+  google.accounts.oauth2.revoke(gdToken,()=>{});
+  gdToken=null;gdFileId=null;
+  updateGDUI(false,'Not connected','Connect to sync history across devices');
+}
+async function gdriveLoadUser(){
+  const r=await gdFetch('https://www.googleapis.com/oauth2/v3/userinfo');
+  const name=r.name||r.email||'Google user';
+  updateGDUI(true,name,'Syncing…');
+}
+async function gdrivePull(){
+  const list=await gdFetch(`https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name='${GD_FILENAME}'&fields=files(id,name)`);
+  if(list.files&&list.files.length>0){
+    gdFileId=list.files[0].id;
+    const cloud=await gdFetch(`https://www.googleapis.com/drive/v3/files/${gdFileId}?alt=media`);
+    const local=getHistory();
+    const localIds=new Set(local.map(h=>h.id));
+    const merged=[...local];
+    if(Array.isArray(cloud))cloud.forEach(c=>{if(!localIds.has(c.id))merged.push(c);});
+    merged.sort((a,b)=>b.id-a.id);
+    saveHistory(merged.slice(0,50));
+    renderHistory();renderGenHistory();
+    document.getElementById('nav-history-count').textContent=merged.length;
+    updateGDUI(true,null,`Synced · ${merged.length} tests · ${new Date().toLocaleTimeString()}`);
+  } else {
+    updateGDUI(true,null,'Connected · No cloud backup yet');
+  }
+}
+async function gdFetch(url,opts={}){
+  const res=await fetch(url,{...opts,headers:{'Authorization':`Bearer ${gdToken}`,'Content-Type':'application/json',...(opts.headers||{})}});
+  return res.json();
+}
+function updateGDUI(connected,name,status){
+  ['gd-user-name','gd-sync-status','s-gdrive-status'].forEach(id=>{});
+  if(name)document.getElementById('gd-user-name').textContent=name;
+  if(status){
+    document.getElementById('gd-sync-status').textContent=status;
+    document.getElementById('s-gdrive-status').textContent=status;
+  }
+  const s=document.getElementById('s-gdrive-status');
+  s.className='setting-desc gdrive-status'+(connected?'':' off');
+  ['btn-gdrive-main','btn-gdrive-settings'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(b){b.textContent=connected?'Disconnect':'Connect Google Drive';b.className='btn-gdrive'+(connected?' connected':'');}
+  });
+  document.getElementById('btn-gdrive-settings').className='btn-setting'+(connected?' primary':'');
+  document.getElementById('btn-gdrive-settings').textContent=connected?'Disconnect':'Connect';
+}
+
+// init
+renderHistory();
+document.getElementById('nav-history-count').textContent=getHistory().length;
+</script>
 </body>
 </html>
