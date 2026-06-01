@@ -167,6 +167,23 @@ textarea { resize: vertical; min-height: 70px; }
 .h-btn-redo { background: #2b6cb0; color: white; }
 .h-btn-dl { background: #276749; color: white; }
 .h-btn-del { background: #e2e8f0; color: #718096; }
+.h-btn-view { background: #805ad5; color: white; }
+
+/* ---- VIEW MODAL ---- */
+.vw-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 300; align-items: flex-start; justify-content: center; padding: 24px 12px; overflow-y: auto; }
+.vw-overlay.show { display: flex; }
+.vw-modal { background: white; border-radius: 14px; max-width: 740px; width: 100%; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,.3); }
+.vw-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.vw-head h2 { font-size: 1.2rem; font-weight: 800; color: #1a365d; }
+.vw-head .vh-meta { font-size: .82rem; color: #718096; margin-top: 3px; }
+.vw-close { background: #e2e8f0; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1rem; color: #4a5568; flex-shrink: 0; }
+.vw-q { padding: 14px 16px; border-radius: 10px; margin-bottom: 10px; background: #f7fafc; border: 1px solid #e2e8f0; }
+.vw-q-num { font-size: .72rem; font-weight: 700; color: #a0aec0; text-transform: uppercase; margin-bottom: 5px; }
+.vw-q-text { font-size: .92rem; font-weight: 600; margin-bottom: 4px; }
+.vw-q-ctx { font-style: italic; color: #2c5282; font-size: .86rem; background: #ebf8ff; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; }
+.vw-opt { font-size: .86rem; padding: 6px 10px; border-radius: 6px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.vw-opt.correct { background: #c6f6d5; color: #276749; font-weight: 600; }
+.vw-exp { font-size: .8rem; color: #718096; margin-top: 8px; line-height: 1.5; font-style: italic; }
 .h-score { font-size: 0.8rem; font-weight: 700; padding: 3px 9px; border-radius: 12px; background: #bee3f8; color: #2c5282; flex-shrink: 0; }
 
 /* ---- GOOGLE DRIVE ---- */
@@ -382,6 +399,20 @@ textarea { resize: vertical; min-height: 70px; }
 </div><!-- /content -->
 </div><!-- /app -->
 
+<!-- VIEW MODAL -->
+<div class="vw-overlay" id="vw-overlay" onclick="if(event.target===this)closeView()">
+  <div class="vw-modal">
+    <div class="vw-head">
+      <div>
+        <h2 id="vw-title">Test</h2>
+        <div class="vh-meta" id="vw-meta"></div>
+      </div>
+      <button class="vw-close" onclick="closeView()">✕</button>
+    </div>
+    <div id="vw-body"></div>
+  </div>
+</div>
+
 <script>
 // ---- state ----
 let TEST = null;
@@ -428,6 +459,7 @@ function renderHistory() {
       </div>
       <span class="h-score">${item.score} · ${item.level}</span>
       <div class="h-actions">
+        <button class="h-btn h-btn-view" onclick="viewFromHistory(${i})">👁 View</button>
         <button class="h-btn h-btn-redo" onclick="redoTest(${i})">↺ Redo</button>
         <button class="h-btn h-btn-dl" onclick="downloadFromHistory(${i})">↓ HTML</button>
         <button class="h-btn h-btn-del" onclick="deleteFromHistory(${i})">✕</button>
@@ -452,6 +484,32 @@ function deleteFromHistory(i) {
   h.splice(i, 1);
   saveHistory(h);
   renderHistory();
+}
+
+function viewFromHistory(i) {
+  const item = getHistory()[i];
+  if (!item || !item.questions) return;
+  document.getElementById('vw-title').textContent = item.title;
+  document.getElementById('vw-meta').textContent = `${item.questions.length} questions · ${item.subtitle || ''}`;
+  const L = ['A','B','C','D'];
+  document.getElementById('vw-body').innerHTML = item.questions.map((q, qi) => {
+    const opts = q.options.map((o, oi) =>
+      `<div class="vw-opt${oi===q.correct?' correct':''}"><span style="font-weight:700">${L[oi]}</span><span>${o}</span>${oi===q.correct?'<span style="margin-left:auto;font-size:.78rem">✓ correct</span>':''}</div>`
+    ).join('');
+    return `<div class="vw-q">
+      <div class="vw-q-num">Q${qi+1} · ${q.skill||''}</div>
+      <div class="vw-q-text">${q.text}</div>
+      ${q.context?`<div class="vw-q-ctx">"${q.context}"</div>`:''}
+      ${opts}
+      ${q.explanation?`<div class="vw-exp">${q.explanation}</div>`:''}
+    </div>`;
+  }).join('');
+  document.getElementById('vw-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeView() {
+  document.getElementById('vw-overlay').classList.remove('show');
+  document.body.style.overflow = '';
 }
 
 function redoTest(i) {
@@ -693,10 +751,10 @@ function buildPdfPrompt(text, extra) {
 Convert it into a structured JSON array of multiple-choice questions.
 
 Rules:
-- Extract EVERY question you find, keeping the original wording.
-- Each question must have: "skill" (classify: Grammar, Vocabulary, Phrasal Verbs, Reading, Use of English, or similar), "text" (the question with a … where the gap is, or the full question), "context" (optional sentence to analyse, or empty string), "options" (array of the answer choices), "correct" (0-based index of the correct answer), "explanation" (2-3 sentences in English explaining why the answer is right and others wrong — generate this yourself based on English grammar/usage).
-- If the PDF includes an answer key (often at the end, sometimes highlighted), use it to set "correct". If no answer key exists, determine the correct answer yourself using your English expertise.
-- Preserve the original question order.
+- Extract EVERY SINGLE question you find — do not stop early, do not skip any. If there are 20 questions, return all 20.
+- Each question must have: "skill" (classify: Grammar, Vocabulary, Phrasal Verbs, Reading, Use of English, or similar), "text" (the question with a … where the gap is), "context" (optional sentence, or empty string), "options" (array of choices), "correct" (0-based index), "explanation" (ONE short sentence explaining why the answer is right — keep it brief to save space).
+- If the PDF includes an answer key (often at the end, sometimes highlighted), use it to set "correct". If no answer key exists, determine the correct answer yourself.
+- Preserve the original question order. Keep explanations short so all questions fit.
 ${extra ? 'Extra instructions: ' + extra : ''}
 
 CRITICAL JSON RULES:
@@ -877,7 +935,7 @@ async function callGemini(key, prompt) {
           model,
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.3,
-          max_tokens: 6000,
+          max_tokens: 16000,
           response_format: { type: 'json_object' }
         })
       });
