@@ -7,6 +7,7 @@
 <script src="auth.js"></script>
 <script src="https://accounts.google.com/gsi/client" async></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="mobile.css">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -274,6 +275,26 @@ textarea { resize: vertical; min-height: 70px; }
     </div>
     <div class="mode-tab" id="tab-pdf" onclick="setMode('pdf')">
       <span class="mt-icon">📄</span>Import from PDF
+    </div>
+    <div class="mode-tab" id="tab-excel" onclick="setMode('excel')">
+      <span class="mt-icon">📊</span>Import from Excel
+    </div>
+  </div>
+
+  <!-- EXCEL PANEL -->
+  <div class="panel" id="excel-panel" style="display:none">
+    <div class="panel-title">Upload Excel / CSV tests</div>
+    <div class="drop-zone" id="excel-drop" onclick="document.getElementById('excel-input').click()">
+      <div class="dz-icon">📊</div>
+      <div class="dz-text">Click to choose Excel files or drag them here</div>
+      <div class="dz-sub">No AI needed — read instantly. Columns: Question | A | B | C | D | Correct letter | Correct text</div>
+    </div>
+    <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" multiple style="display:none">
+    <div id="excel-file-info"></div>
+    <div style="font-size:.78rem;color:#718096;margin-top:12px;line-height:1.6">
+      <strong>Expected columns (first row = headers):</strong><br>
+      Column 1: Question text · Columns 2-5: Options A, B, C, D · Column 6: Correct letter (a/b/c/d) · Column 7: Correct answer text (optional)<br>
+      <span style="color:#a0aec0">Tip: an optional first column named "Skill"/"Context" is auto-detected. Empty option cells are skipped (works with 3-option tests too).</span>
     </div>
   </div>
 
@@ -686,11 +707,16 @@ function setMode(mode) {
   currentMode = mode;
   document.getElementById('tab-ai').classList.toggle('active', mode === 'ai');
   document.getElementById('tab-pdf').classList.toggle('active', mode === 'pdf');
+  document.getElementById('tab-excel').classList.toggle('active', mode === 'excel');
   document.getElementById('pdf-panel').classList.toggle('show', mode === 'pdf');
-  document.getElementById('options-panel').style.display = mode === 'pdf' ? 'none' : '';
-  document.getElementById('btn-gen').innerHTML = mode === 'pdf'
-    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDFs to Tests'
-    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg> Generate Test';
+  document.getElementById('excel-panel').style.display = mode === 'excel' ? 'block' : 'none';
+  // AI config + API key only needed for AI and PDF modes (Excel needs nothing)
+  document.getElementById('options-panel').style.display = (mode === 'ai') ? '' : 'none';
+  document.getElementById('config-panel').style.display = (mode === 'excel') ? 'none' : '';
+  const btn = document.getElementById('btn-gen');
+  if (mode === 'pdf') btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDFs to Tests';
+  else if (mode === 'excel') btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Build Tests from Excel';
+  else btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg> Generate Test';
 }
 
 // PDF.js worker
@@ -705,6 +731,134 @@ if (dropZone) {
   ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('dragover'); }));
   dropZone.addEventListener('drop', e => { handlePdfs(e.dataTransfer.files); });
   pdfInput.addEventListener('change', e => { handlePdfs(e.target.files); });
+}
+
+// ---- EXCEL ----
+let excelFiles = []; // [{name, questions, status}]
+const excelDrop = document.getElementById('excel-drop');
+const excelInput = document.getElementById('excel-input');
+if (excelDrop) {
+  ['dragover','dragenter'].forEach(ev => excelDrop.addEventListener(ev, e => { e.preventDefault(); excelDrop.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(ev => excelDrop.addEventListener(ev, e => { e.preventDefault(); excelDrop.classList.remove('dragover'); }));
+  excelDrop.addEventListener('drop', e => { handleExcels(e.dataTransfer.files); });
+  excelInput.addEventListener('change', e => { handleExcels(e.target.files); });
+}
+
+async function handleExcels(fileList) {
+  for (const file of fileList) {
+    const entry = { name: file.name, questions: [], status: 'Reading…' };
+    excelFiles.push(entry);
+    renderExcelList();
+    try {
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false });
+      entry.questions = parseExcelRows(rows);
+      entry.status = entry.questions.length ? `${entry.questions.length} questions` : 'No questions found';
+    } catch (e) {
+      entry.status = 'Error: ' + e.message;
+    }
+    renderExcelList();
+  }
+  excelInput.value = '';
+}
+
+// Parse rows into questions. Expected columns:
+// Question | A | B | C | D | CorrectLetter | CorrectText
+// Optional leading "Skill"/"Context" columns are auto-skipped by header detection.
+function parseExcelRows(rows) {
+  if (!rows.length) return [];
+  // detect header row & column positions
+  let header = rows[0].map(c => String(c||'').toLowerCase().trim());
+  let dataStart = 1;
+  const looksLikeHeader = header.some(h => /question|pregunta|option|opci|correct|answer|respuesta|letter|letra/.test(h));
+  if (!looksLikeHeader) { header = []; dataStart = 0; }
+
+  function findCol(...names){ for(const n of names){ const i=header.findIndex(h=>h.includes(n)); if(i!==-1) return i; } return -1; }
+
+  let qCol = findCol('question','pregunta');
+  let skillCol = findCol('skill','tema','categor');
+  let ctxCol = findCol('context','contexto');
+  let letterCol = findCol('letter','letra','correct letter','correcta');
+  let textCol = findCol('correct text','contenido','answer text','respuesta correcta');
+  let optCols = [];
+  ['a','b','c','d','e'].forEach(L=>{ const i=header.findIndex(h=>h===L||h==='option '+L||h==='opci'+L||h==='op'+L||h==='opt'+L); if(i!==-1) optCols.push(i); });
+
+  // fallback to positional layout: Question | A | B | C | D | Letter | Text
+  if (qCol === -1) qCol = 0;
+  if (!optCols.length) {
+    // options are columns between question and letter/text columns
+    const maxCol = Math.max(...rows.map(r=>r.length));
+    const stopCol = (letterCol!==-1?letterCol:(textCol!==-1?textCol:maxCol));
+    for (let c = qCol+1; c < stopCol; c++) optCols.push(c);
+  }
+  if (letterCol === -1 && textCol === -1) {
+    // assume last two columns are letter then text
+    const last = Math.max(...rows.map(r=>r.length)) - 1;
+    letterCol = last - 1; textCol = last;
+    optCols = optCols.filter(c => c < letterCol);
+  }
+
+  const out = [];
+  for (let r = dataStart; r < rows.length; r++) {
+    const row = rows[r];
+    if (!row || !row[qCol]) continue;
+    const options = optCols.map(c => row[c]).filter(v => v !== undefined && String(v).trim() !== '').map(v => String(v).trim());
+    if (options.length < 2) continue;
+
+    let correct = -1;
+    const letter = letterCol!==-1 ? String(row[letterCol]||'').trim().toLowerCase() : '';
+    if (letter) {
+      const idx = 'abcde'.indexOf(letter[0]);
+      if (idx !== -1 && idx < options.length) correct = idx;
+    }
+    if (correct === -1 && textCol!==-1) {
+      const txt = String(row[textCol]||'').trim().toLowerCase().replace(/^[a-e]\)\s*/,'');
+      correct = options.findIndex(o => o.toLowerCase().replace(/^[a-e]\)\s*/,'') === txt);
+    }
+    if (correct === -1) correct = 0;
+
+    // strip leading "a) " from options for cleaner display
+    const cleanOpts = options.map(o => o.replace(/^[a-eA-E]\)\s*/,''));
+
+    out.push({
+      skill: skillCol!==-1 ? String(row[skillCol]||'General').trim() : 'General',
+      text: String(row[qCol]).trim(),
+      context: ctxCol!==-1 ? String(row[ctxCol]||'').trim() : '',
+      options: cleanOpts,
+      correct,
+      explanation: textCol!==-1 && row[textCol] ? `Correct answer: ${String(row[textCol]).trim()}` : ''
+    });
+  }
+  return out;
+}
+
+function renderExcelList() {
+  const el = document.getElementById('excel-file-info');
+  if (!excelFiles.length) { el.innerHTML = ''; return; }
+  el.innerHTML = excelFiles.map((f, i) =>
+    `<div class="pdf-file"><span class="pf-name">📊 ${f.name}</span><span style="font-size:0.78rem;color:#718096">${f.status}</span><button class="pf-remove" onclick="removeExcel(${i})">✕</button></div>`
+  ).join('');
+}
+function removeExcel(i){ excelFiles.splice(i,1); renderExcelList(); }
+
+function buildExcelTests() {
+  const ready = excelFiles.filter(f => f.questions.length);
+  if (!ready.length) { showError('Upload at least one Excel with valid questions.'); return; }
+
+  const generated = [];
+  for (const f of ready) {
+    const cleanName = f.name.replace(/\.(xlsx|xls|csv)$/i, '');
+    const test = { title: cleanName, subtitle: `From Excel · ${f.questions.length} questions`, questions: f.questions };
+    generated.push(test);
+    savePdfTest(test); // reuse the same history saver
+  }
+
+  TEST = generated[0];
+  renderTest();
+  showTest();
+  if (generated.length > 1) setTimeout(()=>alert(`✓ ${generated.length} tests built from Excel and saved to history. Showing the first.`), 300);
 }
 
 async function handlePdfs(fileList) {
@@ -838,6 +992,7 @@ function savePdfTest(test) {
 
 async function generateTest() {
   if (currentMode === 'pdf') { convertPdf(); return; }
+  if (currentMode === 'excel') { buildExcelTests(); return; }
   const key = document.getElementById('api-key').value.trim();
   if (!key) { showError('Please enter your OpenRouter API key.'); return; }
 
