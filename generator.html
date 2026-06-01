@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Test Generator</title>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #2d3748; min-height: 100vh; }
+
+/* ---- LAYOUT ---- */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+header { background: #2b6cb0; color: white; padding: 18px 28px; display: flex; align-items: center; gap: 12px; }
+header h1 { font-size: 1.25rem; font-weight: 700; }
+header span { opacity: 0.75; font-size: 0.85rem; }
+.content { flex: 1; max-width: 860px; margin: 0 auto; width: 100%; padding: 28px 16px; }
+
+/* ---- PANELS ---- */
+.panel { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); margin-bottom: 20px; }
+.panel-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #718096; margin-bottom: 16px; }
+
+/* ---- FORM ---- */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 0.82rem; font-weight: 600; color: #4a5568; }
+input, select, textarea {
+  padding: 9px 12px; border: 2px solid #e2e8f0; border-radius: 8px;
+  font-size: 0.9rem; font-family: inherit; color: #2d3748;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: #4299e1; }
+textarea { resize: vertical; min-height: 70px; }
+.key-row { display: flex; gap: 8px; }
+.key-row input { flex: 1; font-family: monospace; font-size: 0.85rem; }
+.key-hint { font-size: 0.75rem; color: #a0aec0; margin-top: 3px; }
+.key-hint a { color: #4299e1; text-decoration: none; }
+
+/* skill checkboxes */
+.skill-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.skill-chip {
+  padding: 5px 12px; border: 2px solid #e2e8f0; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600; cursor: pointer; user-select: none;
+  transition: all 0.12s; color: #718096;
+}
+.skill-chip.active { border-color: #4299e1; background: #ebf8ff; color: #2b6cb0; }
+
+/* ---- BUTTON ---- */
+.btn-generate {
+  width: 100%; padding: 14px; background: #2b6cb0; color: white;
+  border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-generate:hover:not(:disabled) { background: #2c5282; }
+.btn-generate:disabled { opacity: 0.5; cursor: default; }
+
+/* ---- STATUS ---- */
+.status { display: none; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 16px; }
+.status.show { display: flex; }
+.status.loading { background: #ebf8ff; color: #2c5282; border: 1px solid #bee3f8; }
+.status.error { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+.spinner { width: 18px; height: 18px; border: 3px solid #bee3f8; border-top-color: #2b6cb0; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- PROGRESS BAR ---- */
+.progress-bar-wrap { background: #bee3f8; height: 5px; border-radius: 3px; margin-bottom: 20px; display: none; }
+.progress-bar-wrap.show { display: block; }
+.progress-bar { background: #2b6cb0; height: 5px; border-radius: 3px; transition: width 0.4s; }
+
+/* ---- TEST ---- */
+#test-section { display: none; }
+#test-section.show { display: block; }
+
+.test-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.test-header h2 { font-size: 1.1rem; font-weight: 700; }
+.btn-sm { padding: 7px 14px; border: 2px solid #e2e8f0; border-radius: 7px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: white; color: #4a5568; transition: all 0.12s; }
+.btn-sm:hover { border-color: #4299e1; color: #2b6cb0; }
+.btn-sm.primary { background: #2b6cb0; color: white; border-color: #2b6cb0; }
+.btn-sm.primary:hover { background: #2c5282; }
+
+/* question cards */
+.question-card { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); margin-bottom: 16px; display: none; }
+.question-card.active { display: block; }
+.q-number { font-size: 0.75rem; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.q-text { font-size: 1rem; line-height: 1.6; margin-bottom: 14px; }
+.q-context { background: #ebf8ff; border-left: 3px solid #4299e1; padding: 9px 13px; border-radius: 4px; font-style: italic; font-size: 0.92rem; margin-bottom: 12px; color: #2c5282; }
+.options { display: flex; flex-direction: column; gap: 9px; }
+.option {
+  padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 8px;
+  cursor: pointer; transition: all 0.12s; font-size: 0.93rem;
+  display: flex; align-items: center; gap: 9px;
+}
+.option:hover:not(.disabled) { border-color: #4299e1; background: #ebf8ff; }
+.option.correct { border-color: #38a169; background: #f0fff4; color: #276749; }
+.option.wrong { border-color: #e53e3e; background: #fff5f5; color: #c53030; }
+.option.reveal { border-color: #38a169; background: #f0fff4; color: #276749; }
+.option.disabled { cursor: default; }
+.opt-letter { width: 24px; height: 24px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 700; flex-shrink: 0; }
+.feedback { margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 0.87rem; line-height: 1.5; display: none; }
+.feedback.show { display: block; }
+.fb-correct { background: #f0fff4; border: 1px solid #9ae6b4; color: #276749; }
+.fb-wrong { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; }
+.q-nav { display: flex; justify-content: space-between; margin-top: 16px; }
+.btn-nav { padding: 8px 18px; border: none; border-radius: 7px; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+.btn-nav:disabled { opacity: 0.35; cursor: default; }
+.btn-back { background: #e2e8f0; color: #4a5568; }
+.btn-next { background: #2b6cb0; color: white; }
+.btn-finish-q { background: #38a169; color: white; }
+
+/* results */
+#results-section { display: none; }
+#results-section.show { display: block; }
+.results-card { background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+.score-row { display: flex; align-items: center; justify-content: center; gap: 28px; margin-bottom: 24px; }
+.score-circle { width: 110px; height: 110px; border-radius: 50%; border: 7px solid #2b6cb0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-num { font-size: 1.9rem; font-weight: 800; color: #2b6cb0; line-height: 1; }
+.score-denom { font-size: 0.8rem; color: #718096; }
+.level-info h2 { font-size: 1.3rem; font-weight: 700; }
+.level-badge { display: inline-block; padding: 4px 14px; border-radius: 14px; font-weight: 700; font-size: 0.9rem; margin-top: 4px; }
+.la1 { background: #fed7d7; color: #c53030; }
+.la2 { background: #feebc8; color: #c05621; }
+.lb1 { background: #fefcbf; color: #744210; }
+.lb2 { background: #c6f6d5; color: #276749; }
+.lc1 { background: #bee3f8; color: #2c5282; }
+.lc2 { background: #e9d8fd; color: #553c9a; }
+.level-desc { font-size: 0.88rem; color: #718096; margin-top: 6px; max-width: 360px; line-height: 1.5; }
+
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 20px 0; }
+.skill-block { background: #f7fafc; border-radius: 8px; padding: 12px; text-align: center; }
+.sk-label { font-size: 0.75rem; color: #718096; }
+.sk-val { font-size: 1.1rem; font-weight: 700; color: #2b6cb0; }
+
+.analysis-title { font-size: 0.85rem; font-weight: 700; color: #4a5568; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; }
+.ai-item { padding: 12px 14px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid; }
+.ai-ok { border-color: #38a169; background: #f0fff4; }
+.ai-fail { border-color: #e53e3e; background: #fff5f5; }
+.ai-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
+.ai-q { font-size: 0.85rem; color: #4a5568; flex: 1; }
+.ai-badge { font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; flex-shrink: 0; }
+.ai-ok .ai-badge { background: #9ae6b4; color: #276749; }
+.ai-fail .ai-badge { background: #feb2b2; color: #c53030; }
+.ai-detail { font-size: 0.8rem; color: #718096; margin-top: 3px; }
+.ai-skill-tag { font-size: 0.74rem; color: #a0aec0; margin-top: 2px; }
+
+.results-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.results-actions button { flex: 1; min-width: 140px; padding: 10px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+.btn-retry2 { background: #e2e8f0; color: #4a5568; }
+.btn-new { background: #2b6cb0; color: white; }
+.btn-download { background: #276749; color: white; }
+
+/* ---- HISTORY ---- */
+#history-panel { display: none; }
+#history-panel.show { display: block; }
+.history-toggle { background: none; border: none; color: white; opacity: 0.85; font-size: 0.85rem; font-weight: 600; cursor: pointer; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); transition: opacity 0.15s; }
+.history-toggle:hover { opacity: 1; }
+.history-empty { color: #a0aec0; font-size: 0.9rem; text-align: center; padding: 24px 0; }
+.h-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; background: #f7fafc; }
+.h-info { flex: 1; min-width: 0; }
+.h-title { font-size: 0.92rem; font-weight: 700; color: #2d3748; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.h-meta { font-size: 0.76rem; color: #718096; margin-top: 2px; }
+.h-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.h-btn { padding: 5px 11px; border: none; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+.h-btn-redo { background: #2b6cb0; color: white; }
+.h-btn-dl { background: #276749; color: white; }
+.h-btn-del { background: #e2e8f0; color: #718096; }
+.h-score { font-size: 0.8rem; font-weight: 700; padding: 3px 9px; border-radius: 12px; background: #bee3f8; color: #2c5282; flex-shrink: 0; }
+
+/* ---- GOOGLE DRIVE ---- */
+.gdrive-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; background: #f7fafc; border: 1px solid #e2e8f0; margin-bottom: 14px; font-size: 0.85rem; }
+.gdrive-bar .gd-info { flex: 1; color: #4a5568; }
+.gdrive-bar .gd-info span { font-weight: 600; color: #2d3748; }
+.btn-gdrive { display: flex; align-items: center; gap: 7px; padding: 7px 14px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; font-size: 0.82rem; font-weight: 600; cursor: pointer; color: #4a5568; transition: all 0.13s; flex-shrink: 0; }
+.btn-gdrive:hover { border-color: #4299e1; color: #2b6cb0; }
+.btn-gdrive.connected { border-color: #38a169; color: #276749; background: #f0fff4; }
+.btn-gdrive svg { flex-shrink: 0; }
+.gd-sync-status { font-size: 0.74rem; color: #a0aec0; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+  <div style="flex:1">
+    <h1>English Test Generator</h1>
+    <span>Powered by OpenRouter · Free models · No credit card</span>
+  </div>
+  <button class="history-toggle" onclick="toggleHistory()">📋 History (<span id="history-count">0</span>)</button>
+</header>
+
+<!-- HISTORY PANEL -->
+<div class="content" style="padding-bottom:0">
+  <div class="panel" id="history-panel">
+    <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">
+      <span>Test History</span>
+      <button class="h-btn h-btn-del" onclick="clearHistory()" style="font-size:0.72rem">Clear all</button>
+    </div>
+    <div class="gdrive-bar">
+      <svg width="20" height="20" viewBox="0 0 87.3 78" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L28.45 51H0c0 1.55.4 3.1 1.2 4.5l5.4 11.35z" fill="#0066DA"/><path d="M43.65 25L29.05 0c-1.35.8-2.5 1.9-3.3 3.3L1.2 46.5C.4 47.9 0 49.45 0 51h28.45L43.65 25z" fill="#00AC47"/><path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H58.85L73.55 76.8z" fill="#EA4335"/><path d="M43.65 25L58.25 0H29.05L43.65 25z" fill="#00832D"/><path d="M58.85 51H87.3L73.55 76.8 58.85 51z" fill="#2684FC"/><path d="M58.85 51L73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l-3.85-6.65L58.85 51zM43.65 25l15.2 26H87.3L58.25 0 43.65 25z" fill="none"/><path d="M58.85 51L43.65 25 28.45 51h30.4z" fill="#00AC47"/><path d="M28.45 51L13.75 76.8l14.7-25.8H0l28.45 51H58.85L87.3 51H58.85L28.45 51z" fill="none"/></svg>
+      <div class="gd-info">
+        <span id="gd-user">Not connected</span>
+        <div class="gd-sync-status" id="gd-status">Connect to sync your history across devices</div>
+      </div>
+      <button class="btn-gdrive" id="btn-gdrive" onclick="gdriveToggle()">Connect Google Drive</button>
+    </div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- CONFIG PANEL -->
+  <div class="panel" id="config-panel">
+    <div class="panel-title">API Key — OpenRouter (Free)</div>
+    <div class="form-group">
+      <label>OpenRouter API Key</label>
+      <div class="key-row">
+        <input type="password" id="api-key" placeholder="sk-or-v1-..." autocomplete="off">
+        <button class="btn-sm" onclick="toggleKey()">Show</button>
+      </div>
+      <div class="key-hint">
+        Get a free key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> · Sign up with Google · No credit card · Key never leaves this browser.
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="options-panel">
+    <div class="panel-title">Test Configuration</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Topic / Exam style</label>
+        <input type="text" id="topic" value="Cambridge B2 First (FCE)" placeholder="e.g. IELTS Academic, Cambridge B1, TOEFL...">
+      </div>
+      <div class="form-group">
+        <label>Target Level</label>
+        <select id="level">
+          <option value="A1">A1 — Beginner</option>
+          <option value="A2">A2 — Elementary</option>
+          <option value="B1">B1 — Intermediate</option>
+          <option value="B2" selected>B2 — Upper-Intermediate</option>
+          <option value="C1">C1 — Advanced</option>
+          <option value="C2">C2 — Proficient</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of questions</label>
+        <select id="num-q">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Options per question</label>
+        <select id="num-opts">
+          <option value="3">3 options</option>
+          <option value="4" selected>4 options</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Skills to include</label>
+        <div class="skill-grid" id="skill-grid">
+          <span class="skill-chip active" data-skill="Grammar">Grammar</span>
+          <span class="skill-chip active" data-skill="Vocabulary">Vocabulary</span>
+          <span class="skill-chip active" data-skill="Reading">Reading</span>
+          <span class="skill-chip active" data-skill="Use of English">Use of English</span>
+          <span class="skill-chip" data-skill="Listening / Context">Listening / Context</span>
+          <span class="skill-chip" data-skill="Writing">Writing</span>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Extra instructions <span style="font-weight:400;color:#a0aec0">(optional)</span></label>
+        <textarea id="extra" placeholder="e.g. Focus on conditionals and passive voice. Avoid idioms. Include at least 3 reading comprehension questions..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="status" id="status">
+    <div class="spinner"></div>
+    <span id="status-text">Generating questions with Gemini…</span>
+  </div>
+
+  <div class="progress-bar-wrap" id="pbar-wrap">
+    <div class="progress-bar" id="pbar" style="width:0%"></div>
+  </div>
+
+  <button class="btn-generate" id="btn-gen" onclick="generateTest()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg>
+    Generate Test
+  </button>
+
+  <!-- TEST SECTION -->
+  <div id="test-section">
+    <div class="test-header">
+      <h2 id="test-heading">English Test</h2>
+      <div style="display:flex;gap:8px">
+        <button class="btn-sm" onclick="regenerate()">↻ New test</button>
+        <button class="btn-sm primary" onclick="skipToResults()">See Results</button>
+      </div>
+    </div>
+    <div id="questions-container"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-section">
+    <div class="results-card">
+      <div class="score-row">
+        <div class="score-circle">
+          <span class="score-num" id="r-score">0</span>
+          <span class="score-denom" id="r-total">/ 0</span>
+        </div>
+        <div class="level-info">
+          <h2 id="r-title">Your result</h2>
+          <span class="level-badge" id="r-badge">—</span>
+          <p class="level-desc" id="r-desc"></p>
+        </div>
+      </div>
+      <div class="skills-grid" id="r-skills"></div>
+      <div class="analysis-title">Question-by-question analysis</div>
+      <div id="r-analysis"></div>
+      <div class="results-actions">
+        <button class="btn-retry2" onclick="retryTest()">↺ Retry same test</button>
+        <button class="btn-new" onclick="regenerate()">⊕ Generate new test</button>
+        <button class="btn-download" onclick="downloadTest()">↓ Download as HTML</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+// ---- state ----
+let TEST = null;
+let currentQ = 0;
+let answers = {};
+let answered = {};
+
+// ---- history ----
+function getHistory() { try { return JSON.parse(localStorage.getItem('testHistory') || '[]'); } catch { return []; } }
+function saveHistory(h) { localStorage.setItem('testHistory', JSON.stringify(h)); }
+
+function saveToHistory(correct, total, pct, level) {
+  const h = getHistory();
+  // avoid duplicate if test already saved
+  if (h.length && h[0].id === TEST._id) return;
+  TEST._id = Date.now();
+  h.unshift({
+    id: TEST._id,
+    title: TEST.title,
+    subtitle: TEST.subtitle,
+    date: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+    score: `${correct}/${total}`,
+    pct,
+    level,
+    questions: TEST.questions
+  });
+  if (h.length > 50) h.pop(); // keep last 50
+  saveHistory(h);
+  renderHistory();
+  gdrivePush();
+}
+
+function renderHistory() {
+  const h = getHistory();
+  document.getElementById('history-count').textContent = h.length;
+  const list = document.getElementById('history-list');
+  if (!h.length) { list.innerHTML = '<div class="history-empty">No tests generated yet.</div>'; return; }
+  list.innerHTML = h.map((item, i) => `
+    <div class="h-item">
+      <div class="h-info">
+        <div class="h-title">${item.title}</div>
+        <div class="h-meta">${item.date} · ${item.subtitle}</div>
+      </div>
+      <span class="h-score">${item.score} · ${item.level}</span>
+      <div class="h-actions">
+        <button class="h-btn h-btn-redo" onclick="redoTest(${i})">↺ Redo</button>
+        <button class="h-btn h-btn-dl" onclick="downloadFromHistory(${i})">↓ HTML</button>
+        <button class="h-btn h-btn-del" onclick="deleteFromHistory(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleHistory() {
+  const p = document.getElementById('history-panel');
+  p.classList.toggle('show');
+  if (p.classList.contains('show')) renderHistory();
+}
+
+function clearHistory() {
+  if (!confirm('Delete all history?')) return;
+  localStorage.removeItem('testHistory');
+  renderHistory();
+}
+
+function deleteFromHistory(i) {
+  const h = getHistory();
+  h.splice(i, 1);
+  saveHistory(h);
+  renderHistory();
+}
+
+function redoTest(i) {
+  const h = getHistory();
+  const item = h[i];
+  TEST = { _id: item.id, title: item.title, subtitle: item.subtitle, questions: item.questions };
+  document.getElementById('history-panel').classList.remove('show');
+  renderTest();
+  showTest();
+}
+
+function downloadFromHistory(i) {
+  const h = getHistory();
+  const item = h[i];
+  TEST = { title: item.title, subtitle: item.subtitle, questions: item.questions };
+  downloadTest();
+}
+
+window.addEventListener('load', renderHistory);
+
+// ---- GOOGLE DRIVE SYNC ----
+const GD_CLIENT_ID = '249569076351-h9g696r3i0sn02g2qkp9g7bn137uvo30.apps.googleusercontent.com';
+const GD_SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
+const GD_FILENAME = 'english_test_history.json';
+let gdToken = null;
+let gdFileId = null;
+
+function gdriveToggle() {
+  if (gdToken) { gdriveDisconnect(); } else { gdriveConnect(); }
+}
+
+function gdriveConnect() {
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: GD_CLIENT_ID,
+    scope: GD_SCOPE,
+    callback: async (resp) => {
+      if (resp.error) { gdSetStatus('Error: ' + resp.error); return; }
+      gdToken = resp.access_token;
+      localStorage.setItem('gdToken', gdToken);
+      await gdriveLoadUser();
+      await gdrivePull();
+    }
+  });
+  client.requestAccessToken();
+}
+
+function gdriveDisconnect() {
+  google.accounts.oauth2.revoke(gdToken, () => {});
+  gdToken = null; gdFileId = null;
+  localStorage.removeItem('gdToken');
+  document.getElementById('gd-user').textContent = 'Not connected';
+  document.getElementById('gd-status').textContent = 'Connect to sync your history across devices';
+  const btn = document.getElementById('btn-gdrive');
+  btn.textContent = 'Connect Google Drive';
+  btn.classList.remove('connected');
+}
+
+async function gdriveLoadUser() {
+  try {
+    const r = await gdFetch('https://www.googleapis.com/oauth2/v3/userinfo');
+    const name = r.name || r.email || 'Google user';
+    document.getElementById('gd-user').textContent = name;
+    const btn = document.getElementById('btn-gdrive');
+    btn.textContent = 'Disconnect';
+    btn.classList.add('connected');
+  } catch(e) {}
+}
+
+async function gdrivePull() {
+  gdSetStatus('Syncing from Google Drive…');
+  try {
+    // find file in appDataFolder
+    const list = await gdFetch(
+      `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name='${GD_FILENAME}'&fields=files(id,name)`
+    );
+    if (list.files && list.files.length > 0) {
+      gdFileId = list.files[0].id;
+      const content = await gdFetch(
+        `https://www.googleapis.com/drive/v3/files/${gdFileId}?alt=media`
+      );
+      // merge: cloud wins for entries not in local
+      const local = getHistory();
+      const cloud = Array.isArray(content) ? content : [];
+      const localIds = new Set(local.map(h => h.id));
+      const merged = [...local];
+      cloud.forEach(c => { if (!localIds.has(c.id)) merged.push(c); });
+      merged.sort((a, b) => b.id - a.id);
+      saveHistory(merged.slice(0, 50));
+      renderHistory();
+      gdSetStatus(`Synced · ${merged.length} tests · Last sync: ${new Date().toLocaleTimeString()}`);
+    } else {
+      gdSetStatus('Connected · No cloud backup yet — will upload on next test');
+    }
+  } catch(e) { gdSetStatus('Sync error: ' + e.message); }
+}
+
+async function gdrivePush() {
+  if (!gdToken) return;
+  const data = JSON.stringify(getHistory());
+  try {
+    if (gdFileId) {
+      // update existing
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gdFileId}?uploadType=media`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${gdToken}`, 'Content-Type': 'application/json' },
+        body: data
+      });
+    } else {
+      // create new in appDataFolder
+      const meta = await gdFetch('https://www.googleapis.com/drive/v3/files', {
+        method: 'POST',
+        body: JSON.stringify({ name: GD_FILENAME, parents: ['appDataFolder'] })
+      });
+      gdFileId = meta.id;
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gdFileId}?uploadType=media`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${gdToken}`, 'Content-Type': 'application/json' },
+        body: data
+      });
+    }
+    gdSetStatus(`Saved to Google Drive · ${new Date().toLocaleTimeString()}`);
+  } catch(e) { gdSetStatus('Upload error: ' + e.message); }
+}
+
+async function gdFetch(url, opts = {}) {
+  const res = await fetch(url, {
+    ...opts,
+    headers: {
+      'Authorization': `Bearer ${gdToken}`,
+      'Content-Type': 'application/json',
+      ...(opts.headers || {})
+    }
+  });
+  return res.json();
+}
+
+function gdSetStatus(msg) {
+  document.getElementById('gd-status').textContent = msg;
+}
+
+// ---- skill chips ----
+document.querySelectorAll('.skill-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('active'));
+});
+
+async function testKey() {
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) { showError('Paste your key first.'); return; }
+  showError('Testing key…');
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/auth/key', {
+      headers: { 'Authorization': `Bearer ${key}` }
+    });
+    const json = await res.json();
+    if (!res.ok) { showError(json?.error?.message || `Error ${res.status}`); return; }
+    const credits = json.data?.limit_remaining ?? json.data?.usage ?? '?';
+    showError(`✓ Key valid! Credits remaining: ${credits}`);
+  } catch(e) { showError(e.message); }
+}
+
+function toggleKey() {
+  const inp = document.getElementById('api-key');
+  const btn = inp.nextElementSibling;
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = 'Hide'; }
+  else { inp.type = 'password'; btn.textContent = 'Show'; }
+}
+
+// ---- generate ----
+async function generateTest() {
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) { showError('Please enter your Gemini API key.'); return; }
+
+  const topic = document.getElementById('topic').value.trim() || 'General English';
+  const level = document.getElementById('level').value;
+  const numQ = parseInt(document.getElementById('num-q').value);
+  const numOpts = parseInt(document.getElementById('num-opts').value);
+  const extra = document.getElementById('extra').value.trim();
+  const skills = [...document.querySelectorAll('.skill-chip.active')].map(c => c.dataset.skill);
+
+  if (skills.length === 0) { showError('Select at least one skill.'); return; }
+
+  setLoading(true);
+  fakeProgress();
+
+  const prompt = buildPrompt(topic, level, numQ, numOpts, skills, extra);
+
+  try {
+    const raw = await callGemini(key, prompt);
+    const data = parseResponse(raw);
+    TEST = { title: `${topic} — ${level}`, subtitle: `${numQ} questions · ${skills.join(', ')}`, questions: data };
+    setLoading(false);
+    renderTest();
+    showTest();
+  } catch (e) {
+    setLoading(false);
+    showError(e.message);
+  }
+}
+
+function buildPrompt(topic, level, numQ, numOpts, skills, extra) {
+  return `You are an expert English language test designer.
+Generate exactly ${numQ} multiple-choice questions for an English certification test.
+
+Topic/Exam style: ${topic}
+CEFR Target Level: ${level}
+Skills to cover: ${skills.join(', ')}
+Options per question: ${numOpts}
+${extra ? `Extra instructions: ${extra}` : ''}
+
+Rules:
+- Spread questions across the listed skills as evenly as possible.
+- Each question has exactly ${numOpts} options (A, B${numOpts >= 3 ? ', C' : ''}${numOpts === 4 ? ', D' : ''}).
+- Only ONE option is correct.
+- "correct" field is the 0-based index of the correct option.
+- "explanation" must explain WHY the correct answer is right AND briefly why others are wrong. Write in English, 2-3 sentences.
+- "context" is a sentence/phrase for the student to analyze. Leave as empty string "" if the question doesn't need one.
+- "skill" must be exactly one of: ${skills.join(' | ')}
+
+Respond with ONLY a valid JSON array. No markdown, no code fences, no extra text. Example structure:
+[
+  {
+    "skill": "Grammar",
+    "text": "Choose the correct form:",
+    "context": "She ______ there when the call came in.",
+    "options": ["was sitting", "is sitting", "sat down", "has sat"],
+    "correct": 0,
+    "explanation": "'Was sitting' is the Past Continuous, used for an action in progress at a specific past moment. 'Is sitting' is present tense. 'Has sat' is Present Perfect, which doesn't fit here."
+  }
+]
+
+Generate the array now:`;
+}
+
+async function callGemini(key, prompt) {
+  const models = [
+    'qwen/qwen3-next-80b-a3b-instruct:free',
+    'meta-llama/llama-3.3-70b-instruct:free',
+    'google/gemma-4-26b-a4b-it:free',
+    'nousresearch/hermes-3-llama-3.1-405b:free',
+    'openai/gpt-oss-120b:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
+  ];
+  let lastError = '';
+  for (const model of models) {
+    document.getElementById('status-text').textContent = `Trying model: ${model.split('/')[1]}…`;
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${key}`,
+          'HTTP-Referer': 'https://english-test-generator.local',
+          'X-Title': 'English Test Generator'
+        },
+        body: JSON.stringify({
+          model,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 4096
+        })
+      });
+      const json = await res.json();
+      if (!res.ok) { lastError = json?.error?.message || `Error ${res.status}`; continue; }
+      const text = json.choices?.[0]?.message?.content || '';
+      if (!text) { lastError = 'Empty response'; continue; }
+      return text;
+    } catch(e) { lastError = e.message; continue; }
+  }
+  throw new Error(`All models failed. Last error: ${lastError}`);
+}
+
+function parseResponse(raw) {
+  // Strip markdown fences if present
+  let text = raw.trim();
+  text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+  // Find JSON array
+  const start = text.indexOf('[');
+  const end = text.lastIndexOf(']');
+  if (start === -1 || end === -1) throw new Error('Gemini did not return a valid JSON array. Try again.');
+  const arr = JSON.parse(text.slice(start, end + 1));
+  if (!Array.isArray(arr) || arr.length === 0) throw new Error('Empty question list returned. Try again.');
+  return arr.map((q, i) => ({ id: i + 1, ...q }));
+}
+
+// ---- render test ----
+function renderTest() {
+  currentQ = 0;
+  answers = {};
+  answered = {};
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  const total = TEST.questions.length;
+
+  TEST.questions.forEach((q, qi) => {
+    const opts = q.options.map((opt, oi) => `
+      <div class="option" id="opt-${qi}-${oi}" onclick="selectOpt(${qi},${oi})">
+        <span class="opt-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </div>`).join('');
+
+    const ctx = q.context ? `<div class="q-context">"${q.context}"</div>` : '';
+    const isLast = qi === total - 1;
+
+    container.innerHTML += `
+      <div class="question-card" id="qcard-${qi}">
+        <div class="q-number">Q${qi + 1} of ${total} &nbsp;·&nbsp; ${q.skill}</div>
+        <div class="q-text">${q.text}</div>
+        ${ctx}
+        <div class="options">${opts}</div>
+        <div class="feedback" id="fb-${qi}"></div>
+        <div class="q-nav">
+          <button class="btn-nav btn-back" onclick="navQ(-1)" ${qi === 0 ? 'disabled' : ''}>← Back</button>
+          ${isLast
+            ? `<button class="btn-nav btn-next" id="btn-next-${qi}" disabled style="display:none">Next →</button>
+               <button class="btn-nav btn-finish-q" onclick="showResults()" id="btn-finish-${qi}" style="display:none">See Results</button>`
+            : `<button class="btn-nav btn-next" id="btn-next-${qi}" onclick="navQ(1)" disabled>Next →</button>`}
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('test-heading').textContent = TEST.title;
+  showQCard(0);
+}
+
+function showQCard(idx) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  document.getElementById(`qcard-${idx}`).classList.add('active');
+  currentQ = idx;
+  // restore nav state if already answered
+  if (answered[idx] !== undefined) restoreNavState(idx);
+}
+
+function restoreNavState(qi) {
+  const isLast = qi === TEST.questions.length - 1;
+  const nextBtn = document.getElementById(`btn-next-${qi}`);
+  const finishBtn = document.getElementById(`btn-finish-${qi}`);
+  if (isLast) {
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (finishBtn) finishBtn.style.display = 'inline-block';
+  } else {
+    if (nextBtn) nextBtn.disabled = false;
+  }
+}
+
+function selectOpt(qi, oi) {
+  if (answered[qi] !== undefined) return;
+  answers[qi] = oi;
+  answered[qi] = true;
+
+  const q = TEST.questions[qi];
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    el.classList.add('disabled');
+    if (i === oi && oi === q.correct) el.classList.add('correct');
+    else if (i === oi) el.classList.add('wrong');
+    else if (i === q.correct) el.classList.add('reveal');
+  });
+
+  const fb = document.getElementById(`fb-${qi}`);
+  const ok = oi === q.correct;
+  fb.className = `feedback show ${ok ? 'fb-correct' : 'fb-wrong'}`;
+  fb.innerHTML = `<strong>${ok ? '✓ Correct!' : `✗ Incorrect — Answer: ${letters[q.correct]}`}</strong><br>${q.explanation}`;
+
+  restoreNavState(qi);
+}
+
+function navQ(dir) {
+  const next = currentQ + dir;
+  if (next < 0 || next >= TEST.questions.length) return;
+  showQCard(next);
+}
+
+// ---- skip unanswered ----
+function skipToResults() {
+  TEST.questions.forEach((q, qi) => {
+    if (answered[qi] === undefined) { answers[qi] = -1; answered[qi] = true; }
+  });
+  showResults();
+}
+
+// ---- results ----
+function showResults() {
+  document.getElementById('test-section').classList.remove('show');
+  document.getElementById('results-section').classList.add('show');
+
+  const total = TEST.questions.length;
+  let correct = 0;
+  const skillMap = {};
+
+  TEST.questions.forEach((q, qi) => {
+    const ok = answers[qi] === q.correct;
+    if (ok) correct++;
+    if (!skillMap[q.skill]) skillMap[q.skill] = { c: 0, t: 0 };
+    skillMap[q.skill].t++;
+    if (ok) skillMap[q.skill].c++;
+  });
+
+  const pct = Math.round((correct / total) * 100);
+  const lvl = calcLevel(pct);
+
+  // save to history
+  saveToHistory(correct, total, pct, lvl.label);
+
+  document.getElementById('r-score').textContent = correct;
+  document.getElementById('r-total').textContent = `/ ${total}`;
+  document.getElementById('r-title').textContent = `Level: ${lvl.label} (${pct}%)`;
+  const badge = document.getElementById('r-badge');
+  badge.textContent = lvl.label;
+  badge.className = `level-badge l${lvl.label.toLowerCase()}`;
+  document.getElementById('r-desc').textContent = lvl.desc;
+
+  // skills
+  document.getElementById('r-skills').innerHTML = Object.entries(skillMap).map(([sk, d]) => `
+    <div class="skill-block"><div class="sk-label">${sk}</div><div class="sk-val">${d.c}/${d.t}</div></div>`).join('');
+
+  // analysis
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('r-analysis').innerHTML = TEST.questions.map((q, qi) => {
+    const userA = answers[qi];
+    const ok = userA === q.correct;
+    const chosen = (userA !== undefined && userA >= 0) ? letters[userA] : '—';
+    return `
+      <div class="ai-item ${ok ? 'ai-ok' : 'ai-fail'}">
+        <div class="ai-head">
+          <span class="ai-q">Q${qi + 1}: ${q.context || q.text}</span>
+          <span class="ai-badge">${ok ? '✓' : '✗'}</span>
+        </div>
+        ${!ok ? `<div class="ai-detail">Your answer: <strong>${chosen}</strong> · Correct: <strong>${letters[q.correct]}</strong></div>` : ''}
+        <div class="ai-detail">${q.explanation}</div>
+        <div class="ai-skill-tag">${q.skill}</div>
+      </div>`;
+  }).join('');
+}
+
+function calcLevel(pct) {
+  if (pct < 40) return { label: 'A1', desc: 'Beginner. Focus on building basic grammar and vocabulary.' };
+  if (pct < 55) return { label: 'A2', desc: 'Elementary. You handle simple sentences but need more practice.' };
+  if (pct < 68) return { label: 'B1', desc: 'Intermediate. Good base, but complex structures need work.' };
+  if (pct < 80) return { label: 'B2', desc: 'Upper-Intermediate. Solid command with minor gaps.' };
+  if (pct < 92) return { label: 'C1', desc: 'Advanced. Fluent and flexible across most contexts.' };
+  return { label: 'C2', desc: 'Proficient. Near-native command of the language.' };
+}
+
+// ---- ui helpers ----
+function showTest() {
+  document.getElementById('config-panel').style.display = 'none';
+  document.getElementById('options-panel').style.display = 'none';
+  document.getElementById('btn-gen').style.display = 'none';
+  document.getElementById('test-section').classList.add('show');
+  document.getElementById('results-section').classList.remove('show');
+}
+
+function regenerate() {
+  document.getElementById('config-panel').style.display = '';
+  document.getElementById('options-panel').style.display = '';
+  document.getElementById('btn-gen').style.display = '';
+  document.getElementById('test-section').classList.remove('show');
+  document.getElementById('results-section').classList.remove('show');
+  clearStatus();
+}
+
+function retryTest() {
+  document.getElementById('results-section').classList.remove('show');
+  renderTest();
+  document.getElementById('test-section').classList.add('show');
+}
+
+function setLoading(on) {
+  document.getElementById('btn-gen').disabled = on;
+  const st = document.getElementById('status');
+  const pw = document.getElementById('pbar-wrap');
+  if (on) {
+    st.className = 'status loading show';
+    document.getElementById('status-text').textContent = 'Generating questions with Gemini…';
+    pw.classList.add('show');
+  } else {
+    st.className = 'status';
+    pw.classList.remove('show');
+    document.getElementById('pbar').style.width = '0%';
+  }
+}
+
+function showError(msg) {
+  const st = document.getElementById('status');
+  st.className = 'status error show';
+  document.getElementById('status-text').textContent = `Error: ${msg}`;
+}
+
+function clearStatus() {
+  document.getElementById('status').className = 'status';
+}
+
+function downloadTest() {
+  const L = ['a', 'b', 'c', 'd'];
+  const qArray = JSON.stringify(TEST.questions, null, 2);
+  const slug = TEST.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 40);
+  const filename = `test_${slug}.html`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${TEST.title}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh}header{background:#1a365d;color:white;padding:20px 32px}header h1{font-size:1.3rem;font-weight:700}header p{opacity:.75;font-size:.85rem;margin-top:3px}.pw{background:#bee3f8;height:5px}.pb{background:#4299e1;height:5px;transition:width .3s}main{max-width:740px;margin:0 auto;padding:28px 16px}.qc{background:white;border-radius:12px;padding:26px 30px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:20px;display:none}.qc.active{display:block}.qm{font-size:.74rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}.qt{font-size:1.02rem;line-height:1.65;margin-bottom:18px;font-weight:500}.qctx{background:#ebf8ff;border-left:3px solid #4299e1;padding:9px 13px;border-radius:4px;font-style:italic;font-size:.92rem;margin-bottom:12px;color:#2c5282}.opts{display:flex;flex-direction:column;gap:9px}.opt{padding:11px 15px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .13s;font-size:.95rem;display:flex;align-items:center;gap:10px}.opt:hover:not(.dis){border-color:#4299e1;background:#ebf8ff}.opt.cor{border-color:#38a169;background:#f0fff4;color:#276749;font-weight:600}.opt.wrn{border-color:#e53e3e;background:#fff5f5;color:#c53030}.opt.rev{border-color:#38a169;background:#f0fff4;color:#276749;font-weight:600}.opt.dis{cursor:default}.ol{width:25px;height:25px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0}.fb{margin-top:14px;padding:11px 14px;border-radius:8px;font-size:.88rem;line-height:1.55;display:none}.fb.show{display:block}.fbok{background:#f0fff4;border:1px solid #9ae6b4;color:#276749}.fbfl{background:#fff5f5;border:1px solid #feb2b2;color:#c53030}.qnav{display:flex;justify-content:space-between;margin-top:18px}.btn{padding:9px 20px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer}.btn:disabled{opacity:.35;cursor:default}.bbk{background:#e2e8f0;color:#4a5568}.bnx{background:#2b6cb0;color:white}.bfn{background:#38a169;color:white}#results{display:none;background:white;border-radius:12px;padding:32px;box-shadow:0 2px 10px rgba(0,0,0,.08)}.sc{width:118px;height:118px;border-radius:50%;border:8px solid #2b6cb0;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px}.sn{font-size:2rem;font-weight:800;color:#2b6cb0;line-height:1}.sd{font-size:.82rem;color:#718096}.lb{display:inline-block;padding:5px 16px;border-radius:20px;font-weight:700;font-size:.95rem}.la1{background:#fed7d7;color:#c53030}.la2{background:#feebc8;color:#c05621}.lb1{background:#fefcbf;color:#744210}.lb2{background:#c6f6d5;color:#276749}.lc1{background:#bee3f8;color:#2c5282}.lc2{background:#e9d8fd;color:#553c9a}.rs{text-align:center;margin-bottom:28px}.rs h2{font-size:1.2rem;margin-bottom:6px}.rs p{color:#718096;font-size:.92rem;line-height:1.6}.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 24px}.sb{background:#f7fafc;border-radius:8px;padding:12px;text-align:center}.sl{font-size:.76rem;color:#718096}.sv{font-size:1.15rem;font-weight:700;color:#2b6cb0}.ah{font-size:.83rem;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #e2e8f0;padding-bottom:6px;margin-bottom:12px}.ai{padding:12px 14px;border-radius:8px;margin-bottom:8px;border-left:4px solid}.aok{border-color:#38a169;background:#f0fff4}.afl{border-color:#e53e3e;background:#fff5f5}.aih{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px}.aiq{font-size:.85rem;color:#4a5568;flex:1}.aib{font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}.aok .aib{background:#9ae6b4;color:#276749}.afl .aib{background:#feb2b2;color:#c53030}.aid{font-size:.8rem;color:#718096;margin-top:3px}.ais{font-size:.73rem;color:#a0aec0;margin-top:2px}.br{width:100%;margin-top:20px;padding:12px;background:#2b6cb0;color:white;border:none;border-radius:8px;font-size:.97rem;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<header><h1>${TEST.title}</h1><p>${TEST.subtitle}</p></header>
+<div class="pw"><div class="pb" id="pb" style="width:0%"></div></div>
+<main><div id="qcon"></div>
+<div id="results"><div class="rs"><div class="sc"><span class="sn" id="rn">0</span><span class="sd" id="rd">/ ${TEST.questions.length}</span></div><span class="lb" id="rb">—</span><h2 id="rt" style="margin-top:10px"></h2><p id="rde"></p></div><div class="sg" id="rsk"></div><div class="ah">Question-by-question analysis</div><div id="ran"></div><button class="br" onclick="restart()">↺ Try Again</button></div>
+</main>
+<script>
+const Q=${qArray};
+let cq=0,ans={},ansd={};
+function init(){render();showC(0)}
+function render(){const con=document.getElementById('qcon');con.innerHTML='';const L=${JSON.stringify(L.slice(0, TEST.questions[0]?.options?.length || 4))};const tot=Q.length;Q.forEach((q,qi)=>{const ctx=q.context?'<div class="qctx">"'+q.context+'"</div>':'';const opts=q.options.map((o,oi)=>'<div class="opt" id="o'+qi+'-'+oi+'" onclick="pick('+qi+','+oi+')"><span class="ol">'+L[oi]+'</span><span>'+o+'</span></div>').join('');const isL=qi===tot-1;con.innerHTML+='<div class="qc" id="qc'+qi+'"><div class="qm">Question '+(qi+1)+' of '+tot+' &nbsp;·&nbsp; '+q.skill+'</div><div class="qt">'+q.text+'</div>'+ctx+'<div class="opts">'+opts+'</div><div class="fb" id="fb'+qi+'"></div><div class="qnav"><button class="btn bbk" onclick="nav(-1)" '+(qi===0?'disabled':'')+'>← Back</button>'+(isL?'<button class="btn bnx" id="nn'+qi+'" disabled style="display:none">Next →</button><button class="btn bfn" id="nf'+qi+'" onclick="showRes()" style="display:none">See Results</button>':'<button class="btn bnx" id="nn'+qi+'" onclick="nav(1)" disabled>Next →</button>')+'</div></div>';})}
+function showC(i){document.querySelectorAll('.qc').forEach(c=>c.classList.remove('active'));document.getElementById('qc'+i).classList.add('active');cq=i;document.getElementById('pb').style.width=((i+1)/Q.length*100)+'%';if(ansd[i]!==undefined)rNav(i)}
+function rNav(qi){const isL=qi===Q.length-1;const nn=document.getElementById('nn'+qi);const nf=document.getElementById('nf'+qi);if(isL){nn.style.display='none';nf.style.display='inline-block'}else nn.disabled=false}
+function pick(qi,oi){if(ansd[qi]!==undefined)return;ans[qi]=oi;ansd[qi]=true;const q=Q[qi];const L=${JSON.stringify(L.slice(0, TEST.questions[0]?.options?.length || 4))};q.options.forEach((_,i)=>{const el=document.getElementById('o'+qi+'-'+i);el.classList.add('dis');if(i===oi&&oi===q.correct)el.classList.add('cor');else if(i===oi)el.classList.add('wrn');else if(i===q.correct)el.classList.add('rev')});const fb=document.getElementById('fb'+qi);const ok=oi===q.correct;fb.className='fb show '+(ok?'fbok':'fbfl');fb.innerHTML='<strong>'+(ok?'✓ Correct!':'✗ Wrong — Correct: '+L[q.correct]+') '+q.options[q.correct])+'</strong><br>'+q.explanation;rNav(qi)}
+function nav(d){const n=cq+d;if(n<0||n>=Q.length)return;showC(n)}
+function showRes(){document.querySelectorAll('.qc').forEach(c=>c.style.display='none');document.getElementById('results').style.display='block';document.getElementById('pb').style.width='100%';let cor=0;const sm={};Q.forEach((q,qi)=>{const ok=ans[qi]===q.correct;if(ok)cor++;if(!sm[q.skill])sm[q.skill]={c:0,t:0};sm[q.skill].t++;if(ok)sm[q.skill].c++});const pct=Math.round(cor/Q.length*100);const lv=lvl(pct);document.getElementById('rn').textContent=cor;const rb=document.getElementById('rb');rb.textContent=lv.l;rb.className='lb l'+lv.l.toLowerCase();document.getElementById('rt').textContent='Estimated level: '+lv.l+' ('+pct+'%)';document.getElementById('rde').textContent=lv.d;document.getElementById('rsk').innerHTML=Object.entries(sm).map(([k,v])=>'<div class="sb"><div class="sl">'+k+'</div><div class="sv">'+v.c+'/'+v.t+'</div></div>').join('');const L2=${JSON.stringify(L.slice(0, TEST.questions[0]?.options?.length || 4))};document.getElementById('ran').innerHTML=Q.map((q,qi)=>{const ua=ans[qi];const ok=ua===q.correct;const ch=(ua!==undefined&&ua>=0)?L2[ua]+') '+q.options[ua]:'—';return'<div class="ai '+(ok?'aok':'afl')+'"><div class="aih"><span class="aiq">Q'+(qi+1)+': '+(q.context||q.text)+'</span><span class="aib">'+(ok?'✓':'✗')+'</span></div>'+(ok?'':'<div class="aid">Your answer: <strong>'+ch+'</strong> · Correct: <strong>'+L2[q.correct]+') '+q.options[q.correct]+'</strong></div>')+'<div class="aid">'+q.explanation+'</div><div class="ais">'+q.skill+'</div></div>'}).join('')}
+function lvl(p){if(p<40)return{l:'A1',d:'Beginner. Build basic grammar and vocabulary foundations.'};if(p<55)return{l:'A2',d:'Elementary. Simple sentences ok — need more practice.'};if(p<68)return{l:'B1',d:'Intermediate. Good base — complex structures need work.'};if(p<80)return{l:'B2',d:'Upper-Intermediate. Solid command with minor gaps.'};if(p<92)return{l:'C1',d:'Advanced. Fluent across most contexts.'};return{l:'C2',d:'Proficient. Near-native command.'}}
+function restart(){ans={};ansd={};document.getElementById('results').style.display='none';document.querySelectorAll('.qc').forEach(c=>c.style.display='');render();showC(0)}
+window.onload=init;
+<\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+let _progInterval = null;
+function fakeProgress() {
+  let p = 0;
+  clearInterval(_progInterval);
+  _progInterval = setInterval(() => {
+    p = Math.min(p + Math.random() * 8, 88);
+    document.getElementById('pbar').style.width = p + '%';
+    if (p >= 88) clearInterval(_progInterval);
+  }, 200);
+}
+</script>
+</body>
+</html>

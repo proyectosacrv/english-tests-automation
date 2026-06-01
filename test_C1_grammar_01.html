@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C1 Advanced English Grammar Test 01</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #2d3748; min-height: 100vh; }
+
+header { background: #1a365d; color: white; padding: 20px 32px; }
+header h1 { font-size: 1.3rem; font-weight: 700; }
+header p { opacity: 0.75; font-size: 0.85rem; margin-top: 3px; }
+
+.progress-wrap { background: #bee3f8; height: 5px; }
+.progress-bar { background: #4299e1; height: 5px; transition: width 0.3s; }
+
+main { max-width: 740px; margin: 0 auto; padding: 28px 16px; }
+
+.question-card {
+  background: white; border-radius: 12px; padding: 26px 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; display: none;
+}
+.question-card.active { display: block; }
+
+.q-meta { font-size: 0.74rem; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.q-text { font-size: 1.02rem; line-height: 1.65; margin-bottom: 18px; font-weight: 500; }
+.q-text em { font-style: normal; color: #2b6cb0; font-weight: 700; }
+
+.options { display: flex; flex-direction: column; gap: 9px; }
+.option {
+  padding: 11px 15px; border: 2px solid #e2e8f0; border-radius: 8px;
+  cursor: pointer; transition: all 0.13s; font-size: 0.95rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.option:hover:not(.disabled) { border-color: #4299e1; background: #ebf8ff; }
+.option.correct  { border-color: #38a169; background: #f0fff4; color: #276749; font-weight: 600; }
+.option.wrong    { border-color: #e53e3e; background: #fff5f5; color: #c53030; }
+.option.reveal   { border-color: #38a169; background: #f0fff4; color: #276749; font-weight: 600; }
+.option.disabled { cursor: default; }
+.opt-letter {
+  width: 25px; height: 25px; border-radius: 50%; border: 2px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.74rem; font-weight: 700; flex-shrink: 0;
+}
+
+.feedback { margin-top: 14px; padding: 11px 14px; border-radius: 8px; font-size: 0.88rem; line-height: 1.55; display: none; }
+.feedback.show { display: block; }
+.fb-ok   { background: #f0fff4; border: 1px solid #9ae6b4; color: #276749; }
+.fb-fail { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; }
+
+.q-nav { display: flex; justify-content: space-between; margin-top: 18px; }
+.btn { padding: 9px 20px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity 0.13s; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+.btn-back   { background: #e2e8f0; color: #4a5568; }
+.btn-next   { background: #2b6cb0; color: white; }
+.btn-finish { background: #38a169; color: white; }
+
+/* ---- RESULTS ---- */
+#results { display: none; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+
+.score-circle {
+  width: 118px; height: 118px; border-radius: 50%; border: 8px solid #2b6cb0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.score-num  { font-size: 2rem; font-weight: 800; color: #2b6cb0; line-height: 1; }
+.score-denom { font-size: 0.82rem; color: #718096; }
+
+.level-badge {
+  display: inline-block; padding: 5px 16px; border-radius: 20px;
+  font-weight: 700; font-size: 0.95rem;
+}
+.la1 { background: #fed7d7; color: #c53030; }
+.la2 { background: #feebc8; color: #c05621; }
+.lb1 { background: #fefcbf; color: #744210; }
+.lb2 { background: #c6f6d5; color: #276749; }
+.lc1 { background: #bee3f8; color: #2c5282; }
+.lc2 { background: #e9d8fd; color: #553c9a; }
+
+.results-summary { text-align: center; margin-bottom: 28px; }
+.results-summary h2 { font-size: 1.2rem; margin-bottom: 6px; }
+.results-summary p { color: #718096; font-size: 0.92rem; line-height: 1.6; }
+
+.skills-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0 24px; }
+.skill-block { background: #f7fafc; border-radius: 8px; padding: 12px; text-align: center; }
+.sk-label { font-size: 0.76rem; color: #718096; }
+.sk-val { font-size: 1.15rem; font-weight: 700; color: #2b6cb0; }
+
+.analysis-head { font-size: 0.83rem; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; }
+.ai-item { padding: 12px 14px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid; }
+.ai-ok   { border-color: #38a169; background: #f0fff4; }
+.ai-fail { border-color: #e53e3e; background: #fff5f5; }
+.ai-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
+.ai-q    { font-size: 0.85rem; color: #4a5568; flex: 1; }
+.ai-badge { font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; flex-shrink: 0; }
+.ai-ok .ai-badge   { background: #9ae6b4; color: #276749; }
+.ai-fail .ai-badge { background: #feb2b2; color: #c53030; }
+.ai-detail { font-size: 0.8rem; color: #718096; margin-top: 3px; }
+.ai-skill  { font-size: 0.73rem; color: #a0aec0; margin-top: 2px; }
+
+.btn-retry { width: 100%; margin-top: 20px; padding: 12px; background: #2b6cb0; color: white; border: none; border-radius: 8px; font-size: 0.97rem; font-weight: 600; cursor: pointer; }
+.btn-retry:hover { background: #2c5282; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>01. Advanced English Grammar Test — C1</h1>
+  <p>Choose the correct option · 20 questions · Phrasal verbs &amp; Vocabulary</p>
+</header>
+<div class="progress-wrap"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+
+<main>
+  <div id="qcontainer"></div>
+  <div id="results">
+    <div class="results-summary">
+      <div class="score-circle">
+        <span class="score-num" id="r-num">0</span>
+        <span class="score-denom" id="r-den">/ 20</span>
+      </div>
+      <span class="level-badge" id="r-badge">—</span>
+      <h2 id="r-title" style="margin-top:10px"></h2>
+      <p id="r-desc"></p>
+    </div>
+    <div class="skills-row" id="r-skills"></div>
+    <div class="analysis-head">Question-by-question analysis</div>
+    <div id="r-analysis"></div>
+    <button class="btn-retry" onclick="restart()">↺ Try Again</button>
+  </div>
+</main>
+
+<script>
+const QUESTIONS = [
+  {
+    skill: "Phrasal Verbs",
+    text: 'An eagle, if pressed for food, might … a small baby that had been left in the open.',
+    options: ["carry off", "carry out", "carry on with"],
+    correct: 0,
+    explanation: "'Carry off' means to take something away, often forcibly — fitting for an eagle snatching prey. 'Carry out' means to execute a task. 'Carry on with' means to continue doing something."
+  },
+  {
+    skill: "Phrasal Verbs",
+    text: 'Their education system is a good example of the fact that it is possible to … very extensive readjustments.',
+    options: ["carry off", "carry away", "carry through"],
+    correct: 2,
+    explanation: "'Carry through' means to complete something difficult successfully. 'Carry off' implies taking away. 'Carry away' means to remove or to become over-excited — neither fits the context of completing readjustments."
+  },
+  {
+    skill: "Phrasal Verbs",
+    text: 'Russia and Iran will continue to deepen ties and … bilateral projects.',
+    options: ["carry away", "carry off", "carry on with"],
+    correct: 2,
+    explanation: "'Carry on with' means to continue doing something, which is correct here — they will continue with bilateral projects. 'Carry away' and 'carry off' imply removing or stealing, which don't fit."
+  },
+  {
+    skill: "Phrasal Verbs",
+    text: 'This chemical compound helps … waste products from the liver.',
+    options: ["carry away", "carry over", "carry on with"],
+    correct: 0,
+    explanation: "'Carry away' means to transport or remove something from a place — here, removing waste from the liver. 'Carry over' means to transfer something to a later time or context. 'Carry on with' means to continue."
+  },
+  {
+    skill: "Phrasal Verbs",
+    text: 'The government announced its plan to … cultural reform.',
+    options: ["carry off", "carry out", "carry away"],
+    correct: 1,
+    explanation: "'Carry out' means to implement or execute a plan. 'Carry off' implies taking away or pulling something off with success in a surprising way. 'Carry away' means to remove — none of these fit 'implementing reform' as well as 'carry out'."
+  },
+  {
+    skill: "Vocabulary",
+    text: 'These restaurants remind me of belly dancers, exotic spices and … drink.',
+    options: ["instigating", "intoxicating", "incriminating"],
+    correct: 1,
+    explanation: "'Intoxicating' means powerfully stimulating or exciting — used metaphorically here to describe drink in an exotic, sensory context. 'Instigating' means provoking/starting trouble. 'Incriminating' means making someone appear guilty of a crime."
+  },
+  {
+    skill: "Vocabulary",
+    text: 'Thai cuisine still … an element of mystery and exoticism.',
+    options: ["refrains", "retains", "regains"],
+    correct: 1,
+    explanation: "'Retains' means to keep or continue to have something — Thai cuisine still keeps that element of mystery. 'Refrains' means to stop yourself from doing something. 'Regains' means to recover something previously lost."
+  },
+  {
+    skill: "Vocabulary",
+    text: 'International restaurants are … adept at perfecting both eastern and western dishes.',
+    options: ["partly", "particularity", "particularly"],
+    correct: 2,
+    explanation: "'Particularly' is an adverb meaning especially or to a notable degree. 'Partly' means to some extent but not completely. 'Particularity' is a noun, so it cannot modify the adjective 'adept'."
+  },
+  {
+    skill: "Vocabulary",
+    text: 'Hong Kong is a place where you can enjoy … cuisine and service at reasonable prices.',
+    options: ["expletive", "exquisite", "explosive"],
+    correct: 1,
+    explanation: "'Exquisite' means extremely beautiful, delicate, or of exceptional quality — perfect for describing fine cuisine. 'Expletive' refers to a swear word. 'Explosive' describes something that bursts or is forceful."
+  },
+  {
+    skill: "Vocabulary",
+    text: 'European cuisine always … a sense of nostalgia and romance.',
+    options: ["evokes", "evicts", "evolves"],
+    correct: 0,
+    explanation: "'Evokes' means to bring a feeling, memory or image to mind — cuisine evoking nostalgia is a classic colocation. 'Evicts' means to legally remove someone from a property. 'Evolves' means to develop gradually over time."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'Her job has gone because her manager … her.',
+    options: ["flamed", "fired", "burned"],
+    correct: 1,
+    explanation: "'Fired' is the standard informal verb meaning to dismiss someone from their job. 'Flamed' has no such meaning in standard English. 'Burned' does not collocate with 'her' to mean dismissal."
+  },
+  {
+    skill: "Work & Employment",
+    text: "I won't be working tomorrow because I've just been given the … .",
+    options: ["sack", "bag", "case"],
+    correct: 0,
+    explanation: "'Given the sack' is a fixed British idiom meaning to be dismissed from a job. 'Given the bag' and 'given the case' are not standard expressions for dismissal."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'I was … this morning and had to empty my desk.',
+    options: ["departed", "deterred", "dismissed"],
+    correct: 2,
+    explanation: "'Dismissed' means formally told to leave your job. 'Departed' means left (intransitive — you depart, you are not 'departed'). 'Deterred' means discouraged from doing something."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'I was handed my … yesterday.',
+    options: ["books", "papers", "cards"],
+    correct: 2,
+    explanation: "'Handed one's cards' (or 'P45' in UK English) is an idiomatic expression for being dismissed. 'Handed one's books' or 'papers' are not standard idioms for dismissal in this context."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'The company decided to get … of me last week.',
+    options: ["rod", "ride", "rid"],
+    correct: 2,
+    explanation: "'Get rid of' is the correct fixed phrase meaning to remove or dismiss someone. 'Get rod of' and 'get ride of' are not valid expressions."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'She has been made … because her work is no longer needed.',
+    options: ["redundant", "repellent", "reduced"],
+    correct: 0,
+    explanation: "'Made redundant' is the formal UK English term for being let go because the job role no longer exists. 'Repellent' means disgusting or repelling. 'Reduced' means made smaller, not dismissed."
+  },
+  {
+    skill: "Work & Employment",
+    text: "The firm decided to … which means they don't want us.",
+    options: ["resize", "downsize", "upsize"],
+    correct: 1,
+    explanation: "'Downsize' means to reduce the size of a company, typically by cutting staff. 'Upsize' means to make larger. 'Resize' is used in computing or design contexts, not typically for corporate workforce reduction."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'They told Mark to go because he was said to be … to requirements.',
+    options: ["recess", "surplus", "excess"],
+    correct: 1,
+    explanation: "'Surplus to requirements' is a fixed formal expression meaning no longer needed — equivalent to redundant. 'Recess' refers to a break or cavity. 'Excess' means too much, but doesn't collocate with 'to requirements' in this idiom."
+  },
+  {
+    skill: "Work & Employment",
+    text: 'I was told not to … to come back to work tomorrow.',
+    options: ["worry", "care", "bother"],
+    correct: 2,
+    explanation: "'Don't bother to do something' means it is not worth doing — implying you are fired and there is no point returning. 'Don't worry' or 'don't care' don't carry the same idiomatic dismissal meaning here."
+  },
+  {
+    skill: "Work & Employment",
+    text: "I didn't ask for more money because he gave me one month's … .",
+    options: ["notice", "facts", "news"],
+    correct: 0,
+    explanation: "'One month's notice' is the standard employment term for a formal warning period before dismissal or resignation. 'One month's facts' and 'one month's news' are not collocations used in employment contexts."
+  }
+];
+
+let currentQ = 0;
+let answers  = {};
+let answered = {};
+
+function init() {
+  render();
+  showCard(0);
+}
+
+function render() {
+  const c = document.getElementById('qcontainer');
+  c.innerHTML = '';
+  const letters = ['a', 'b', 'c'];
+  const total = QUESTIONS.length;
+
+  QUESTIONS.forEach((q, qi) => {
+    const opts = q.options.map((o, oi) => `
+      <div class="option" id="opt-${qi}-${oi}" onclick="pick(${qi},${oi})">
+        <span class="opt-letter">${letters[oi]}</span>
+        <span>${o}</span>
+      </div>`).join('');
+
+    const isLast = qi === total - 1;
+    c.innerHTML += `
+      <div class="question-card" id="qc-${qi}">
+        <div class="q-meta">Question ${qi+1} of ${total} &nbsp;·&nbsp; ${q.skill}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options">${opts}</div>
+        <div class="feedback" id="fb-${qi}"></div>
+        <div class="q-nav">
+          <button class="btn btn-back" onclick="nav(-1)" ${qi===0?'disabled':''}>← Back</button>
+          ${isLast
+            ? `<button class="btn btn-next" id="nn-${qi}" disabled style="display:none">Next →</button>
+               <button class="btn btn-finish" id="nf-${qi}" onclick="showResults()" style="display:none">See Results</button>`
+            : `<button class="btn btn-next" id="nn-${qi}" onclick="nav(1)" disabled>Next →</button>`}
+        </div>
+      </div>`;
+  });
+}
+
+function showCard(idx) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  document.getElementById(`qc-${idx}`).classList.add('active');
+  currentQ = idx;
+  updateProgress(idx);
+  if (answered[idx] !== undefined) restoreNav(idx);
+}
+
+function updateProgress(idx) {
+  document.getElementById('pbar').style.width = ((idx+1)/QUESTIONS.length*100)+'%';
+}
+
+function restoreNav(qi) {
+  const isLast = qi === QUESTIONS.length - 1;
+  const nn = document.getElementById(`nn-${qi}`);
+  const nf = document.getElementById(`nf-${qi}`);
+  if (isLast) { nn.style.display='none'; nf.style.display='inline-block'; }
+  else nn.disabled = false;
+}
+
+function pick(qi, oi) {
+  if (answered[qi] !== undefined) return;
+  answers[qi]  = oi;
+  answered[qi] = true;
+
+  const q = QUESTIONS[qi];
+  const letters = ['a', 'b', 'c'];
+  q.options.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    el.classList.add('disabled');
+    if (i === oi && oi === q.correct) el.classList.add('correct');
+    else if (i === oi)               el.classList.add('wrong');
+    else if (i === q.correct)        el.classList.add('reveal');
+  });
+
+  const fb = document.getElementById(`fb-${qi}`);
+  const ok = oi === q.correct;
+  fb.className = `feedback show ${ok ? 'fb-ok' : 'fb-fail'}`;
+  fb.innerHTML = `<strong>${ok ? '✓ Correct!' : `✗ Wrong — Correct: ${letters[q.correct]}) ${q.options[q.correct]}`}</strong><br>${q.explanation}`;
+
+  restoreNav(qi);
+}
+
+function nav(dir) {
+  const next = currentQ + dir;
+  if (next < 0 || next >= QUESTIONS.length) return;
+  showCard(next);
+}
+
+function showResults() {
+  document.querySelectorAll('.question-card').forEach(c => c.style.display='none');
+  document.getElementById('results').style.display='block';
+  document.getElementById('pbar').style.width='100%';
+
+  const total = QUESTIONS.length;
+  let correct = 0;
+  const skillMap = {};
+
+  QUESTIONS.forEach((q, qi) => {
+    const ok = answers[qi] === q.correct;
+    if (ok) correct++;
+    if (!skillMap[q.skill]) skillMap[q.skill] = {c:0, t:0};
+    skillMap[q.skill].t++;
+    if (ok) skillMap[q.skill].c++;
+  });
+
+  const pct = Math.round(correct/total*100);
+  const lvl = getLevel(pct);
+
+  document.getElementById('r-num').textContent = correct;
+  document.getElementById('r-den').textContent = `/ ${total}`;
+  const badge = document.getElementById('r-badge');
+  badge.textContent = lvl.label;
+  badge.className = `level-badge l${lvl.label.toLowerCase()}`;
+  document.getElementById('r-title').textContent = `Estimated level: ${lvl.label} (${pct}%)`;
+  document.getElementById('r-desc').textContent  = lvl.desc;
+
+  document.getElementById('r-skills').innerHTML = Object.entries(skillMap).map(([sk,d])=>`
+    <div class="skill-block"><div class="sk-label">${sk}</div><div class="sk-val">${d.c}/${d.t}</div></div>`).join('');
+
+  const letters = ['a','b','c'];
+  document.getElementById('r-analysis').innerHTML = QUESTIONS.map((q,qi)=>{
+    const ua = answers[qi];
+    const ok = ua === q.correct;
+    const chosen = (ua!==undefined && ua>=0) ? `${letters[ua]}) ${q.options[ua]}` : '—';
+    return `
+      <div class="ai-item ${ok?'ai-ok':'ai-fail'}">
+        <div class="ai-head">
+          <span class="ai-q">Q${qi+1}: ${q.text}</span>
+          <span class="ai-badge">${ok?'✓':'✗'}</span>
+        </div>
+        ${!ok?`<div class="ai-detail">Your answer: <strong>${chosen}</strong> · Correct: <strong>${letters[q.correct]}) ${q.options[q.correct]}</strong></div>`:''}
+        <div class="ai-detail">${q.explanation}</div>
+        <div class="ai-skill">${q.skill}</div>
+      </div>`;
+  }).join('');
+}
+
+function getLevel(pct) {
+  if (pct < 40) return {label:'A2', desc:'Elementary. The advanced vocabulary and phrasal verbs need more work.'};
+  if (pct < 55) return {label:'B1', desc:'Intermediate. Good base but C1 collocations and idioms need revision.'};
+  if (pct < 70) return {label:'B2', desc:'Upper-Intermediate. Solid command, but some C1 expressions still trip you up.'};
+  if (pct < 85) return {label:'C1', desc:'Advanced. Strong grasp of complex vocabulary and phrasal verbs.'};
+  return {label:'C2', desc:'Proficient. Excellent command of advanced vocabulary and fixed expressions.'};
+}
+
+function restart() {
+  answers = {}; answered = {};
+  document.getElementById('results').style.display='none';
+  document.querySelectorAll('.question-card').forEach(c=>c.style.display='');
+  render();
+  showCard(0);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>

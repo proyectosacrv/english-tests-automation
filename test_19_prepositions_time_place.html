@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>19. Prepositions of Time &amp; Place — C1</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh}header{background:#1a365d;color:white;padding:20px 32px}header h1{font-size:1.3rem;font-weight:700}header p{opacity:.75;font-size:.85rem;margin-top:3px}.pw{background:#bee3f8;height:5px}.pb{background:#4299e1;height:5px;transition:width .3s}main{max-width:740px;margin:0 auto;padding:28px 16px}.qc{background:white;border-radius:12px;padding:26px 30px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:20px;display:none}.qc.active{display:block}.qm{font-size:.74rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}.qt{font-size:1.02rem;line-height:1.65;margin-bottom:18px;font-weight:500}.opts{display:flex;flex-direction:column;gap:9px}.opt{padding:11px 15px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .13s;font-size:.95rem;display:flex;align-items:center;gap:10px}.opt:hover:not(.dis){border-color:#4299e1;background:#ebf8ff}.opt.cor{border-color:#38a169;background:#f0fff4;color:#276749;font-weight:600}.opt.wrn{border-color:#e53e3e;background:#fff5f5;color:#c53030}.opt.rev{border-color:#38a169;background:#f0fff4;color:#276749;font-weight:600}.opt.dis{cursor:default}.ol{width:25px;height:25px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0}.fb{margin-top:14px;padding:11px 14px;border-radius:8px;font-size:.88rem;line-height:1.55;display:none}.fb.show{display:block}.fbok{background:#f0fff4;border:1px solid #9ae6b4;color:#276749}.fbfl{background:#fff5f5;border:1px solid #feb2b2;color:#c53030}.qnav{display:flex;justify-content:space-between;margin-top:18px}.btn{padding:9px 20px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer}.btn:disabled{opacity:.35;cursor:default}.bbk{background:#e2e8f0;color:#4a5568}.bnx{background:#2b6cb0;color:white}.bfn{background:#38a169;color:white}#results{display:none;background:white;border-radius:12px;padding:32px;box-shadow:0 2px 10px rgba(0,0,0,.08)}.sc{width:118px;height:118px;border-radius:50%;border:8px solid #2b6cb0;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px}.sn{font-size:2rem;font-weight:800;color:#2b6cb0;line-height:1}.sd{font-size:.82rem;color:#718096}.lb{display:inline-block;padding:5px 16px;border-radius:20px;font-weight:700;font-size:.95rem}.la2{background:#feebc8;color:#c05621}.lb1{background:#fefcbf;color:#744210}.lb2{background:#c6f6d5;color:#276749}.lc1{background:#bee3f8;color:#2c5282}.lc2{background:#e9d8fd;color:#553c9a}.rs{text-align:center;margin-bottom:28px}.rs h2{font-size:1.2rem;margin-bottom:6px}.rs p{color:#718096;font-size:.92rem;line-height:1.6}.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 24px}.sb{background:#f7fafc;border-radius:8px;padding:12px;text-align:center}.sl{font-size:.76rem;color:#718096}.sv{font-size:1.15rem;font-weight:700;color:#2b6cb0}.ah{font-size:.83rem;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #e2e8f0;padding-bottom:6px;margin-bottom:12px}.ai{padding:12px 14px;border-radius:8px;margin-bottom:8px;border-left:4px solid}.aok{border-color:#38a169;background:#f0fff4}.afl{border-color:#e53e3e;background:#fff5f5}.aih{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px}.aiq{font-size:.85rem;color:#4a5568;flex:1}.aib{font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}.aok .aib{background:#9ae6b4;color:#276749}.afl .aib{background:#feb2b2;color:#c53030}.aid{font-size:.8rem;color:#718096;margin-top:3px}.ais{font-size:.73rem;color:#a0aec0;margin-top:2px}.br{width:100%;margin-top:20px;padding:12px;background:#2b6cb0;color:white;border:none;border-radius:8px;font-size:.97rem;font-weight:600;cursor:pointer}</style>
+</head>
+<body>
+<header>
+  <h1>19. Advanced English Grammar Test — C1</h1>
+  <p>Choose the correct option · 20 questions · Prepositions of Time &amp; Place</p>
+</header>
+<div class="pw"><div class="pb" id="pb" style="width:5%"></div></div>
+<main>
+  <div id="qcon"></div>
+  <div id="results">
+    <div class="rs">
+      <div class="sc"><span class="sn" id="rn"></span><span class="sd" id="rd"></span></div>
+      <h2><span id="rb" class="lb"></span></h2>
+      <p id="rt"></p>
+      <p id="rde"></p>
+    </div>
+    <div class="sg" id="rsk"></div>
+    <div class="ah">Question Analysis</div>
+    <div id="ran"></div>
+    <button class="br" onclick="restart()">Try Again</button>
+  </div>
+</main>
+<script>
+const Q=[
+  {s:"At / On / In (Time)",t:"The conference will be held … the 15th of September.",o:["at","on","in"],c:1,e:"'On' is used with specific dates: on the 15th of September."},
+  {s:"At / On / In (Time)",t:"She started her career … the early 1990s, when the internet was just emerging.",o:["at","on","in"],c:2,e:"'In' is used with years, decades, months, and longer time periods: in the 1990s."},
+  {s:"At / On / In (Time)",t:"He tends to feel most creative … night, when the house is quiet.",o:["in","on","at"],c:2,e:"'At night', 'at dawn', 'at midnight' — fixed expressions using 'at'."},
+  {s:"By / Until",t:"You must submit your application … Friday at the very latest.",o:["until","by","since"],c:1,e:"'By' means no later than a deadline. 'Until' means continuing up to a point in time."},
+  {s:"By / Until",t:"She waited … the last possible moment before making her decision.",o:["by","until","since"],c:1,e:"'Until' describes a continuous state up to a point: she waited until X."},
+  {s:"Since / For",t:"He has been living abroad … he graduated from university.",o:["for","since","during"],c:1,e:"'Since' is used with a point in time (since he graduated). 'For' is used with a duration."},
+  {s:"Since / For",t:"They have been negotiating the contract … several months with no resolution.",o:["since","during","for"],c:2,e:"'For' is used with periods of time: for several months, for two years."},
+  {s:"During / While",t:"She fell asleep … the lecture and missed the key points.",o:["while","for","during"],c:2,e:"'During' is a preposition used before a noun: during the lecture. 'While' is a conjunction."},
+  {s:"At / On / In (Place)",t:"There was a small café … the corner of the street.",o:["in","on","at"],c:1,e:"'On the corner' is the standard expression for a position at a street corner."},
+  {s:"At / On / In (Place)",t:"The documents are … the top drawer of the filing cabinet.",o:["on","in","at"],c:1,e:"'In' is used for enclosed or contained spaces: in the drawer, in the box."},
+  {s:"At / On / In (Place)",t:"We'll meet you … the entrance of the museum at half past two.",o:["in","on","at"],c:2,e:"'At' is used for specific points or locations: at the entrance, at the station."},
+  {s:"Above / Over",t:"The plane flew … the clouds at an altitude of 35,000 feet.",o:["above","over","on"],c:1,e:"'Over' suggests movement or a covering position. 'Above' is used for a static higher position with no contact."},
+  {s:"Above / Over",t:"The temperature rose … 40 degrees during the heatwave.",o:["over","above","past"],c:1,e:"'Above' is used with measurements and scales: above average, above 40 degrees."},
+  {s:"Between / Among",t:"The profits were divided equally … the three founding partners.",o:["among","between","within"],c:1,e:"'Between' is traditionally used with a specific number of parties (two or more clearly defined). 'Among' is used with a less defined group."},
+  {s:"Between / Among",t:"She felt completely at ease … her colleagues, who were all very welcoming.",o:["between","within","among"],c:2,e:"'Among' is used for a larger, less individually defined group: among colleagues, among friends."},
+  {s:"Beside / Besides",t:"… the financial cost, there are significant ethical implications to consider.",o:["Beside","Besides","Apart"],c:1,e:"'Besides' means in addition to. 'Beside' means next to (physical position)."},
+  {s:"Beside / Besides",t:"She sat … her mentor throughout the entire awards ceremony.",o:["besides","next","beside"],c:2,e:"'Beside' means physically next to someone or something."},
+  {s:"At / On / In (Time)",t:"I'll see you … Monday morning — don't be late.",o:["in","at","on"],c:2,e:"'On' is used with days of the week and specific day+time combinations: on Monday morning."},
+  {s:"Since / For",t:"The company has been profitable … its launch in 2018.",o:["for","since","from"],c:1,e:"'Since' is used with a specific point in the past: since its launch, since 2018."},
+  {s:"At / On / In (Place)",t:"He was born … a small village … the north of Scotland.",o:["in / in","at / in","in / at"],c:0,e:"'In a village' (enclosed area) and 'in the north of Scotland' (region) — both use 'in'."}
+];
+function lvl(p){if(p<40)return{l:'A2',d:'Review the core rules for at/on/in with time and place — these are foundational.'};if(p<55)return{l:'B1',d:'You know the basics. Focus on by/until and since/for distinctions.'};if(p<70)return{l:'B2',d:'Good overall. Work on above/over and beside/besides edge cases.'};if(p<85)return{l:'C1',d:'Strong C1 accuracy with prepositions of time and place.'};return{l:'C2',d:'Outstanding precision with all preposition categories!'};}
+let cq=0,ans={},ansd={};
+function init(){render();showC(0)}
+function render(){const con=document.getElementById('qcon');con.innerHTML='';const L=['a','b','c'];const tot=Q.length;Q.forEach((q,qi)=>{const opts=q.o.map((o,oi)=>`<div class="opt" id="o${qi}-${oi}" onclick="pick(${qi},${oi})"><span class="ol">${L[oi]}</span><span>${o}</span></div>`).join('');const isL=qi===tot-1;con.innerHTML+=`<div class="qc" id="qc${qi}"><div class="qm">Question ${qi+1} of ${tot} &nbsp;·&nbsp; ${q.s}</div><div class="qt">${q.t}</div><div class="opts">${opts}</div><div class="fb" id="fb${qi}"></div><div class="qnav"><button class="btn bbk" onclick="nav(-1)" ${qi===0?'disabled':''}>← Back</button>${isL?`<button class="btn bnx" id="nn${qi}" disabled style="display:none">Next →</button><button class="btn bfn" id="nf${qi}" onclick="showRes()" style="display:none">See Results</button>`:`<button class="btn bnx" id="nn${qi}" onclick="nav(1)" disabled>Next →</button>`}</div></div>`;});}
+function showC(i){document.querySelectorAll('.qc').forEach(c=>c.classList.remove('active'));document.getElementById('qc'+i).classList.add('active');cq=i;document.getElementById('pb').style.width=((i+1)/Q.length*100)+'%';if(ansd[i]!==undefined)rNav(i)}
+function rNav(qi){const isL=qi===Q.length-1;const nn=document.getElementById('nn'+qi);const nf=document.getElementById('nf'+qi);if(isL){nn.style.display='none';nf.style.display='inline-block'}else nn.disabled=false}
+function pick(qi,oi){if(ansd[qi]!==undefined)return;ans[qi]=oi;ansd[qi]=true;const q=Q[qi];const L=['a','b','c'];q.o.forEach((_,i)=>{const el=document.getElementById('o'+qi+'-'+i);el.classList.add('dis');if(i===oi&&oi===q.c)el.classList.add('cor');else if(i===oi)el.classList.add('wrn');else if(i===q.c)el.classList.add('rev')});const fb=document.getElementById('fb'+qi);const ok=oi===q.c;fb.className='fb show '+(ok?'fbok':'fbfl');fb.innerHTML=`<strong>${ok?'✓ Correct!':'✗ Wrong — Correct: '+L[q.c]+') '+q.o[q.c]}</strong><br>${q.e}`;rNav(qi);}
+function nav(d){const n=cq+d;if(n<0||n>=Q.length)return;showC(n)}
+function showRes(){document.querySelectorAll('.qc').forEach(c=>c.style.display='none');document.getElementById('results').style.display='block';document.getElementById('pb').style.width='100%';let cor=0;const sm={};Q.forEach((q,qi)=>{const ok=ans[qi]===q.c;if(ok)cor++;if(!sm[q.s])sm[q.s]={c:0,t:0};sm[q.s].t++;if(ok)sm[q.s].c++});const pct=Math.round(cor/Q.length*100);const lv=lvl(pct);document.getElementById('rn').textContent=cor;document.getElementById('rd').textContent='/ '+Q.length;const rb=document.getElementById('rb');rb.textContent=lv.l;rb.className='lb l'+lv.l.toLowerCase();document.getElementById('rt').textContent='Estimated level: '+lv.l+' ('+pct+'%)';document.getElementById('rde').textContent=lv.d;document.getElementById('rsk').innerHTML=Object.entries(sm).map(([k,v])=>`<div class="sb"><div class="sl">${k}</div><div class="sv">${v.c}/${v.t}</div></div>`).join('');const L=['a','b','c'];document.getElementById('ran').innerHTML=Q.map((q,qi)=>{const ua=ans[qi];const ok=ua===q.c;const ch=(ua!==undefined&&ua>=0)?L[ua]+') '+q.o[ua]:'—';return`<div class="ai ${ok?'aok':'afl'}"><div class="aih"><span class="aiq">Q${qi+1}: ${q.t}</span><span class="aib">${ok?'✓':'✗'}</span></div>${!ok?`<div class="aid">Your answer: <strong>${ch}</strong> · Correct: <strong>${L[q.c]}) ${q.o[q.c]}</strong></div>`:''}<div class="aid">${q.e}</div><div class="ais">${q.s}</div></div>`}).join('');}
+function restart(){ans={};ansd={};document.getElementById('results').style.display='none';document.querySelectorAll('.qc').forEach(c=>c.style.display='');render();showC(0)}
+window.onload=init;
+</script>
+</body>
+</html>
