@@ -262,15 +262,14 @@ textarea { resize: vertical; min-height: 70px; }
 
   <!-- PDF PANEL -->
   <div class="panel" id="pdf-panel">
-    <div class="panel-title">Upload a PDF test</div>
+    <div class="panel-title">Upload one or more PDF tests</div>
     <div class="drop-zone" id="drop-zone" onclick="document.getElementById('pdf-input').click()">
       <div class="dz-icon">📄</div>
-      <div class="dz-text">Click to choose a PDF or drag it here</div>
-      <div class="dz-sub">The AI will read the questions and rebuild them as an interactive test</div>
+      <div class="dz-text">Click to choose PDFs or drag them here</div>
+      <div class="dz-sub">Upload several at once — the AI rebuilds each one as a separate interactive test</div>
     </div>
-    <input type="file" id="pdf-input" accept="application/pdf" style="display:none">
+    <input type="file" id="pdf-input" accept="application/pdf" multiple style="display:none">
     <div id="pdf-file-info"></div>
-    <div class="pdf-extracted" id="pdf-extracted"></div>
     <div class="form-group full" style="margin-top:14px">
       <label>Extra instructions <span style="font-weight:400;color:#a0aec0">(optional)</span></label>
       <textarea id="pdf-extra" placeholder="e.g. The answer key is on the last page. Keep the questions in the original order."></textarea>
@@ -623,18 +622,16 @@ function toggleKey() {
 // ---- generate ----
 // ---- MODE (AI / PDF) ----
 let currentMode = 'ai';
-let pdfText = '';
-let pdfFileName = '';
+let pdfFiles = []; // [{name, text, status}]
 
 function setMode(mode) {
   currentMode = mode;
   document.getElementById('tab-ai').classList.toggle('active', mode === 'ai');
   document.getElementById('tab-pdf').classList.toggle('active', mode === 'pdf');
   document.getElementById('pdf-panel').classList.toggle('show', mode === 'pdf');
-  // hide AI-specific config when in PDF mode (topic/skills not needed)
   document.getElementById('options-panel').style.display = mode === 'pdf' ? 'none' : '';
   document.getElementById('btn-gen').innerHTML = mode === 'pdf'
-    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDF to Test'
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDFs to Tests'
     : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg> Generate Test';
 }
 
@@ -643,46 +640,51 @@ if (window.pdfjsLib) {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
 
-// drag & drop
 const dropZone = document.getElementById('drop-zone');
 const pdfInput = document.getElementById('pdf-input');
 if (dropZone) {
   ['dragover','dragenter'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.add('dragover'); }));
   ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('dragover'); }));
-  dropZone.addEventListener('drop', e => { if (e.dataTransfer.files[0]) handlePdf(e.dataTransfer.files[0]); });
-  pdfInput.addEventListener('change', e => { if (e.target.files[0]) handlePdf(e.target.files[0]); });
+  dropZone.addEventListener('drop', e => { handlePdfs(e.dataTransfer.files); });
+  pdfInput.addEventListener('change', e => { handlePdfs(e.target.files); });
 }
 
-async function handlePdf(file) {
-  if (file.type !== 'application/pdf') { showError('Please choose a PDF file.'); return; }
-  pdfFileName = file.name;
-  document.getElementById('pdf-file-info').innerHTML =
-    `<div class="pdf-file"><span class="pf-name">📄 ${file.name}</span><span style="font-size:0.78rem;color:#718096" id="pf-status">Reading…</span><button class="pf-remove" onclick="clearPdf()">✕</button></div>`;
-  try {
-    const buf = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-    let text = '';
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      text += content.items.map(it => it.str).join(' ') + '\n';
+async function handlePdfs(fileList) {
+  for (const file of fileList) {
+    if (file.type !== 'application/pdf') continue;
+    const entry = { name: file.name, text: '', status: 'Reading…' };
+    pdfFiles.push(entry);
+    renderPdfList();
+    try {
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(it => it.str).join(' ') + '\n';
+      }
+      entry.text = text.trim();
+      entry.status = `${pdf.numPages} pages · ${entry.text.length} chars`;
+    } catch (e) {
+      entry.status = 'Error: ' + e.message;
     }
-    pdfText = text.trim();
-    document.getElementById('pf-status').textContent = `${pdf.numPages} pages · ${pdfText.length} chars`;
-    const ex = document.getElementById('pdf-extracted');
-    ex.textContent = pdfText.slice(0, 800) + (pdfText.length > 800 ? '…' : '');
-    ex.classList.add('show');
-  } catch (e) {
-    showError('Could not read PDF: ' + e.message);
-    clearPdf();
+    renderPdfList();
   }
+  pdfInput.value = '';
 }
 
-function clearPdf() {
-  pdfText = ''; pdfFileName = '';
-  document.getElementById('pdf-file-info').innerHTML = '';
-  document.getElementById('pdf-extracted').classList.remove('show');
-  pdfInput.value = '';
+function renderPdfList() {
+  const el = document.getElementById('pdf-file-info');
+  if (!pdfFiles.length) { el.innerHTML = ''; return; }
+  el.innerHTML = pdfFiles.map((f, i) =>
+    `<div class="pdf-file"><span class="pf-name">📄 ${f.name}</span><span style="font-size:0.78rem;color:#718096">${f.status}</span><button class="pf-remove" onclick="removePdf(${i})">✕</button></div>`
+  ).join('');
+}
+
+function removePdf(i) {
+  pdfFiles.splice(i, 1);
+  renderPdfList();
 }
 
 function buildPdfPrompt(text, extra) {
@@ -697,7 +699,10 @@ Rules:
 - Preserve the original question order.
 ${extra ? 'Extra instructions: ' + extra : ''}
 
-Respond with ONLY a valid JSON array, no markdown, no code fences, no extra text.
+CRITICAL JSON RULES:
+- Use ONLY single quotes (') inside any text, never double quotes. Double quotes are reserved for JSON delimiters.
+- Do not use curly/smart quotes. Do not add trailing commas.
+- Respond with ONLY a valid JSON array, no markdown, no code fences, no extra text.
 
 PDF TEXT:
 """
@@ -710,25 +715,66 @@ Generate the JSON array now:`;
 async function convertPdf() {
   const key = document.getElementById('api-key').value.trim();
   if (!key) { showError('Please enter your OpenRouter API key.'); return; }
-  if (!pdfText) { showError('Please upload a PDF first.'); return; }
+  const ready = pdfFiles.filter(f => f.text);
+  if (!ready.length) { showError('Please upload at least one PDF.'); return; }
 
   const extra = document.getElementById('pdf-extra').value.trim();
   setLoading(true);
   fakeProgress();
-  document.getElementById('status-text').textContent = 'Reading PDF and rebuilding the test…';
 
-  try {
-    const raw = await callGemini(key, buildPdfPrompt(pdfText, extra));
-    const data = parseResponse(raw);
-    const cleanName = pdfFileName.replace(/\.pdf$/i, '');
-    TEST = { title: cleanName, subtitle: `From PDF · ${data.length} questions`, questions: data };
-    setLoading(false);
-    renderTest();
-    showTest();
-  } catch (e) {
-    setLoading(false);
-    showError(e.message);
+  const generated = [];
+  const failed = [];
+  for (let i = 0; i < ready.length; i++) {
+    const f = ready[i];
+    document.getElementById('status-text').textContent = `Converting PDF ${i+1}/${ready.length}: ${f.name}…`;
+    try {
+      const raw = await callGemini(key, buildPdfPrompt(f.text, extra));
+      const data = parseResponse(raw);
+      const cleanName = f.name.replace(/\.pdf$/i, '');
+      const test = { title: cleanName, subtitle: `From PDF · ${data.length} questions`, questions: data };
+      generated.push(test);
+      savePdfTest(test); // save to history immediately
+    } catch (e) {
+      failed.push(`${f.name}: ${e.message}`);
+    }
   }
+
+  setLoading(false);
+
+  if (!generated.length) {
+    showError('No tests could be generated. ' + failed.join(' · '));
+    return;
+  }
+
+  // load the first generated test to play now; the rest are in history
+  TEST = generated[0];
+  renderTest();
+  showTest();
+
+  let msg = `✓ ${generated.length} test${generated.length>1?'s':''} generated and saved to history.`;
+  if (failed.length) msg += ` ${failed.length} failed.`;
+  if (generated.length > 1) msg += ` Showing the first — open History to play the others.`;
+  setTimeout(() => alert(msg), 300);
+}
+
+// save a PDF-generated test to history without needing to complete it
+function savePdfTest(test) {
+  const h = getHistory();
+  test._id = Date.now() + Math.floor(Math.random()*1000);
+  h.unshift({
+    id: test._id,
+    title: test.title,
+    subtitle: test.subtitle,
+    date: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+    score: '—',
+    pct: 0,
+    level: 'Not taken',
+    questions: test.questions
+  });
+  if (h.length > 50) h.pop();
+  saveHistory(h);
+  renderHistory();
+  gdrivePush();
 }
 
 async function generateTest() {
@@ -836,16 +882,56 @@ async function callGemini(key, prompt) {
 }
 
 function parseResponse(raw) {
-  // Strip markdown fences if present
   let text = raw.trim();
   text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-  // Find JSON array
   const start = text.indexOf('[');
   const end = text.lastIndexOf(']');
-  if (start === -1 || end === -1) throw new Error('Gemini did not return a valid JSON array. Try again.');
-  const arr = JSON.parse(text.slice(start, end + 1));
-  if (!Array.isArray(arr) || arr.length === 0) throw new Error('Empty question list returned. Try again.');
-  return arr.map((q, i) => ({ id: i + 1, ...q }));
+  if (start === -1 || end === -1) throw new Error('The model did not return a JSON array. Try again.');
+  let jsonStr = text.slice(start, end + 1);
+
+  // 1) try as-is
+  let arr = tryParse(jsonStr);
+  // 2) try after sanitising stray quotes/curly quotes
+  if (!arr) arr = tryParse(sanitiseJson(jsonStr));
+  // 3) last resort: extract objects one by one
+  if (!arr) arr = extractObjects(jsonStr);
+
+  if (!arr || !Array.isArray(arr) || arr.length === 0)
+    throw new Error('Could not parse the questions. Try again.');
+
+  // keep only well-formed questions
+  const valid = arr.filter(q => q && q.text && Array.isArray(q.options) && q.options.length >= 2 && typeof q.correct === 'number');
+  if (!valid.length) throw new Error('No valid questions found. Try again.');
+  return valid.map((q, i) => ({ id: i + 1, context: q.context || '', skill: q.skill || 'General', explanation: q.explanation || '', ...q }));
+}
+
+function tryParse(s) { try { const a = JSON.parse(s); return Array.isArray(a) ? a : null; } catch { return null; } }
+
+function sanitiseJson(s) {
+  // normalise curly quotes that models often emit
+  return s
+    .replace(/[“”]/g, "'")   // " " → '
+    .replace(/[‘’]/g, "'")   // ' ' → '
+    .replace(/[–—]/g, '-');  // – — → -
+}
+
+// fallback: pull each {...} block and parse individually, fixing inner quotes
+function extractObjects(s) {
+  const out = [];
+  const re = /\{[^{}]*\}/g;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    let block = sanitiseJson(m[0]);
+    let obj = tryParse('[' + block + ']');
+    if (obj) { out.push(obj[0]); continue; }
+    // try to fix unescaped double quotes inside string values
+    const fixed = block.replace(/:\s*"(.*?)"(\s*[,}])/gs, (full, val, tail) => {
+      return ': "' + val.replace(/"/g, "'") + '"' + tail;
+    });
+    obj = tryParse('[' + fixed + ']');
+    if (obj) out.push(obj[0]);
+  }
+  return out.length ? out : null;
 }
 
 // ---- render test ----
