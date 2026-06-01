@@ -700,9 +700,9 @@ Rules:
 ${extra ? 'Extra instructions: ' + extra : ''}
 
 CRITICAL JSON RULES:
-- Use ONLY single quotes (') inside any text, never double quotes. Double quotes are reserved for JSON delimiters.
-- Do not use curly/smart quotes. Do not add trailing commas.
-- Respond with ONLY a valid JSON array, no markdown, no code fences, no extra text.
+- Return a single JSON object: {"questions": [ ... ]}
+- Use ONLY single quotes (') inside any text value, never double quotes. Double quotes are reserved for JSON syntax.
+- Do not use curly/smart quotes. Do not add trailing commas. No markdown, no code fences.
 
 PDF TEXT:
 """
@@ -828,19 +828,24 @@ Rules:
 - "context" is a sentence/phrase for the student to analyze. Leave as empty string "" if the question doesn't need one.
 - "skill" must be exactly one of: ${skills.join(' | ')}
 
-Respond with ONLY a valid JSON array. No markdown, no code fences, no extra text. Example structure:
-[
+CRITICAL JSON RULES:
+- Return a single JSON object: {"questions": [ ... ]}
+- Use ONLY single quotes (') inside text values, never double quotes.
+- No markdown, no code fences, no trailing commas.
+
+Example structure:
+{"questions": [
   {
     "skill": "Grammar",
     "text": "Choose the correct form:",
     "context": "She ______ there when the call came in.",
     "options": ["was sitting", "is sitting", "sat down", "has sat"],
     "correct": 0,
-    "explanation": "'Was sitting' is the Past Continuous, used for an action in progress at a specific past moment. 'Is sitting' is present tense. 'Has sat' is Present Perfect, which doesn't fit here."
+    "explanation": "'Was sitting' is the Past Continuous for an action in progress at a past moment. 'Is sitting' is present tense. 'Has sat' is Present Perfect."
   }
-]
+]}
 
-Generate the array now:`;
+Generate the JSON now:`;
 }
 
 async function callGemini(key, prompt) {
@@ -871,8 +876,9 @@ async function callGemini(key, prompt) {
         body: JSON.stringify({
           model,
           messages: [{ role: 'user', content: prompt }],
-          temperature: 0.7,
-          max_tokens: 4096
+          temperature: 0.3,
+          max_tokens: 6000,
+          response_format: { type: 'json_object' }
         })
       });
       clearTimeout(timer);
@@ -880,6 +886,8 @@ async function callGemini(key, prompt) {
       if (!res.ok) { lastError = json?.error?.message || `Error ${res.status}`; continue; }
       const text = json.choices?.[0]?.message?.content || '';
       if (!text) { lastError = 'Empty response'; continue; }
+      console.log('[Model response]', model, text.slice(0, 500));
+      window._lastRaw = text;
       return text;
     } catch(e) {
       clearTimeout(timer);
@@ -893,17 +901,21 @@ async function callGemini(key, prompt) {
 function parseResponse(raw) {
   let text = raw.trim();
   text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-  const start = text.indexOf('[');
-  const end = text.lastIndexOf(']');
-  if (start === -1 || end === -1) throw new Error('The model did not return a JSON array. Try again.');
-  let jsonStr = text.slice(start, end + 1);
 
-  // 1) try as-is
-  let arr = tryParse(jsonStr);
-  // 2) try after sanitising stray quotes/curly quotes
-  if (!arr) arr = tryParse(sanitiseJson(jsonStr));
-  // 3) last resort: extract objects one by one
-  if (!arr) arr = extractObjects(jsonStr);
+  // try full object first {"questions":[...]}
+  let arr = null;
+  const objParsed = tryParseObj(text) || tryParseObj(sanitiseJson(text));
+  if (objParsed && Array.isArray(objParsed.questions)) arr = objParsed.questions;
+
+  // otherwise locate an array
+  if (!arr) {
+    const start = text.indexOf('[');
+    const end = text.lastIndexOf(']');
+    if (start !== -1 && end !== -1) {
+      let jsonStr = text.slice(start, end + 1);
+      arr = tryParse(jsonStr) || tryParse(sanitiseJson(jsonStr)) || extractObjects(jsonStr);
+    }
+  }
 
   if (!arr || !Array.isArray(arr) || arr.length === 0)
     throw new Error('Could not parse the questions. Try again.');
@@ -915,6 +927,7 @@ function parseResponse(raw) {
 }
 
 function tryParse(s) { try { const a = JSON.parse(s); return Array.isArray(a) ? a : null; } catch { return null; } }
+function tryParseObj(s) { try { const o = JSON.parse(s); return (o && typeof o === 'object' && !Array.isArray(o)) ? o : null; } catch { return null; } }
 
 function sanitiseJson(s) {
   // normalise curly quotes that models often emit
