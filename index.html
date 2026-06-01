@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C1 English Grammar Tests — Index</title>
+<script>
+const ALLOWED=['proyectosacrv@gmail.com','solgncd@gmail.com','alexciuvi6@gmail.com'];
+const email=sessionStorage.getItem('auth_email');
+if(!email||!ALLOWED.includes(email.toLowerCase())){sessionStorage.setItem('auth_dest','index.html');window.location.href='login.html';}
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh}
@@ -162,7 +167,8 @@ a.card:hover{border-color:#4299e1;background:#ebf8ff;transform:translateY(-1px);
   </a>
 </div>
 
-<p style="text-align:center;color:#a0aec0;font-size:.8rem;margin-top:36px">20 tests · 400 questions total · No API, no internet, no data sent anywhere</p>
+<p style="text-align:center;color:#a0aec0;font-size:.8rem;margin-top:36px">20 tests · 400 questions total · Signed in as <strong id="user-email"></strong> · <a href="login.html" onclick="sessionStorage.clear()" style="color:#4299e1">Sign out</a></p>
 </main>
+<script>document.getElementById('user-email').textContent=sessionStorage.getItem('auth_email')||'';</script>
 </body>
 </html>

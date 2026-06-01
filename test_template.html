@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Level Test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #2d3748; min-height: 100vh; }
+
+  header { background: #2b6cb0; color: white; padding: 24px 32px; }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header p { opacity: 0.85; font-size: 0.9rem; margin-top: 4px; }
+
+  .progress-bar-wrap { background: #bee3f8; height: 6px; }
+  .progress-bar { background: #2b6cb0; height: 6px; transition: width 0.3s; }
+
+  main { max-width: 780px; margin: 0 auto; padding: 32px 16px; }
+
+  .question-card {
+    background: white; border-radius: 12px; padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px;
+    display: none;
+  }
+  .question-card.active { display: block; }
+
+  .q-number { font-size: 0.78rem; font-weight: 600; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .q-text { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+  .q-context { background: #ebf8ff; border-left: 3px solid #4299e1; padding: 10px 14px; border-radius: 4px; font-style: italic; font-size: 0.95rem; margin-bottom: 16px; color: #2c5282; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 8px;
+    cursor: pointer; transition: all 0.15s; font-size: 0.97rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .option:hover:not(.disabled) { border-color: #4299e1; background: #ebf8ff; }
+  .option.selected { border-color: #4299e1; background: #ebf8ff; }
+  .option.correct { border-color: #38a169; background: #f0fff4; color: #276749; }
+  .option.wrong { border-color: #e53e3e; background: #fff5f5; color: #c53030; }
+  .option.reveal-correct { border-color: #38a169; background: #f0fff4; color: #276749; }
+  .option.disabled { cursor: default; }
+  .option-letter {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
+  }
+
+  .feedback { margin-top: 16px; padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: #f0fff4; border: 1px solid #9ae6b4; color: #276749; }
+  .feedback.wrong-fb { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; }
+
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .btn {
+    padding: 10px 22px; border: none; border-radius: 8px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .btn-primary { background: #2b6cb0; color: white; }
+  .btn-primary:hover:not(:disabled) { background: #2c5282; }
+  .btn-secondary { background: #e2e8f0; color: #4a5568; }
+  .btn-secondary:hover:not(:disabled) { background: #cbd5e0; }
+  .btn-finish { background: #38a169; color: white; }
+  .btn-finish:hover:not(:disabled) { background: #276749; }
+
+  /* Results */
+  #results { display: none; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .score-circle {
+    width: 120px; height: 120px; border-radius: 50%; border: 8px solid #2b6cb0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .score-num { font-size: 2rem; font-weight: 800; color: #2b6cb0; line-height: 1; }
+  .score-denom { font-size: 0.85rem; color: #718096; }
+  .level-badge {
+    display: inline-block; padding: 6px 18px; border-radius: 20px;
+    font-weight: 700; font-size: 1rem; margin-bottom: 16px;
+  }
+  .level-a1 { background: #fed7d7; color: #c53030; }
+  .level-a2 { background: #feebc8; color: #c05621; }
+  .level-b1 { background: #fefcbf; color: #744210; }
+  .level-b2 { background: #c6f6d5; color: #276749; }
+  .level-c1 { background: #bee3f8; color: #2c5282; }
+  .level-c2 { background: #e9d8fd; color: #553c9a; }
+
+  .results-summary { text-align: center; margin-bottom: 28px; }
+  .results-summary h2 { font-size: 1.3rem; margin-bottom: 8px; }
+  .results-summary p { color: #718096; font-size: 0.95rem; line-height: 1.6; }
+
+  .analysis-title { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: #4a5568; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+  .analysis-item {
+    padding: 14px 16px; border-radius: 8px; margin-bottom: 10px;
+    border-left: 4px solid;
+  }
+  .analysis-item.ok { border-color: #38a169; background: #f0fff4; }
+  .analysis-item.fail { border-color: #e53e3e; background: #fff5f5; }
+  .analysis-item .ai-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .analysis-item .ai-q { font-size: 0.88rem; color: #4a5568; flex: 1; }
+  .analysis-item .ai-badge { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; margin-left: 8px; }
+  .ok .ai-badge { background: #9ae6b4; color: #276749; }
+  .fail .ai-badge { background: #feb2b2; color: #c53030; }
+  .analysis-item .ai-detail { font-size: 0.83rem; color: #718096; margin-top: 4px; }
+  .analysis-item .ai-skill { font-size: 0.78rem; color: #a0aec0; margin-top: 2px; }
+
+  .skills-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .skill-block { background: #f7fafc; border-radius: 8px; padding: 14px; text-align: center; }
+  .skill-block .sb-label { font-size: 0.8rem; color: #718096; margin-bottom: 4px; }
+  .skill-block .sb-score { font-size: 1.2rem; font-weight: 700; color: #2b6cb0; }
+
+  .btn-retry { width: 100%; margin-top: 20px; padding: 12px; background: #2b6cb0; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+  .btn-retry:hover { background: #2c5282; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="test-title">English Level Test</h1>
+  <p id="test-subtitle">Answer all questions and get your level assessment</p>
+</header>
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+</div>
+
+<main>
+  <div id="questions-container"></div>
+
+  <div id="results">
+    <div class="results-summary">
+      <div class="score-circle">
+        <span class="score-num" id="score-num">0</span>
+        <span class="score-denom" id="score-denom">/ 0</span>
+      </div>
+      <span class="level-badge" id="level-badge">—</span>
+      <h2 id="result-title">Your Level</h2>
+      <p id="result-desc"></p>
+    </div>
+
+    <div class="skills-breakdown" id="skills-breakdown"></div>
+
+    <div class="analysis-title">Question-by-question analysis</div>
+    <div id="analysis-list"></div>
+
+    <button class="btn-retry" onclick="restartTest()">Try Again</button>
+  </div>
+</main>
+
+<script>
+// ============================================================
+// TEST DATA — Replace this with generated data from your PDF
+// ============================================================
+const TEST_CONFIG = {
+  title: "English Certification Practice Test",
+  subtitle: "Cambridge / IELTS style — Intermediate to Upper-Intermediate",
+  targetLevel: "B1–B2",
+  questions: [
+    {
+      id: 1,
+      skill: "Grammar",
+      text: "Choose the correct form to complete the sentence:",
+      context: "By the time we arrived, the concert ______ for an hour.",
+      options: [
+        "had been going on",
+        "has been going on",
+        "was going on",
+        "went on"
+      ],
+      correct: 0,
+      explanation: "'Had been going on' is the Past Perfect Continuous, used to describe an action that was in progress before a past moment. The trigger is 'by the time we arrived' (a past reference point)."
+    },
+    {
+      id: 2,
+      skill: "Vocabulary",
+      text: "Select the word that best fits the sentence:",
+      context: "The manager was ______ about the delay and demanded an immediate explanation.",
+      options: [
+        "furious",
+        "nervous",
+        "enthusiastic",
+        "curious"
+      ],
+      correct: 0,
+      explanation: "'Furious' means extremely angry, which fits the context of demanding an immediate explanation. 'Nervous' implies anxiety, not anger."
+    },
+    {
+      id: 3,
+      skill: "Reading",
+      text: "Read the sentence and choose the closest meaning:",
+      context: "Despite her reservations, she agreed to take on the project.",
+      options: [
+        "She accepted the project even though she had doubts.",
+        "She rejected the project because of her doubts.",
+        "She was enthusiastic about taking the project.",
+        "She had no doubts about accepting the project."
+      ],
+      correct: 0,
+      explanation: "'Despite her reservations' = even though she had doubts. 'Agreed to take on' = accepted. The contrast particle 'despite' is key."
+    },
+    {
+      id: 4,
+      skill: "Grammar",
+      text: "Which sentence is grammatically correct?",
+      options: [
+        "If I had known, I would have called you.",
+        "If I would have known, I would have called you.",
+        "If I knew, I would have called you.",
+        "If I had known, I will call you."
+      ],
+      correct: 0,
+      explanation: "Third conditional structure: 'If + Past Perfect, would have + past participle'. Options B and D mix conditional forms incorrectly."
+    },
+    {
+      id: 5,
+      skill: "Vocabulary",
+      text: "Choose the correct phrasal verb:",
+      context: "She decided to ______ her old hobby of painting after years of not practising.",
+      options: [
+        "take up",
+        "give up",
+        "put up",
+        "make up"
+      ],
+      correct: 0,
+      explanation: "'Take up' means to start doing something again or for the first time. 'Give up' means to stop, which is the opposite of what is needed here."
+    },
+    {
+      id: 6,
+      skill: "Use of English",
+      text: "Select the best option to complete the formal sentence:",
+      context: "We regret to inform you that your application has been ______ due to incomplete documentation.",
+      options: [
+        "turned down",
+        "turned up",
+        "turned over",
+        "turned out"
+      ],
+      correct: 0,
+      explanation: "'Turned down' means rejected. In formal writing, this phrasal verb is standard in rejection contexts. 'Turned up' = appeared; 'Turned out' = resulted."
+    },
+    {
+      id: 7,
+      skill: "Grammar",
+      text: "Choose the correct option:",
+      context: "The report ______ by the committee before the deadline.",
+      options: [
+        "was reviewed",
+        "reviewed",
+        "has reviewed",
+        "reviewing"
+      ],
+      correct: 0,
+      explanation: "'Was reviewed' is simple past passive, correct because the subject ('the report') receives the action and the time is specified (before the deadline)."
+    },
+    {
+      id: 8,
+      skill: "Listening / Context",
+      text: "A colleague says: 'I'm afraid I can't make it to the meeting tomorrow.' What does this mean?",
+      options: [
+        "They cannot attend the meeting.",
+        "They are scared of the meeting.",
+        "They will arrive late to the meeting.",
+        "They need help preparing for the meeting."
+      ],
+      correct: 0,
+      explanation: "'I'm afraid I can't make it' is an idiomatic expression meaning 'I cannot attend'. 'Afraid' here is used to soften a negative message, not to express fear."
+    },
+    {
+      id: 9,
+      skill: "Reading",
+      text: "Choose the word that is closest in meaning to the underlined word:",
+      context: "The new policy is designed to mitigate the risks associated with data breaches.",
+      options: [
+        "reduce",
+        "increase",
+        "identify",
+        "ignore"
+      ],
+      correct: 0,
+      explanation: "'Mitigate' means to lessen the severity or impact of something. It is a formal synonym of 'reduce' in this context."
+    },
+    {
+      id: 10,
+      skill: "Use of English",
+      text: "Which sentence uses 'although' correctly?",
+      options: [
+        "Although it was raining, we went for a walk.",
+        "Although we went for a walk, but it was raining.",
+        "We went for a walk, although but it was raining.",
+        "Although of the rain, we went for a walk."
+      ],
+      correct: 0,
+      explanation: "'Although' introduces a subordinate clause showing contrast. You cannot combine it with 'but' (option B/C). 'Although of' is not correct — use 'despite' with a noun phrase instead."
+    }
+  ]
+};
+// ============================================================
+
+let currentQ = 0;
+let answers = {}; // { questionIndex: selectedOptionIndex }
+let answered = {}; // { questionIndex: true }
+
+function init() {
+  document.getElementById('test-title').textContent = TEST_CONFIG.title;
+  document.getElementById('test-subtitle').textContent = TEST_CONFIG.subtitle;
+  renderQuestions();
+  showQuestion(0);
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  TEST_CONFIG.questions.forEach((q, qi) => {
+    const letters = ['A', 'B', 'C', 'D'];
+    const optionsHTML = q.options.map((opt, oi) => `
+      <div class="option" id="opt-${qi}-${oi}" onclick="selectOption(${qi}, ${oi})">
+        <span class="option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </div>
+    `).join('');
+
+    const contextHTML = q.context ? `<div class="q-context">"${q.context}"</div>` : '';
+
+    container.innerHTML += `
+      <div class="question-card" id="qcard-${qi}">
+        <div class="q-number">Question ${qi + 1} of ${TEST_CONFIG.questions.length} &nbsp;·&nbsp; ${q.skill}</div>
+        <div class="q-text">${q.text}</div>
+        ${contextHTML}
+        <div class="options">${optionsHTML}</div>
+        <div class="feedback" id="feedback-${qi}"></div>
+        <div class="nav" style="margin-top:20px">
+          <button class="btn btn-secondary" onclick="navigate(-1)" id="btn-prev-${qi}" ${qi === 0 ? 'disabled' : ''}>← Back</button>
+          <button class="btn btn-primary" onclick="navigate(1)" id="btn-next-${qi}" disabled>Next →</button>
+          ${qi === TEST_CONFIG.questions.length - 1
+            ? `<button class="btn btn-finish" onclick="showResults()" id="btn-finish-${qi}" style="display:none">See Results</button>`
+            : ''}
+        </div>
+      </div>
+    `;
+  });
+}
+
+function showQuestion(idx) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  document.getElementById(`qcard-${idx}`).classList.add('active');
+  updateProgress(idx);
+
+  // Re-enable nav state
+  const nextBtn = document.getElementById(`btn-next-${idx}`);
+  const finishBtn = document.getElementById(`btn-finish-${idx}`);
+  if (answered[idx] !== undefined) {
+    nextBtn && (nextBtn.disabled = false);
+    if (finishBtn && idx === TEST_CONFIG.questions.length - 1) {
+      nextBtn.style.display = 'none';
+      finishBtn.style.display = 'inline-block';
+    }
+  }
+}
+
+function selectOption(qi, oi) {
+  if (answered[qi] !== undefined) return; // already answered
+
+  answers[qi] = oi;
+  answered[qi] = true;
+
+  const q = TEST_CONFIG.questions[qi];
+  const letters = ['A', 'B', 'C', 'D'];
+
+  // Disable all options
+  q.options.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    el.classList.add('disabled');
+    if (i === oi && oi === q.correct) el.classList.add('correct');
+    else if (i === oi) el.classList.add('wrong');
+    else if (i === q.correct) el.classList.add('reveal-correct');
+  });
+
+  // Show feedback
+  const fb = document.getElementById(`feedback-${qi}`);
+  const isCorrect = oi === q.correct;
+  fb.className = `feedback show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+  fb.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : `✗ Incorrect — Correct answer: ${letters[q.correct]}`}</strong><br>${q.explanation}`;
+
+  // Enable Next / Finish
+  const nextBtn = document.getElementById(`btn-next-${qi}`);
+  const finishBtn = document.getElementById(`btn-finish-${qi}`);
+  if (qi === TEST_CONFIG.questions.length - 1) {
+    nextBtn.style.display = 'none';
+    finishBtn && (finishBtn.style.display = 'inline-block');
+  } else {
+    nextBtn.disabled = false;
+  }
+}
+
+function navigate(dir) {
+  const next = currentQ + dir;
+  if (next < 0 || next >= TEST_CONFIG.questions.length) return;
+  currentQ = next;
+  showQuestion(currentQ);
+}
+
+function updateProgress(idx) {
+  const pct = ((idx + 1) / TEST_CONFIG.questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function getLevel(pct) {
+  if (pct < 40) return { label: 'A1', cls: 'level-a1', desc: 'Beginner. You need to build basic grammar and vocabulary foundations.' };
+  if (pct < 55) return { label: 'A2', cls: 'level-a2', desc: 'Elementary. You understand simple sentences and common expressions, but need more practice.' };
+  if (pct < 68) return { label: 'B1', cls: 'level-b1', desc: 'Intermediate. You can handle familiar topics, but complex grammar and vocabulary need work.' };
+  if (pct < 80) return { label: 'B2', cls: 'level-b2', desc: 'Upper-Intermediate. Good command of English with minor gaps in advanced structures.' };
+  if (pct < 92) return { label: 'C1', cls: 'level-c1', desc: 'Advanced. Fluent and flexible use of English for academic and professional purposes.' };
+  return { label: 'C2', cls: 'level-c2', desc: 'Proficient. Near-native command of the language across all contexts.' };
+}
+
+function showResults() {
+  // Hide all question cards
+  document.querySelectorAll('.question-card').forEach(c => c.style.display = 'none');
+  document.getElementById('results').style.display = 'block';
+  updateProgress(TEST_CONFIG.questions.length - 1);
+
+  const total = TEST_CONFIG.questions.length;
+  let correct = 0;
+  const skillMap = {};
+
+  TEST_CONFIG.questions.forEach((q, qi) => {
+    const isCorrect = answers[qi] === q.correct;
+    if (isCorrect) correct++;
+    if (!skillMap[q.skill]) skillMap[q.skill] = { correct: 0, total: 0 };
+    skillMap[q.skill].total++;
+    if (isCorrect) skillMap[q.skill].correct++;
+  });
+
+  const pct = Math.round((correct / total) * 100);
+  const level = getLevel(pct);
+
+  document.getElementById('score-num').textContent = correct;
+  document.getElementById('score-denom').textContent = `/ ${total}`;
+  document.getElementById('level-badge').textContent = level.label;
+  document.getElementById('level-badge').className = `level-badge ${level.cls}`;
+  document.getElementById('result-title').textContent = `Estimated Level: ${level.label} (${pct}%)`;
+  document.getElementById('result-desc').textContent = level.desc;
+
+  // Skills breakdown
+  const sb = document.getElementById('skills-breakdown');
+  sb.innerHTML = Object.entries(skillMap).map(([skill, data]) => `
+    <div class="skill-block">
+      <div class="sb-label">${skill}</div>
+      <div class="sb-score">${data.correct}/${data.total}</div>
+    </div>
+  `).join('');
+
+  // Per-question analysis
+  const al = document.getElementById('analysis-list');
+  const letters = ['A', 'B', 'C', 'D'];
+  al.innerHTML = TEST_CONFIG.questions.map((q, qi) => {
+    const userAns = answers[qi];
+    const isCorrect = userAns === q.correct;
+    const chosen = userAns !== undefined ? letters[userAns] : '—';
+    return `
+      <div class="analysis-item ${isCorrect ? 'ok' : 'fail'}">
+        <div class="ai-header">
+          <span class="ai-q">Q${qi + 1}: ${q.context || q.text}</span>
+          <span class="ai-badge">${isCorrect ? '✓ Correct' : '✗ Wrong'}</span>
+        </div>
+        ${!isCorrect ? `<div class="ai-detail">Your answer: <strong>${chosen}</strong> · Correct: <strong>${letters[q.correct]}</strong></div>` : ''}
+        <div class="ai-detail">${q.explanation}</div>
+        <div class="ai-skill">Skill: ${q.skill}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function restartTest() {
+  currentQ = 0;
+  answers = {};
+  answered = {};
+  document.getElementById('results').style.display = 'none';
+  document.querySelectorAll('.question-card').forEach(c => c.style.display = '');
+  renderQuestions();
+  showQuestion(0);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
