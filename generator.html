@@ -793,6 +793,7 @@ async function convertPdf() {
       generated.push(test);
       savePdfTest(test); // save to history immediately
     } catch (e) {
+      if (e.rateLimit) { setLoading(false); showRateLimit(generated.length); return; }
       failed.push(`${f.name}: ${e.message}`);
     }
   }
@@ -863,8 +864,18 @@ async function generateTest() {
     showTest();
   } catch (e) {
     setLoading(false);
+    if (e.rateLimit) { showRateLimit(0); return; }
     showError(e.message);
   }
+}
+
+function showRateLimit(savedCount) {
+  const st = document.getElementById('status');
+  st.className = 'status error show';
+  let msg = '⏳ OpenRouter rate limit reached. The free tier allows a limited number of requests. Please wait a few minutes and try again';
+  if (savedCount > 0) msg += ` (${savedCount} test${savedCount>1?'s':''} were saved before the limit).`;
+  else msg += '. Tip: add $10 credit to OpenRouter to raise the daily limit to 1000 requests.';
+  document.getElementById('status-text').textContent = msg;
 }
 
 function buildPrompt(topic, level, numQ, numOpts, skills, extra) {
@@ -939,6 +950,12 @@ async function callGemini(key, prompt) {
         })
       });
       clearTimeout(timer);
+      // rate limit → stop immediately, no point trying other free models
+      if (res.status === 429) {
+        const err = new Error('RATE_LIMIT');
+        err.rateLimit = true;
+        throw err;
+      }
       const json = await res.json();
       if (!res.ok) { lastError = json?.error?.message || `Error ${res.status}`; continue; }
       const text = json.choices?.[0]?.message?.content || '';
@@ -948,6 +965,7 @@ async function callGemini(key, prompt) {
       return text;
     } catch(e) {
       clearTimeout(timer);
+      if (e.rateLimit) throw e; // stop the whole process on rate limit
       lastError = e.name === 'AbortError' ? `${model.split('/')[1]} timed out` : e.message;
       continue;
     }
