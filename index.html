@@ -74,6 +74,20 @@ body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-heig
 .btn-go-gen{margin-top:12px;padding:9px 20px;background:white;color:#1a365d;border:none;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .15s}
 .btn-go-gen:hover{opacity:.9}
 
+/* ── BANK STATS ── */
+.bank-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.bank-stat{background:white;border-radius:12px;padding:18px;border:2px solid #e2e8f0;text-align:center}
+.bank-stat .bs-num{font-size:1.8rem;font-weight:800;color:#2b6cb0;line-height:1}
+.bank-stat .bs-label{font-size:.8rem;color:#718096;margin-top:6px}
+.bank-levels{margin-top:20px}
+.bank-levels h3{font-size:.85rem;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.bl-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:white;border:2px solid #e2e8f0;border-radius:10px;margin-bottom:8px}
+.bl-badge{font-size:.74rem;font-weight:700;padding:3px 8px;border-radius:12px;flex-shrink:0;width:140px;text-align:center}
+.lb1{background:#fefcbf;color:#744210}.lb2{background:#c6f6d5;color:#276749}.lc1{background:#bee3f8;color:#2c5282}
+.bl-bar{flex:1;height:8px;background:#edf2f7;border-radius:4px;overflow:hidden}
+.bl-bar span{display:block;height:100%;background:#4299e1;border-radius:4px}
+.bl-count{font-size:.82rem;font-weight:700;color:#4a5568;flex-shrink:0;width:70px;text-align:right}
+
 /* ── HISTORY LIST ── */
 .history-empty{color:#a0aec0;text-align:center;padding:40px 0;font-size:.9rem}
 .h-card{background:white;border-radius:10px;padding:14px 16px;margin-bottom:10px;border:2px solid #e2e8f0;display:flex;align-items:center;gap:12px}
@@ -181,7 +195,12 @@ input.add-email:focus{outline:none;border-color:#4299e1}
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-section">
     <div class="sidebar-section-title">Tests</div>
-    <a class="nav-item active" onclick="showSection('static')" href="#">
+    <a class="nav-item active" onclick="showSection('bank')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      Question Bank
+      <span class="nav-count" id="nav-bank-count">…</span>
+    </a>
+    <a class="nav-item" onclick="showSection('static')" href="#">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Static Tests
       <span class="nav-count">20</span>
@@ -222,8 +241,26 @@ input.add-email:focus{outline:none;border-color:#4299e1}
 <!-- MAIN -->
 <div class="main" id="main">
 
+  <!-- QUESTION BANK -->
+  <div class="section active" id="section-bank">
+    <div class="section-header">
+      <h1>Question Bank</h1>
+      <p>Build unlimited tests from a curated bank of real exam questions — instantly or with AI variations at any Cambridge level</p>
+    </div>
+    <div class="bank-stats-grid" id="bank-stats-grid"></div>
+    <div class="gen-card" style="margin-top:20px">
+      <div class="gen-card-icon">📚</div>
+      <div>
+        <h2>Generate from the bank</h2>
+        <p>Pick a category, Cambridge level and number of questions. Instant mode needs no internet; AI mode writes brand-new questions in the same style.</p>
+        <button class="btn-go-gen" onclick="window.location.href='generator.html?mode=bank'">Open Question Bank →</button>
+      </div>
+    </div>
+    <div class="bank-levels" id="bank-levels"></div>
+  </div>
+
   <!-- STATIC TESTS -->
-  <div class="section active" id="section-static">
+  <div class="section" id="section-static">
     <div class="section-header">
       <h1>Static Tests</h1>
       <p>20 hand-crafted C1 tests — no internet required once loaded</p>
@@ -510,10 +547,8 @@ document.getElementById('s-url').textContent = window.location.origin + window.l
 document.getElementById('s-count').textContent = ALLOWED.length + ' users';
 
 if(isAdmin){
-  document.querySelectorAll('.admin-hidden').forEach(el=>el.style.display='flex'||el.classList.remove('admin-hidden'));
   document.getElementById('nav-admin').style.display='flex';
-  document.getElementById('section-admin').style.display='none'; // managed by showSection
-  renderUserList();
+  // renderUserList() is called in the final init block (needs sessionAllowed defined first)
 }
 
 function signOut(){sessionStorage.clear();window.location.href='login.html';}
@@ -751,9 +786,42 @@ function updateGDUI(connected,name,status){
   document.getElementById('btn-gdrive-settings').textContent=connected?'Disconnect':'Connect';
 }
 
+// ── QUESTION BANK STATS ──
+async function loadBankStats(){
+  try{
+    const res=await fetch('questionbank.json',{cache:'no-store'});
+    const data=await res.json();
+    const qs=data.questions||[];
+    document.getElementById('nav-bank-count').textContent=qs.length;
+    // by section
+    const secs={}, lvls={};
+    qs.forEach(q=>{secs[q.section]=(secs[q.section]||0)+1; lvls[q.level]=(lvls[q.level]||0)+1;});
+    const icons={'Grammar & Vocabulary':'📝','Phrasal Verbs':'🔗','Idioms':'💬'};
+    document.getElementById('bank-stats-grid').innerHTML=
+      `<div class="bank-stat"><div class="bs-num">${qs.length}</div><div class="bs-label">Total questions</div></div>`+
+      Object.entries(secs).map(([s,n])=>`<div class="bank-stat"><div class="bs-num">${n}</div><div class="bs-label">${icons[s]||''} ${s}</div></div>`).join('');
+    // by level bars
+    const order=['B1','B2','C1'];
+    const cls={B1:'lb1',B2:'lb2',C1:'lc1'};
+    const max=Math.max(...Object.values(lvls),1);
+    document.getElementById('bank-levels').innerHTML='<h3>Questions by Cambridge level</h3>'+
+      order.filter(l=>lvls[l]).map(l=>`
+        <div class="bl-row">
+          <span class="bl-badge ${cls[l]}">${l} · ${({B1:'Preliminary',B2:'First',C1:'Advanced'})[l]}</span>
+          <span class="bl-bar"><span style="width:${Math.round(lvls[l]/max*100)}%"></span></span>
+          <span class="bl-count">${lvls[l]}</span>
+        </div>`).join('');
+  }catch(e){
+    document.getElementById('nav-bank-count').textContent='—';
+    document.getElementById('bank-stats-grid').innerHTML='<div class="history-empty">Could not load question bank.</div>';
+  }
+}
+
 // init
 renderHistory();
 document.getElementById('nav-history-count').textContent=getHistory().length;
+loadBankStats();
+if(isAdmin) renderUserList();
 </script>
 </body>
 </html>

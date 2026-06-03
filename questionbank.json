@@ -1,0 +1,5822 @@
+{
+"generated": "from excel_test_ingles_1-9.xlsx",
+"count": 424,
+"questions": [
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "An eagle, if pressed for food, might ... a small baby that had been left in the open.",
+"options": [
+"carry off",
+"carry out",
+"carry on with"
+],
+"correct": 0,
+"explanation": "Correct answer: carry off.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "Their education system is a good example of the fact that it is possible to ... very extensive readjustments.",
+"options": [
+"carry ofF",
+"carry away",
+"carry through"
+],
+"correct": 2,
+"explanation": "Correct answer: carry through.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "Russia and Iran will continue to deepen ties and ... bilateral projects.",
+"options": [
+"carry away",
+"carry off",
+"carry on with"
+],
+"correct": 2,
+"explanation": "Correct answer: carry on with.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "This chemical compound helps ... waste products from the liver.",
+"options": [
+"carry away",
+"carry over",
+"carry on with"
+],
+"correct": 0,
+"explanation": "Correct answer: carry away.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "The government announced its plan to ... cultural reform.",
+"options": [
+"carry off",
+"carry out",
+"carry away"
+],
+"correct": 1,
+"explanation": "Correct answer: carry out.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "These restaurants remind me of belly dancers, exotic spices and ... drink.",
+"options": [
+"instigating",
+"intoxicating",
+"incriminating"
+],
+"correct": 1,
+"explanation": "Correct answer: intoxicating.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "Thai cuisine still ... an element of mystery and exoticism.",
+"options": [
+"refrains",
+"retains",
+"regains"
+],
+"correct": 1,
+"explanation": "Correct answer: retains.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "International restaurants are ... adept at perfecting both eastern and western dishes.",
+"options": [
+"partly",
+"particularity",
+"particularly"
+],
+"correct": 2,
+"explanation": "Correct answer: particularly.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "Hong Kong is a place where you can enjoy ... cuisine and service at reasonable prices.",
+"options": [
+"expletive",
+"exquisite",
+"explosive"
+],
+"correct": 1,
+"explanation": "Correct answer: exquisite.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "European cuisine always ... a sense of nostalgia and romance.",
+"options": [
+"evokes",
+"evicts",
+"evolves"
+],
+"correct": 0,
+"explanation": "Correct answer: evokes.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "Her job has gone because her manager ... her.",
+"options": [
+"flamed",
+"fired",
+"burned"
+],
+"correct": 1,
+"explanation": "Correct answer: fired.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "I won't be working tomorrow because I've just been given the ... .",
+"options": [
+"sack",
+"bag",
+"case"
+],
+"correct": 0,
+"explanation": "Correct answer: sack.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "I was ... this morning and had to empty my desk.",
+"options": [
+"departed",
+"deterred",
+"dismissed"
+],
+"correct": 2,
+"explanation": "Correct answer: dismissed.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "I was handed my ... yesterday.",
+"options": [
+"books",
+"papers",
+"cards"
+],
+"correct": 2,
+"explanation": "Correct answer: cards.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "The company decided to get ... of me last week.",
+"options": [
+"rod",
+"ride",
+"rid"
+],
+"correct": 2,
+"explanation": "Correct answer: rid.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "She has been made ... because her work is no longer needed.",
+"options": [
+"redundant",
+"repellent",
+"reduced"
+],
+"correct": 0,
+"explanation": "Correct answer: redundant.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "The firm decided to ... which means they don't want us.",
+"options": [
+"resize",
+"downsize",
+"upsize"
+],
+"correct": 1,
+"explanation": "Correct answer: downsize.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "They told Mark to go because he was said to be ... to requirements.",
+"options": [
+"recess",
+"surplus",
+"excess"
+],
+"correct": 1,
+"explanation": "Correct answer: surplus.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "I was told not to ... to come back to work tomorrow.",
+"options": [
+"worry",
+"care",
+"bother"
+],
+"correct": 2,
+"explanation": "Correct answer: bother.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "C1",
+"text": "I didn't ask for more money because he gave me one month's ... .",
+"options": [
+"notice",
+"facts",
+"news"
+],
+"correct": 0,
+"explanation": "Correct answer: notice.",
+"term": ""
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Brian asked Judy ___ to dinner.",
+"options": [
+"out",
+"off",
+"on",
+"up"
+],
+"correct": 0,
+"explanation": "'ask somebody out' means: invite on a date Example: Brian asked Judy out to dinner.",
+"term": "ask somebody out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You'll have to back ___ your car so that I can get out.",
+"options": [
+"up",
+"on",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'back something up' means: reverse Example: You'll have to back up your car so that I can get out.",
+"term": "back something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My wife backed me ___ over my decision to quit my job.",
+"options": [
+"up",
+"on",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'back somebody up' means: support Example: My wife backed me up over my decision to quit my job.",
+"term": "back somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The racing car blew ___ after it crashed into the fence.",
+"options": [
+"out",
+"up",
+"off",
+"on"
+],
+"correct": 1,
+"explanation": "'blow up' means: explode Example: The racing car blew up after it crashed into the fence.",
+"term": "blow up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We have to blow 50 balloons ___ for the party.",
+"options": [
+"out",
+"off",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'blow something up' means: add air Example: We have to blow 50 balloons up for the party.",
+"term": "blow something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Our car broke ___ at the side of the highway in the snowstorm.",
+"options": [
+"up",
+"down",
+"off",
+"out"
+],
+"correct": 1,
+"explanation": "'break down' means: stop functioning (vehicle, machine) Example: Our car broke down at the side of the highway in the snowstorm.",
+"term": "break down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The woman broke ___ when the police told her that her son had died.",
+"options": [
+"out",
+"up",
+"down",
+"off"
+],
+"correct": 2,
+"explanation": "'break down' means: get upset Example: The woman broke down when the police told her that her son had died.",
+"term": "break down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Our teacher broke the final project ___ into three separate parts",
+"options": [
+"down",
+"off",
+"out",
+"up"
+],
+"correct": 0,
+"explanation": "'break something down' means: divide into smaller parts Example: Our teacher broke the final project down into three separate parts",
+"term": "break something down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Somebody broke ___ last night and stole our stereo.",
+"options": [
+"off",
+"in",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'break in' means: force entry to a building Example: Somebody broke in last night and stole our stereo.",
+"term": "break in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The firemen had to break ___ the room to rescue the children.",
+"options": [
+"off",
+"up",
+"into",
+"out"
+],
+"correct": 2,
+"explanation": "'break into something' means: enter forcibly Example: The firemen had to break into the room to rescue the children.",
+"term": "break into something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My boyfriend and I broke ___ before I moved to America.",
+"options": [
+"out",
+"up",
+"off",
+"on"
+],
+"correct": 1,
+"explanation": "'break up' means: end a relationship Example: My boyfriend and I broke up before I moved to America.",
+"term": "break up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The kids just broke ___ as soon as the clown started talking.",
+"options": [
+"up",
+"off",
+"on",
+"out"
+],
+"correct": 0,
+"explanation": "'break up' means: start laughing (informal) Example: The kids just broke up as soon as the clown started talking.",
+"term": "break up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The prisoners broke ___ of jail when the guards weren't looking.",
+"options": [
+"out",
+"up",
+"off",
+"on"
+],
+"correct": 0,
+"explanation": "'break out' means: escape Example: The prisoners broke out of jail when the guards weren't looking.",
+"term": "break out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I broke ___ a rash after our camping trip.",
+"options": [
+"off",
+"up",
+"out",
+"out in"
+],
+"correct": 3,
+"explanation": "'break out in something' means: develop a skin condition Example: I broke out in a rash after our camping trip.",
+"term": "break out in something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: This sad music is bringing me ___.",
+"options": [
+"off",
+"down",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'bring somebody down' means: make unhappy Example: This sad music is bringing me down.",
+"term": "bring somebody down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My grandparents brought me ___ after my parents died.",
+"options": [
+"out",
+"on",
+"up",
+"off"
+],
+"correct": 2,
+"explanation": "'bring somebody up' means: raise a child Example: My grandparents brought me up after my parents died.",
+"term": "bring somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My mother walks out of the room when my father brings ___ sports.",
+"options": [
+"out",
+"on",
+"up",
+"off"
+],
+"correct": 2,
+"explanation": "'bring something up' means: start talking about a subject Example: My mother walks out of the room when my father brings up sports.",
+"term": "bring something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We called ___ but we weren't able to find the car part we needed.",
+"options": [
+"off",
+"out",
+"around",
+"up"
+],
+"correct": 2,
+"explanation": "'call around' means: phone many different places/people Example: We called around but we weren't able to find the car part we needed.",
+"term": "call around"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I called the company ___ but the offices were closed for the weekend.",
+"options": [
+"out",
+"back",
+"off",
+"up"
+],
+"correct": 1,
+"explanation": "'call somebody back' means: return a phone call Example: I called the company back but the offices were closed for the weekend.",
+"term": "call somebody back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Jason called the wedding ___ because he wasn't in love with his fiancé.",
+"options": [
+"on",
+"up",
+"off",
+"out"
+],
+"correct": 2,
+"explanation": "'call something off' means: cancel Example: Jason called the wedding off because he wasn't in love with his fiancé.",
+"term": "call something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Give me your phone number and I will call you ___ when we are in town.",
+"options": [
+"off",
+"on",
+"up",
+"out"
+],
+"correct": 2,
+"explanation": "'call somebody up' means: phone Example: Give me your phone number and I will call you up when we are in town.",
+"term": "call somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You are still mad. You need to calm ___ before you drive the car.",
+"options": [
+"out",
+"up",
+"off",
+"down"
+],
+"correct": 3,
+"explanation": "'calm down' means: relax after being angry Example: You are still mad. You need to calm down before you drive the car.",
+"term": "calm down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I don't care ___ his behavior.",
+"options": [
+"for",
+"off",
+"out",
+"up"
+],
+"correct": 0,
+"explanation": "'not care for somebody/ something' means: not like (formal) Example: I don't care for his behavior.",
+"term": "not care for somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We will get the hotel keys when we check ___.",
+"options": [
+"out",
+"off",
+"up",
+"in"
+],
+"correct": 3,
+"explanation": "'check in' means: arrive and register at a hotel or airport Example: We will get the hotel keys when we check in.",
+"term": "check in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: She cheered ___ when she heard the good news.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 1,
+"explanation": "'cheer up' means: become happier Example: She cheered up when she heard the good news.",
+"term": "cheer up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I brought you some flowers to cheer you ___.",
+"options": [
+"off",
+"on",
+"up",
+"out"
+],
+"correct": 2,
+"explanation": "'cheer somebody up' means: make happier Example: I brought you some flowers to cheer you up.",
+"term": "cheer somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: If everyone chips ___ we can get the kitchen painted by noon.",
+"options": [
+"off",
+"up",
+"out",
+"in"
+],
+"correct": 3,
+"explanation": "'chip in' means: help Example: If everyone chips in we can get the kitchen painted by noon.",
+"term": "chip in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please, clean ___ your bedroom before you go outside.",
+"options": [
+"out",
+"on",
+"off",
+"up"
+],
+"correct": 3,
+"explanation": "'clean something up' means: tidy up, clean Example: Please, clean up your bedroom before you go outside.",
+"term": "clean something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I am counting ___ you to make dinner while I am out.",
+"options": [
+"on",
+"out",
+"off",
+"up"
+],
+"correct": 0,
+"explanation": "'count on somebody/ something' means: rely on Example: I am counting on you to make dinner while I am out.",
+"term": "count on somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please cross ___ your old address and write your new one.",
+"options": [
+"on",
+"up",
+"out",
+"off"
+],
+"correct": 2,
+"explanation": "'cross something out' means: draw a line through Example: Please cross out your old address and write your new one.",
+"term": "cross something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My doctor wants me to cut ___ sweets and fatty foods.",
+"options": [
+"back on",
+"out",
+"up",
+"off"
+],
+"correct": 0,
+"explanation": "'cut back on something' means: consume less Example: My doctor wants me to cut back on sweets and fatty foods.",
+"term": "cut back on something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Your father cut ___ while I was dancing with your uncle.",
+"options": [
+"off",
+"in",
+"up",
+"out"
+],
+"correct": 1,
+"explanation": "'cut in' means: interrupt Example: Your father cut in while I was dancing with your uncle.",
+"term": "cut in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The bus driver got angry when that car cut ___.",
+"options": [
+"out",
+"up",
+"in",
+"off"
+],
+"correct": 2,
+"explanation": "'cut in' means: pull in too closely in front of another vehicle Example: The bus driver got angry when that car cut in.",
+"term": "cut in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The doctors cut ___ his leg because it was severely injured.",
+"options": [
+"off",
+"out",
+"up",
+"on"
+],
+"correct": 0,
+"explanation": "'cut something off' means: remove with something sharp Example: The doctors cut off his leg because it was severely injured.",
+"term": "cut something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The phone company cut ___ our phone because we didn't pay the bill.",
+"options": [
+"up",
+"off",
+"out",
+"on"
+],
+"correct": 1,
+"explanation": "'cut something off' means: stop providing Example: The phone company cut off our phone because we didn't pay the bill.",
+"term": "cut something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I cut this ad ___ of the newspaper.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 0,
+"explanation": "'cut something out' means: remove part of something, usually with scissors and paper Example: I cut this ad out of the newspaper.",
+"term": "cut something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: He's lucky to be alive. His shop was done ___ by a street gang.",
+"options": [
+"up",
+"over",
+"out",
+"off"
+],
+"correct": 1,
+"explanation": "'do somebody/ something over' means: beat up, ransack Example: He's lucky to be alive. His shop was done over by a street gang.",
+"term": "do somebody/ something over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: It's time to do ___ all of these old tax records.",
+"options": [
+"out",
+"up",
+"off",
+"away with"
+],
+"correct": 3,
+"explanation": "'do away with something' means: discard Example: It's time to do away with all of these old tax records.",
+"term": "do away with something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Do your coat ___ before you go outside. It's snowing!",
+"options": [
+"up",
+"off",
+"on",
+"out"
+],
+"correct": 0,
+"explanation": "'do something up' means: fasten, close Example: Do your coat up before you go outside. It's snowing!",
+"term": "do something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: It's a fancy restaurant so we have to dress ___.",
+"options": [
+"on",
+"out",
+"off",
+"up"
+],
+"correct": 3,
+"explanation": "'dress up' means: wear nice clothing Example: It's a fancy restaurant so we have to dress up.",
+"term": "dress up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Andrea dropped ___ to third place when she fell off her bike.",
+"options": [
+"out",
+"up",
+"off",
+"back"
+],
+"correct": 3,
+"explanation": "'drop back' means: move back in a position/group Example: Andrea dropped back to third place when she fell off her bike.",
+"term": "drop back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I might drop in/by/___ for tea sometime this week.",
+"options": [
+"off",
+"up",
+"out",
+"in/ by/ over"
+],
+"correct": 3,
+"explanation": "'drop in/ by/ over' means: come without an appointment Example: I might drop in/by/over for tea sometime this week.",
+"term": "drop in/ by/ over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to drop my sister ___ at work before I come over.",
+"options": [
+"out",
+"up",
+"off",
+"on"
+],
+"correct": 2,
+"explanation": "'drop somebody/ something off' means: take somebody/ something somewhere and leave them/it there Example: I have to drop my sister off at work before I come over.",
+"term": "drop somebody/ something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I dropped ___ of Science because it was too difficult.",
+"options": [
+"on",
+"off",
+"out",
+"up"
+],
+"correct": 2,
+"explanation": "'drop out' means: quit a class, school etc Example: I dropped out of Science because it was too difficult.",
+"term": "drop out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We ended ___ renting a movie instead of going to the movies.",
+"options": [
+"off",
+"out",
+"up",
+"on"
+],
+"correct": 2,
+"explanation": "'end up' means: eventually reach/do/decide Example: We ended up renting a movie instead of going to the movies.",
+"term": "end up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The money must have fallen ___ of my pocket.",
+"options": [
+"up",
+"out",
+"off",
+"on"
+],
+"correct": 1,
+"explanation": "'fall out' means: separate from an interior Example: The money must have fallen out of my pocket.",
+"term": "fall out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: His hair started to fall ___ when he was only 35.",
+"options": [
+"off",
+"on",
+"out",
+"up"
+],
+"correct": 2,
+"explanation": "'fall out' means: (of hair, teeth) become loose and unattached Example: His hair started to fall out when he was only 35.",
+"term": "fall out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I need to figure ___ how to fit the piano and the bookshelf in this room.",
+"options": [
+"out",
+"off",
+"on",
+"up"
+],
+"correct": 0,
+"explanation": "'figure something out' means: understand, find the answer Example: I need to figure out how to fit the piano and the bookshelf in this room.",
+"term": "figure something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please fill ___ the form with your name, address, and phone number.",
+"options": [
+"up",
+"in",
+"out",
+"off"
+],
+"correct": 1,
+"explanation": "'fill something in' means: to write information in blanks, as on a form Example: Please fill in the form with your name, address, and phone number.",
+"term": "fill something in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The form must be filled ___ in capital letters.",
+"options": [
+"off",
+"up",
+"on",
+"out"
+],
+"correct": 3,
+"explanation": "'fill something out' means: to write information in blanks, as on a form Example: The form must be filled out in capital letters.",
+"term": "fill something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We don't know where he lives. How can we find ___?",
+"options": [
+"on",
+"out",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'find out' means: discover Example: We don't know where he lives. How can we find out?",
+"term": "find out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We tried to keep the time of the party a secret, but Samantha found it ___.",
+"options": [
+"up",
+"out",
+"off",
+"on"
+],
+"correct": 1,
+"explanation": "'find something out' means: discover Example: We tried to keep the time of the party a secret, but Samantha found it out.",
+"term": "find something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I tried to get my point ___/over to the judge but she wouldn't listen.",
+"options": [
+"up",
+"across/ over",
+"out",
+"off"
+],
+"correct": 1,
+"explanation": "'get something across/ over' means: communicate, make understandable Example: I tried to get my point across/over to the judge but she wouldn't listen.",
+"term": "get something across/ over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I was surprised how well my new girlfriend and my sister got ___.",
+"options": [
+"up",
+"out",
+"along/on",
+"off"
+],
+"correct": 2,
+"explanation": "'get along/on' means: like each other Example: I was surprised how well my new girlfriend and my sister got along/on.",
+"term": "get along/on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My grandfather can get ___ fine in his new wheelchair.",
+"options": [
+"around",
+"out",
+"off",
+"up"
+],
+"correct": 0,
+"explanation": "'get around' means: have mobility Example: My grandfather can get around fine in his new wheelchair.",
+"term": "get around"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We got ___ from our vacation last week.",
+"options": [
+"back",
+"up",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'get back' means: return Example: We got back from our vacation last week.",
+"term": "get back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Liz finally got her Science notes ___ from my roommate.",
+"options": [
+"out",
+"back",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'get something back' means: receive something you had before Example: Liz finally got her Science notes back from my roommate.",
+"term": "get something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My sister got ___ me for stealing her shoes. She stole my favorite hat.",
+"options": [
+"up",
+"out",
+"back at",
+"off"
+],
+"correct": 2,
+"explanation": "'get back at somebody' means: take revenge Example: My sister got back at me for stealing her shoes. She stole my favorite hat.",
+"term": "get back at somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I finally got ___ my novel and finished it.",
+"options": [
+"off",
+"out",
+"back into",
+"up"
+],
+"correct": 2,
+"explanation": "'get back into something' means: become interested in something again Example: I finally got back into my novel and finished it.",
+"term": "get back into something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We're going to freeze out here if you don't let us get ___ the bus.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 2,
+"explanation": "'get on something' means: step onto a vehicle Example: We're going to freeze out here if you don't let us get on the bus.",
+"term": "get on something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I just got ___ the flu and now my sister has it.",
+"options": [
+"off",
+"up",
+"out",
+"over"
+],
+"correct": 3,
+"explanation": "'get over something' means: recover from an illness, loss, difficulty Example: I just got over the flu and now my sister has it.",
+"term": "get over something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The company will have to close if it can't get ___ the new regulations.",
+"options": [
+"off",
+"over",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'get over something' means: overcome a problem Example: The company will have to close if it can't get over the new regulations.",
+"term": "get over something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Let's get ___ for a BBQ this weekend.",
+"options": [
+"up",
+"off",
+"out",
+"together"
+],
+"correct": 3,
+"explanation": "'get together' means: meet (usually for social reasons) Example: Let's get together for a BBQ this weekend.",
+"term": "get together"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You should get ___ and give the elderly man your seat.",
+"options": [
+"out",
+"up",
+"off",
+"on"
+],
+"correct": 1,
+"explanation": "'get up' means: stand Example: You should get up and give the elderly man your seat.",
+"term": "get up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: His wife gave him ___ to the police.",
+"options": [
+"off",
+"up",
+"out",
+"away"
+],
+"correct": 3,
+"explanation": "'give somebody away' means: reveal hidden information about somebody Example: His wife gave him away to the police.",
+"term": "give somebody away"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My little sister gave the surprise party ___ by accident.",
+"options": [
+"out",
+"up",
+"off",
+"away"
+],
+"correct": 3,
+"explanation": "'give something away' means: ruin a secret Example: My little sister gave the surprise party away by accident.",
+"term": "give something away"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to give these skates ___ to Franz before his hockey game.",
+"options": [
+"back",
+"off",
+"out",
+"up"
+],
+"correct": 0,
+"explanation": "'give something back' means: return a borrowed item Example: I have to give these skates back to Franz before his hockey game.",
+"term": "give something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My boyfriend didn't want to go to the ballet, but he finally gave ___.",
+"options": [
+"out",
+"off",
+"in",
+"up"
+],
+"correct": 2,
+"explanation": "'give in' means: reluctantly stop fighting or arguing Example: My boyfriend didn't want to go to the ballet, but he finally gave in.",
+"term": "give in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I am giving ___ smoking as of January 1st.",
+"options": [
+"on",
+"out",
+"off",
+"up"
+],
+"correct": 3,
+"explanation": "'give something up' means: quit a habit Example: I am giving up smoking as of January 1st.",
+"term": "give something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My math homework was too difficult so I gave ___.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 1,
+"explanation": "'give up' means: stop trying Example: My math homework was too difficult so I gave up.",
+"term": "give up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My brother tried to go ___ the thief in his car.",
+"options": [
+"after",
+"up",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'go after somebody' means: follow somebody Example: My brother tried to go after the thief in his car.",
+"term": "go after somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We are going ___ the best soccer team in the city tonight.",
+"options": [
+"out",
+"against",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'go against somebody' means: compete, oppose Example: We are going against the best soccer team in the city tonight.",
+"term": "go against somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please go ___ and eat before the food gets cold.",
+"options": [
+"up",
+"off",
+"ahead",
+"out"
+],
+"correct": 2,
+"explanation": "'go ahead' means: start, proceed Example: Please go ahead and eat before the food gets cold.",
+"term": "go ahead"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to go ___ home and get my lunch.",
+"options": [
+"back",
+"off",
+"up",
+"out"
+],
+"correct": 0,
+"explanation": "'go back' means: return to a place Example: I have to go back home and get my lunch.",
+"term": "go back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We're going ___ for dinner tonight.",
+"options": [
+"off",
+"on",
+"up",
+"out"
+],
+"correct": 3,
+"explanation": "'go out' means: leave home to go on a social event Example: We're going out for dinner tonight.",
+"term": "go out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Jesse has been going ___ Luke since they met last winter.",
+"options": [
+"up",
+"out",
+"out with",
+"off"
+],
+"correct": 2,
+"explanation": "'go out with somebody' means: date Example: Jesse has been going out with Luke since they met last winter.",
+"term": "go out with somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please go ___ your answers before you submit your test.",
+"options": [
+"up",
+"out",
+"off",
+"over"
+],
+"correct": 3,
+"explanation": "'go over something' means: review Example: Please go over your answers before you submit your test.",
+"term": "go over something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I haven't seen Tina for a long time. I think I'll go ___ for an hour or two.",
+"options": [
+"over",
+"out",
+"off",
+"up"
+],
+"correct": 0,
+"explanation": "'go over' means: visit somebody nearby Example: I haven't seen Tina for a long time. I think I'll go over for an hour or two.",
+"term": "go over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: When I was young, we went ___ winter boots.",
+"options": [
+"off",
+"up",
+"out",
+"without"
+],
+"correct": 3,
+"explanation": "'go without something' means: suffer lack or deprivation Example: When I was young, we went without winter boots.",
+"term": "go without something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My best friend and I grew ___ after she changed schools.",
+"options": [
+"off",
+"out",
+"apart",
+"up"
+],
+"correct": 2,
+"explanation": "'grow apart' means: stop being friends over time Example: My best friend and I grew apart after she changed schools.",
+"term": "grow apart"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My roses grew ___ this summer.",
+"options": [
+"off",
+"out",
+"back",
+"up"
+],
+"correct": 2,
+"explanation": "'grow back' means: regrow Example: My roses grew back this summer.",
+"term": "grow back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: When Jack grows ___ he wants to be a fireman.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'grow up' means: become an adult Example: When Jack grows up he wants to be a fireman.",
+"term": "grow up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to hand ___ my essay by Friday.",
+"options": [
+"out",
+"in",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'hand something in' means: submit Example: I have to hand in my essay by Friday.",
+"term": "hand something in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We will hand ___ the invitations at the door.",
+"options": [
+"up",
+"off",
+"on",
+"out"
+],
+"correct": 3,
+"explanation": "'hand something out' means: to distribute to a group of people Example: We will hand out the invitations at the door.",
+"term": "hand something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The police asked the man to hand ___ his wallet and his weapons.",
+"options": [
+"up",
+"off",
+"over",
+"out"
+],
+"correct": 2,
+"explanation": "'hand something over' means: give (usually unwillingly) Example: The police asked the man to hand over his wallet and his weapons.",
+"term": "hand something over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Hang ___ there. I'm sure you'll find a job very soon.",
+"options": [
+"up",
+"out",
+"off",
+"in"
+],
+"correct": 3,
+"explanation": "'hang in' means: stay positive (informal) Example: Hang in there. I'm sure you'll find a job very soon.",
+"term": "hang in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Hang ___ while I grab my coat and shoes!",
+"options": [
+"on",
+"up",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'hang on' means: wait a short time Example: Hang on while I grab my coat and shoes!",
+"term": "hang on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Instead of going to the party we are just going to hang ___ at my place.",
+"options": [
+"on",
+"out",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'hang out' means: spend time relaxing Example: Instead of going to the party we are just going to hang out at my place.",
+"term": "hang out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: He didn't say goodbye before he hung ___.",
+"options": [
+"off",
+"up",
+"on",
+"out"
+],
+"correct": 1,
+"explanation": "'hang up' means: end a phone call Example: He didn't say goodbye before he hung up.",
+"term": "hang up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I had to hold my dog ___ because there was a cat in the park.",
+"options": [
+"back",
+"up",
+"out",
+"off"
+],
+"correct": 0,
+"explanation": "'hold somebody/ something back' means: prevent from doing/going Example: I had to hold my dog back because there was a cat in the park.",
+"term": "hold somebody/ something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Jamie held ___ his tears at his grandfather's funeral.",
+"options": [
+"out",
+"up",
+"off",
+"back"
+],
+"correct": 3,
+"explanation": "'hold something back' means: hide an emotion Example: Jamie held back his tears at his grandfather's funeral.",
+"term": "hold something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please hold ___ while I transfer you to the Sales Department.",
+"options": [
+"on",
+"out",
+"off",
+"up"
+],
+"correct": 0,
+"explanation": "'hold on' means: wait a short time Example: Please hold on while I transfer you to the Sales Department.",
+"term": "hold on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Hold ___ your hat because it's very windy outside.",
+"options": [
+"off",
+"onto",
+"up",
+"out"
+],
+"correct": 1,
+"explanation": "'hold onto somebody/ something' means: hold firmly using your hands or arms Example: Hold onto your hat because it's very windy outside.",
+"term": "hold onto somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Keep ___ stirring until the liquid comes to a boil.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 2,
+"explanation": "'keep on doing something' means: continue doing Example: Keep on stirring until the liquid comes to a boil.",
+"term": "keep on doing something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We kept our relationship ___ our parents for two years.",
+"options": [
+"up",
+"off",
+"out",
+"from"
+],
+"correct": 3,
+"explanation": "'keep something from somebody' means: not tell Example: We kept our relationship from our parents for two years.",
+"term": "keep something from somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Try to keep the wet dog ___ of the living room.",
+"options": [
+"up",
+"off",
+"out",
+"on"
+],
+"correct": 2,
+"explanation": "'keep somebody/ something out' means: stop from entering Example: Try to keep the wet dog out of the living room.",
+"term": "keep somebody/ something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: If you keep those results ___ you will get into a great college.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'keep something up' means: continue at the same rate Example: If you keep those results up you will get into a great college.",
+"term": "keep something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I need you to be on time. Don't let me ___ this time.",
+"options": [
+"up",
+"out",
+"off",
+"down"
+],
+"correct": 3,
+"explanation": "'let somebody down' means: fail to support or help, disappoint Example: I need you to be on time. Don't let me down this time.",
+"term": "let somebody down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Can you let the cat ___ before you go to school?",
+"options": [
+"off",
+"up",
+"out",
+"in"
+],
+"correct": 3,
+"explanation": "'let somebody in' means: allow to enter Example: Can you let the cat in before you go to school?",
+"term": "let somebody in"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I can't log ___ to Facebook because I've forgotten my password.",
+"options": [
+"in /on",
+"up",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'log in (or on)' means: sign in (to a website, database) Example: I can't log in to Facebook because I've forgotten my password.",
+"term": "log in (or on)"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: If you don't log ___ somebody could get into your account.",
+"options": [
+"up",
+"out",
+"off",
+"out /off"
+],
+"correct": 3,
+"explanation": "'log out (or off)' means: sign out (of a website, database) Example: If you don't log off somebody could get into your account.",
+"term": "log out (or off)"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I'm looking ___ the Christmas break.",
+"options": [
+"off",
+"up",
+"out",
+"forward to"
+],
+"correct": 3,
+"explanation": "'look forward to something' means: be excited about the future Example: I'm looking forward to the Christmas break.",
+"term": "look forward to something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We are going to look ___ the price of snowboards today.",
+"options": [
+"into",
+"up",
+"out",
+"off"
+],
+"correct": 0,
+"explanation": "'look into something' means: investigate Example: We are going to look into the price of snowboards today.",
+"term": "look into something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Look ___! That car's going to hit you!",
+"options": [
+"off",
+"up",
+"on",
+"out"
+],
+"correct": 3,
+"explanation": "'look out' means: be careful, vigilant, and take notice Example: Look out! That car's going to hit you!",
+"term": "look out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Don't forget to look ___ snakes on the hiking trail.",
+"options": [
+"up",
+"out",
+"out for",
+"off"
+],
+"correct": 2,
+"explanation": "'look out for somebody/ something' means: be especially vigilant for Example: Don't forget to look out for snakes on the hiking trail.",
+"term": "look out for somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Can you look ___ my essay for spelling mistakes?",
+"options": [
+"out",
+"over",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'look something over' means: check, examine Example: Can you look over my essay for spelling mistakes?",
+"term": "look something over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We can look her phone number ___ on the Internet.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'look something up' means: search and find information in a reference book or the internet Example: We can look her phone number up on the Internet.",
+"term": "look something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My little sister has always looked ___ me.",
+"options": [
+"off",
+"up to",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'look up to somebody' means: have a lot of respect for Example: My little sister has always looked up to me.",
+"term": "look up to somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Josie made ___ a story about why we were late.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 1,
+"explanation": "'make something up' means: invent, lie about something Example: Josie made up a story about why we were late.",
+"term": "make something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We were angry last night, but we made ___ at breakfast.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'make up' means: forgive each other Example: We were angry last night, but we made up at breakfast.",
+"term": "make up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My sisters made me ___ for my graduation party.",
+"options": [
+"off",
+"out",
+"up",
+"on"
+],
+"correct": 2,
+"explanation": "'make somebody up' means: apply cosmetics to Example: My sisters made me up for my graduation party.",
+"term": "make somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I mixed ___ the twins' names again!",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 1,
+"explanation": "'mix something up' means: confuse two or more things Example: I mixed up the twins' names again!",
+"term": "mix something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: His uncle passed ___ last night after a long illness.",
+"options": [
+"up",
+"away",
+"out",
+"off"
+],
+"correct": 1,
+"explanation": "'pass away' means: die Example: His uncle passed away last night after a long illness.",
+"term": "pass away"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: It was so hot in the church that an elderly lady passed ___.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 1,
+"explanation": "'pass out' means: faint Example: It was so hot in the church that an elderly lady passed out.",
+"term": "pass out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I passed ___ the job because I am afraid of change.",
+"options": [
+"up",
+"on",
+"out",
+"off"
+],
+"correct": 0,
+"explanation": "'pass something up' means: decline (usually something good) Example: I passed up the job because I am afraid of change.",
+"term": "pass something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Thanks for buying my ticket. I'll pay you ___ on Friday.",
+"options": [
+"off",
+"up",
+"out",
+"back"
+],
+"correct": 3,
+"explanation": "'pay somebody back' means: return owed money Example: Thanks for buying my ticket. I'll pay you back on Friday.",
+"term": "pay somebody back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: That bully will pay ___ being mean to my little brother.",
+"options": [
+"off",
+"for",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'pay for something' means: be punished for doing something bad Example: That bully will pay for being mean to my little brother.",
+"term": "pay for something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I picked ___ three sweaters for you to try on.",
+"options": [
+"up",
+"on",
+"out",
+"off"
+],
+"correct": 2,
+"explanation": "'pick something out' means: choose Example: I picked out three sweaters for you to try on.",
+"term": "pick something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I'll point my boyfriend ___ when he runs by.",
+"options": [
+"up",
+"on",
+"out",
+"off"
+],
+"correct": 2,
+"explanation": "'point somebody/ something out' means: indicate with your finger Example: I'll point my boyfriend out when he runs by.",
+"term": "point somebody/ something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The students put the substitute teacher ___ because his pants were too short.",
+"options": [
+"up",
+"down",
+"off",
+"out"
+],
+"correct": 1,
+"explanation": "'put somebody down' means: insult, make somebody feel stupid Example: The students put the substitute teacher down because his pants were too short.",
+"term": "put somebody down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We are putting ___ our trip until January because of the hurricane.",
+"options": [
+"on",
+"off",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'put something off' means: postpone Example: We are putting off our trip until January because of the hurricane.",
+"term": "put something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The neighbors put the fire ___ before the firemen arrived.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 1,
+"explanation": "'put something out' means: extinguish Example: The neighbors put the fire out before the firemen arrived.",
+"term": "put something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to put the crib ___ before the baby arrives.",
+"options": [
+"out",
+"up",
+"off",
+"together"
+],
+"correct": 3,
+"explanation": "'put something together' means: assemble Example: I have to put the crib together before the baby arrives.",
+"term": "put something together"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I don't think I can put ___ three small children in the car.",
+"options": [
+"up with",
+"off",
+"up",
+"out"
+],
+"correct": 0,
+"explanation": "'put up with somebody/ something' means: tolerate Example: I don't think I can put up with three small children in the car.",
+"term": "put up with somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I ran ___ an old school-friend at the mall.",
+"options": [
+"out",
+"up",
+"off",
+"into"
+],
+"correct": 3,
+"explanation": "'run into somebody/ something' means: meet unexpectedly Example: I ran into an old school-friend at the mall.",
+"term": "run into somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I accidentally ran ___ your bicycle in the driveway.",
+"options": [
+"off",
+"out",
+"over",
+"up"
+],
+"correct": 2,
+"explanation": "'run over somebody/ something' means: drive a vehicle over a person or thing Example: I accidentally ran over your bicycle in the driveway.",
+"term": "run over somebody/ something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Let's run over/___ these lines one more time before the show.",
+"options": [
+"up",
+"out",
+"over/ through",
+"off"
+],
+"correct": 2,
+"explanation": "'run over/ through something' means: rehearse, review Example: Let's run over/through these lines one more time before the show.",
+"term": "run over/ through something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The child ran ___ from home and has been missing for three days.",
+"options": [
+"away",
+"up",
+"out",
+"off"
+],
+"correct": 0,
+"explanation": "'run away' means: leave unexpectedly, escape Example: The child ran away from home and has been missing for three days.",
+"term": "run away"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We ran ___ shampoo so I had to wash my hair with soap.",
+"options": [
+"off",
+"out of",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'run out of' means: have none left Example: We ran out of shampoo so I had to wash my hair with soap.",
+"term": "run out of"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My letter got sent ___ to me because I used the wrong stamp.",
+"options": [
+"out",
+"off",
+"back",
+"up"
+],
+"correct": 2,
+"explanation": "'send something back' means: return (usually by mail) Example: My letter got sent back to me because I used the wrong stamp.",
+"term": "send something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Our boss set a meeting ___ with the president of the company.",
+"options": [
+"off",
+"up",
+"on",
+"out"
+],
+"correct": 1,
+"explanation": "'set something up' means: arrange, organize Example: Our boss set a meeting up with the president of the company.",
+"term": "set something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The police set ___ the car thief by using a hidden camera.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'set somebody up' means: trick, trap Example: The police set up the car thief by using a hidden camera.",
+"term": "set somebody up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I want to shop ___ a little before I decide on these boots.",
+"options": [
+"up",
+"off",
+"around",
+"out"
+],
+"correct": 2,
+"explanation": "'shop around' means: compare prices Example: I want to shop around a little before I decide on these boots.",
+"term": "shop around"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: He always shows ___ on his skateboard",
+"options": [
+"on",
+"off",
+"out",
+"up"
+],
+"correct": 1,
+"explanation": "'show off' means: act extra special for people watching Example: He always shows off on his skateboard",
+"term": "show off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You should sleep ___ tonight if the weather is too bad to drive home.",
+"options": [
+"off",
+"over",
+"up",
+"out"
+],
+"correct": 1,
+"explanation": "'sleep over' means: stay somewhere for the night Example: You should sleep over tonight if the weather is too bad to drive home.",
+"term": "sleep over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We need to sort the bills ___ before the first of the month.",
+"options": [
+"up",
+"out",
+"on",
+"off"
+],
+"correct": 1,
+"explanation": "'sort something out' means: organize, resolve a problem Example: We need to sort the bills out before the first of the month.",
+"term": "sort something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You will lose weight if you stick ___ the diet.",
+"options": [
+"to",
+"off",
+"up",
+"out"
+],
+"correct": 0,
+"explanation": "'stick to something' means: continue doing something, limit yourself to one particular thing Example: You will lose weight if you stick to the diet.",
+"term": "stick to something"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The light's too bright. Could you switch it ___.",
+"options": [
+"up",
+"out",
+"off",
+"on"
+],
+"correct": 2,
+"explanation": "'switch something off' means: stop the energy flow, turn off Example: The light's too bright. Could you switch it off.",
+"term": "switch something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We heard the news as soon as we switched ___ the car radio.",
+"options": [
+"off",
+"up",
+"on",
+"out"
+],
+"correct": 2,
+"explanation": "'switch something on' means: start the energy flow, turn on Example: We heard the news as soon as we switched on the car radio.",
+"term": "switch something on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I take ___ my mother. We are both impatient.",
+"options": [
+"up",
+"out",
+"off",
+"after"
+],
+"correct": 3,
+"explanation": "'take after somebody' means: resemble a family member Example: I take after my mother. We are both impatient.",
+"term": "take after somebody"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: He took the car brakes ___ and found the problem.",
+"options": [
+"out",
+"up",
+"off",
+"apart"
+],
+"correct": 3,
+"explanation": "'take something apart' means: purposely break into pieces Example: He took the car brakes apart and found the problem.",
+"term": "take something apart"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I have to take our new TV ___ because it doesn't work.",
+"options": [
+"out",
+"off",
+"up",
+"back"
+],
+"correct": 3,
+"explanation": "'take something back' means: return an item Example: I have to take our new TV back because it doesn't work.",
+"term": "take something back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: My plane takes ___ in five minutes.",
+"options": [
+"on",
+"up",
+"off",
+"out"
+],
+"correct": 2,
+"explanation": "'take off' means: start to fly Example: My plane takes off in five minutes.",
+"term": "take off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Take ___ your socks and shoes and come in the lake!",
+"options": [
+"on",
+"off",
+"up",
+"out"
+],
+"correct": 1,
+"explanation": "'take something off' means: remove something (usually clothing) Example: Take off your socks and shoes and come in the lake!",
+"term": "take something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Can you take the garbage ___ to the street for me?",
+"options": [
+"out",
+"off",
+"up",
+"on"
+],
+"correct": 0,
+"explanation": "'take something out' means: remove from a place or thing Example: Can you take the garbage out to the street for me?",
+"term": "take something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I tore ___ my ex-boyfriend's letters and gave them back to him.",
+"options": [
+"up",
+"off",
+"on",
+"out"
+],
+"correct": 0,
+"explanation": "'tear something up' means: rip into pieces Example: I tore up my ex-boyfriend's letters and gave them back to him.",
+"term": "tear something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: When I think ___ on my youth, I wish I had studied harder.",
+"options": [
+"off",
+"up",
+"out",
+"back"
+],
+"correct": 3,
+"explanation": "'think back' means: remember (often + to, sometimes + on) Example: When I think back on my youth, I wish I had studied harder.",
+"term": "think back"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I'll have to think this job offer ___ before I make my final decision.",
+"options": [
+"out",
+"over",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'think something over' means: consider Example: I'll have to think this job offer over before I make my final decision.",
+"term": "think something over"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We threw our old furniture ___ when we won the lottery.",
+"options": [
+"away",
+"up",
+"out",
+"off"
+],
+"correct": 0,
+"explanation": "'throw something away' means: dispose of Example: We threw our old furniture away when we won the lottery.",
+"term": "throw something away"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Please turn the TV ___ while the guests are here.",
+"options": [
+"down",
+"up",
+"off",
+"out"
+],
+"correct": 0,
+"explanation": "'turn something down' means: decrease the volume or strength Example: Please turn the TV down while the guests are here.",
+"term": "turn something down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I turned the job ___ because I don't want to move.",
+"options": [
+"out",
+"down",
+"up",
+"off"
+],
+"correct": 1,
+"explanation": "'turn something down' means: refuse Example: I turned the job down because I don't want to move.",
+"term": "turn something down"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Your mother wants you to turn the TV ___ and come for dinner.",
+"options": [
+"off",
+"up",
+"out",
+"on"
+],
+"correct": 0,
+"explanation": "'turn something off' means: stop the energy flow, switch off Example: Your mother wants you to turn the TV off and come for dinner.",
+"term": "turn something off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: It's too dark in here. Let's turn some lights ___.",
+"options": [
+"off",
+"up",
+"out",
+"on"
+],
+"correct": 3,
+"explanation": "'turn something on' means: start the energy, switch on Example: It's too dark in here. Let's turn some lights on.",
+"term": "turn something on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Can you turn the music ___? This is my favorite song.",
+"options": [
+"off",
+"up",
+"out",
+"on"
+],
+"correct": 1,
+"explanation": "'turn something up' means: increase the volume or strength Example: Can you turn the music up? This is my favorite song.",
+"term": "turn something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Our cat turned ___ after we put posters up all over the neighborhood.",
+"options": [
+"up",
+"out",
+"on",
+"off"
+],
+"correct": 0,
+"explanation": "'turn up' means: appear suddenly Example: Our cat turned up after we put posters up all over the neighborhood.",
+"term": "turn up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I'm going to try these jeans ___, but I don't think they will fit.",
+"options": [
+"out",
+"off",
+"up",
+"on"
+],
+"correct": 3,
+"explanation": "'try something on' means: sample clothing Example: I'm going to try these jeans on, but I don't think they will fit.",
+"term": "try something on"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I am going to try this new brand of detergent ___.",
+"options": [
+"out",
+"off",
+"up",
+"on"
+],
+"correct": 0,
+"explanation": "'try something out' means: test Example: I am going to try this new brand of detergent out.",
+"term": "try something out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: The kids used all of the toothpaste ___ so we need to buy some more.",
+"options": [
+"on",
+"up",
+"out",
+"off"
+],
+"correct": 1,
+"explanation": "'use something up' means: finish the supply Example: The kids used all of the toothpaste up so we need to buy some more.",
+"term": "use something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: We have to wake ___ early for work on Monday.",
+"options": [
+"off",
+"out",
+"on",
+"up"
+],
+"correct": 3,
+"explanation": "'wake up' means: stop sleeping Example: We have to wake up early for work on Monday.",
+"term": "wake up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: You can warm your feet ___ in front of the fireplace.",
+"options": [
+"out",
+"on",
+"off",
+"up"
+],
+"correct": 3,
+"explanation": "'warm somebody/ something up' means: increase the temperature Example: You can warm your feet up in front of the fireplace.",
+"term": "warm somebody/ something up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I always warm ___ by doing sit-ups before I go for a run.",
+"options": [
+"off",
+"on",
+"up",
+"out"
+],
+"correct": 2,
+"explanation": "'warm up' means: prepare body for exercise Example: I always warm up by doing sit-ups before I go for a run.",
+"term": "warm up"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Most of my make-up wore ___ before I got to the party.",
+"options": [
+"up",
+"out",
+"off",
+"on"
+],
+"correct": 2,
+"explanation": "'wear off' means: fade away Example: Most of my make-up wore off before I got to the party.",
+"term": "wear off"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: I work ___ at the gym three times a week.",
+"options": [
+"out",
+"up",
+"on",
+"off"
+],
+"correct": 0,
+"explanation": "'work out' means: exercise Example: I work out at the gym three times a week.",
+"term": "work out"
+},
+{
+"section": "Phrasal Verbs",
+"level": "B2",
+"text": "Complete the sentence with the correct particle: Our plan worked ___ fine.",
+"options": [
+"out",
+"off",
+"up",
+"on"
+],
+"correct": 0,
+"explanation": "'work out' means: be successful Example: Our plan worked out fine.",
+"term": "work out"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to massively over exaggerate something, usually the price.",
+"options": [
+"Elephant in the room",
+"Miss the boat",
+"Off the table",
+"An arm and a leg"
+],
+"correct": 3,
+"explanation": "'An arm and a leg' = to massively over exaggerate something, usually the price. Example: \"This coffee cost me an arm and a leg, damn, everything is so expensive these days...\"",
+"term": "An arm and a leg"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: it's your turn to do / say something.",
+"options": [
+"Bite more than you can chew",
+"Hold your horses",
+"The ball is in your court",
+"Figure of speech"
+],
+"correct": 2,
+"explanation": "'The ball is in your court' = it's your turn to do / say something. Example: \"I've already said what I needed to, now the ball is in your court\"",
+"term": "The ball is in your court"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to be looking in the wrong place/wrong person.",
+"options": [
+"To feel under the weather",
+"Don't cry over spilled milk",
+"Bark up the wrong tree",
+"All over the map"
+],
+"correct": 2,
+"explanation": "'Bark up the wrong tree' = to be looking in the wrong place/wrong person. Example: \"I'm not interested in him at all, he's completely barking up the wrong tree\"",
+"term": "Bark up the wrong tree"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to purposefully avoid a topic.",
+"options": [
+"Beat around the bush",
+"Get out of hand",
+"Head over heels",
+"Not my cup of tea"
+],
+"correct": 0,
+"explanation": "'Beat around the bush' = to purposefully avoid a topic. Example: \"Could you, please, stop beating around the bush and tell me what the hell happened? God, you're making me anxious...\"",
+"term": "Beat around the bush"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to try to do too much, or harder.",
+"options": [
+"Curiosity killed the cat",
+"Get cold feet",
+"Bite more than you can chew",
+"To feel under the weather"
+],
+"correct": 2,
+"explanation": "'Bite more than you can chew' = to try to do too much, or harder. Example: \"I've been really busy at work lately, I've been definitely biting more than I can chew\"",
+"term": "Bite more than you can chew"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: great idea / plan / innovation",
+"options": [
+"Best thing since sliced bread",
+"Lose the plot",
+"Figure of speech",
+"Raincheck someone"
+],
+"correct": 0,
+"explanation": "'Best thing since sliced bread' = great idea / plan / innovation Example: \"This new metro system is the best thing since sliced bread\"",
+"term": "Best thing since sliced bread"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: don't judge something by how it looks.",
+"options": [
+"Call it a day",
+"Beat around the bush",
+"Can't judge a book by its cover",
+"Take matters into your own hands"
+],
+"correct": 2,
+"explanation": "'Can't judge a book by its cover' = don't judge something by how it looks. Example: \"This house looks a bit rough on the outside but we shouldn't judge a book by its cover\"",
+"term": "Can't judge a book by its cover"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: being too inquisitive may lead to an unpleasant situation.",
+"options": [
+"Bark up the wrong tree",
+"Curiosity killed the cat",
+"Turn the other cheek",
+"Talk sense into someone"
+],
+"correct": 1,
+"explanation": "'Curiosity killed the cat' = being too inquisitive may lead to an unpleasant situation. Example: \"Don't look up your ex on Instagram, you know curiosity killed the cat\"",
+"term": "Curiosity killed the cat"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: not being very good at something, therefore not doing it professionally.",
+"options": [
+"All over the map",
+"Bite the bullet",
+"Give someone the benefit of the doubt",
+"Don't give up your day job"
+],
+"correct": 3,
+"explanation": "'Don't give up your day job' = not being very good at something, therefore not doing it professionally. Example: (Someone dancing quite badly) \"Lovely, don't give up your day job...\"",
+"term": "Don't give up your day job"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: do always have plenty of options, don't solely rely on one thing.",
+"options": [
+"Not my cup of tea",
+"Kill two birds with one stone",
+"An arm and a leg",
+"Don't put all your eggs in one basket"
+],
+"correct": 3,
+"explanation": "'Don't put all your eggs in one basket' = do always have plenty of options, don't solely rely on one thing. Example: \"I know you're relying on getting into medical school but you shouldn't put all your eggs in one basket\"",
+"term": "Don't put all your eggs in one basket"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to do something perfectly.",
+"options": [
+"Talk sense into someone",
+"Hit the nail on the head",
+"Don't cry over spilled milk",
+"Elephant in the room"
+],
+"correct": 1,
+"explanation": "'Hit the nail on the head' = to do something perfectly. Example: \"Congrats!!! You scored 100 points in the test, you've hit the nail on the head\"",
+"term": "Hit the nail on the head"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to need more than 1 person to work.",
+"options": [
+"Steal someone's thunder",
+"Get out of hand",
+"It takes two to tango",
+"The ball is in your court"
+],
+"correct": 2,
+"explanation": "'It takes two to tango' = to need more than 1 person to work. Example: \"I know I broke his heart when I told him that I didn't love him anymore but remember that it always takes two to tango\"",
+"term": "It takes two to tango"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: accomplishing two things in one go.",
+"options": [
+"Bite the bullet",
+"Hit the nail on the head",
+"Kill two birds with one stone",
+"Don't put all your eggs in one basket"
+],
+"correct": 2,
+"explanation": "'Kill two birds with one stone' = accomplishing two things in one go. Example: \"I killed two birds with one stone and picked the kids up from school on the way to the shop\"",
+"term": "Kill two birds with one stone"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: a crazy idea but a reasonable one.",
+"options": [
+"Raincheck someone",
+"Method to someone's madness",
+"Hold your horses",
+"Not my cup of tea"
+],
+"correct": 1,
+"explanation": "'Method to someone's madness' = a crazy idea but a reasonable one. Example: \"The employees are often confused by the boss' decisions, but there always seems to be method to his madness\"",
+"term": "Method to someone's madness"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: two people agreeing, same views on something.",
+"options": [
+"Speak of the devil",
+"Full of beans",
+"See eye to eye",
+"An arm and a leg"
+],
+"correct": 2,
+"explanation": "'See eye to eye' = two people agreeing, same views on something. Example: \"I've never really seen eye to eye with my dad\"",
+"term": "See eye to eye"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to deal with a problem yourself.",
+"options": [
+"Take matters into your own hands",
+"Can't judge a book by its cover",
+"Hold your horses",
+"A blessing in disguise"
+],
+"correct": 0,
+"explanation": "'Take matters into your own hands' = to deal with a problem yourself. Example: \"This project isn't being managed properly, so I'm just going to have to take matters into my own hands and start supervising the work directly\"",
+"term": "Take matters into your own hands"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: talking about someone and them showing up immediately after.",
+"options": [
+"Get out of hand",
+"Speak of the devil",
+"Cross that bridge when we come to it",
+"Get cold feet"
+],
+"correct": 1,
+"explanation": "'Speak of the devil' = talking about someone and them showing up immediately after. Example: (Talking about Dave and Dave arrives) \"Ah, speak of the devil...\"",
+"term": "Speak of the devil"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: take credit for someone else's work /attention.",
+"options": [
+"Lose the plot",
+"Cut someone some slack",
+"Steal someone's thunder",
+"Spice things up"
+],
+"correct": 2,
+"explanation": "'Steal someone's thunder' = take credit for someone else's work /attention. Example: \"It's Laura's birthday tonight, don't steal her thunder!\"",
+"term": "Steal someone's thunder"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to be treated the same way you treat others.",
+"options": [
+"Pull yourself together",
+"Taste of your own medicine",
+"Go bananas",
+"Off the table"
+],
+"correct": 1,
+"explanation": "'Taste of your own medicine' = to be treated the same way you treat others. Example: \"Don't bully that boy or one day you'll get a taste of your own medicine\"",
+"term": "Taste of your own medicine"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: you know as much as the person asking.",
+"options": [
+"Bite the bullet",
+"Bark up the wrong tree",
+"Method to someone's madness",
+"Your guess is as good as mine"
+],
+"correct": 3,
+"explanation": "'Your guess is as good as mine' = you know as much as the person asking. Example: \"Do we get paid tomorrow?\" \"I don't know, mate. Your guess is as good as mine\"",
+"term": "Your guess is as good as mine"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: something good that seemed bad at first.",
+"options": [
+"Curiosity killed the cat",
+"A blessing in disguise",
+"The ball is in your court",
+"Throw a spanner in the works"
+],
+"correct": 1,
+"explanation": "'A blessing in disguise' = something good that seemed bad at first. Example: \"I missed the bus but it was a blessing in disguise because it exploded\"",
+"term": "A blessing in disguise"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: better being late than not arriving/ doing it at all.",
+"options": [
+"Better late than never",
+"Full of beans",
+"It takes two to tango",
+"All over the map"
+],
+"correct": 0,
+"explanation": "'Better late than never' = better being late than not arriving/ doing it at all. Example: \"In spite of turning 45 this year, I decided to start studying again, better late than never\"",
+"term": "Better late than never"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to get something over with, inevitable.",
+"options": [
+"Don't cry over spilled milk",
+"Don't give up your day job",
+"Bite the bullet",
+"To feel under the weather"
+],
+"correct": 2,
+"explanation": "'Bite the bullet' = to get something over with, inevitable. Example: \"I wish they'd bite the bullet and get married already, it's been 10 years!\"",
+"term": "Bite the bullet"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: stop working on something.",
+"options": [
+"Turn a blind eye",
+"Not my cup of tea",
+"Call it a day",
+"Give someone the benefit of the doubt"
+],
+"correct": 2,
+"explanation": "'Call it a day' = stop working on something. Example: \"I've been studying all day today, I'm going to call it a day\"",
+"term": "Call it a day"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to lose control over something.",
+"options": [
+"The ball is in your court",
+"Get out of hand",
+"Turn the other cheek",
+"Lose the plot"
+],
+"correct": 1,
+"explanation": "'Get out of hand' = to lose control over something. Example: \"My obsession with buying second-hand items is getting out of hand\"",
+"term": "Get out of hand"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: resolve the issue when it happens, not now.",
+"options": [
+"Beat around the bush",
+"Cross that bridge when we come to it",
+"Bark up the wrong tree",
+"Method to someone's madness"
+],
+"correct": 1,
+"explanation": "'Cross that bridge when we come to it' = resolve the issue when it happens, not now. Example: \"Let's not think about the mortgage payment yet, we'll cross that bridge when we come to it\"",
+"term": "Cross that bridge when we come to it"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to calm down.",
+"options": [
+"Pull yourself together",
+"The ball is in your court",
+"Lose the plot",
+"Steal someone's thunder"
+],
+"correct": 0,
+"explanation": "'Pull yourself together' = to calm down. Example: \"Stop crying George, pull yourself together, c'mon!!!\"",
+"term": "Pull yourself together"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to start feeling a bit ill/sick.",
+"options": [
+"Cut someone some slack",
+"The ball is in your court",
+"Curiosity killed the cat",
+"To feel under the weather"
+],
+"correct": 3,
+"explanation": "'To feel under the weather' = to start feeling a bit ill/sick. Example: \"I feel really under the weather today, I'll call in sick\"",
+"term": "To feel under the weather"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: too late.",
+"options": [
+"Cross that bridge when we come to it",
+"Throw a spanner in the works",
+"Miss the boat",
+"Don't cry over spilled milk"
+],
+"correct": 2,
+"explanation": "'Miss the boat' = too late. Example: \"You don't want to miss the boat on those concert tickets, hurry up!\"",
+"term": "Miss the boat"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to trust what they say.",
+"options": [
+"Give someone the benefit of the doubt",
+"Hit the hay",
+"Your guess is as good as mine",
+"Don't cry over spilled milk"
+],
+"correct": 0,
+"explanation": "'Give someone the benefit of the doubt' = to trust what they say. Example: \"I don't know who to believe so I'll give you both the benefit of the doubt and not punish either of you\"",
+"term": "Give someone the benefit of the doubt"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: prevents something from happening smoothly.",
+"options": [
+"Off the table",
+"Throw a spanner in the works",
+"To feel under the weather",
+"Beat around the bush"
+],
+"correct": 1,
+"explanation": "'Throw a spanner in the works' = prevents something from happening smoothly. Example: \"The train strikes have really thrown a spanner in the works for my upcoming trip to London\"",
+"term": "Throw a spanner in the works"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to go crazy.",
+"options": [
+"Throw in the towel",
+"Hit the hay",
+"Head over heels",
+"Lose the plot"
+],
+"correct": 3,
+"explanation": "'Lose the plot' = to go crazy. Example: \"My mum has lost the plot, she's bought 10 kg of pasta for 4 people\"",
+"term": "Lose the plot"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: not my favorite thing.",
+"options": [
+"Go bananas",
+"Get out of hand",
+"Not my cup of tea",
+"Blow off steam"
+],
+"correct": 2,
+"explanation": "'Not my cup of tea' = not my favorite thing. Example: \"Michael Jackson's music isn't really my cup of tea\"",
+"term": "Not my cup of tea"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: full of energy.",
+"options": [
+"Get cold feet",
+"Full of beans",
+"Go bananas",
+"Method to someone's madness"
+],
+"correct": 1,
+"explanation": "'Full of beans' = full of energy. Example: \"Mateo is really full of beans today, he won't sit down\"",
+"term": "Full of beans"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: a conversation that does not stick to the main topic.",
+"options": [
+"Be off the mark",
+"Bark up the wrong tree",
+"Spice things up",
+"All over the map"
+],
+"correct": 3,
+"explanation": "'All over the map' = a conversation that does not stick to the main topic. Example: \"The meeting today was all over the map and I don't feel like we accomplished what we need to\"",
+"term": "All over the map"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to let out stress/ anger / frustration.",
+"options": [
+"Go bananas",
+"Hold your horses",
+"Blow off steam",
+"Have a run-in with"
+],
+"correct": 2,
+"explanation": "'Blow off steam' = to let out stress/ anger / frustration. Example: \"After a stressful work day it was great to blow off some steam and work out\"",
+"term": "Blow off steam"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to be very much in love.",
+"options": [
+"Pull yourself together",
+"Get cold feet",
+"Hit the hay",
+"Head over heels"
+],
+"correct": 3,
+"explanation": "'Head over heels' = to be very much in love. Example: \"Tim and Erica look adorable! They are head over heels for each other\"",
+"term": "Head over heels"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to give up/ surrender.",
+"options": [
+"Best thing since sliced bread",
+"Throw in the towel",
+"Miss the boat",
+"Bite the dust"
+],
+"correct": 1,
+"explanation": "'Throw in the towel' = to give up/ surrender. Example: \"After hours of trying to fix the issue on his computer, he decided to throw in the towel and call for technical support\"",
+"term": "Throw in the towel"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: very easy to do.",
+"options": [
+"Bite more than you can chew",
+"Speak of the devil",
+"Piece of cake",
+"Curiosity killed the cat"
+],
+"correct": 2,
+"explanation": "'Piece of cake' = very easy to do. Example: \"The exam was a piece of cake; I finished it in 20 minutes\"",
+"term": "Piece of cake"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: said to encourage a person to avoid wasting time worrying about things that have already happened and cannot be changed.",
+"options": [
+"It takes two to tango",
+"Don't cry over spilled milk",
+"Elephant in the room",
+"Bite the dust"
+],
+"correct": 1,
+"explanation": "'Don't cry over spilled milk' = said to encourage a person to avoid wasting time worrying about things that have already happened and cannot be changed. Example: \"Yes, you made a mistake, but don't cry over spilled milk; focus on finding a solution\"",
+"term": "Don't cry over spilled milk"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: it involves two things that are very similar.",
+"options": [
+"Two peas in a pod",
+"Head over heels",
+"It takes two to tango",
+"Your guess is as good as mine"
+],
+"correct": 0,
+"explanation": "'Two peas in a pod' = it involves two things that are very similar. Example: \"My best friend and I like all the same things, we're two peas in a pod!\"",
+"term": "Two peas in a pod"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to add excitement to a situation.",
+"options": [
+"Miss the boat",
+"Hit the nail on the head",
+"Spice things up",
+"Give someone the benefit of the doubt"
+],
+"correct": 2,
+"explanation": "'Spice things up' = to add excitement to a situation. Example: \"Let's spice things up at the party by introducing some fun games and activities\"",
+"term": "Spice things up"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to go extremely happy/ excited/ crazy over something.",
+"options": [
+"Bite the bullet",
+"Don't put all your eggs in one basket",
+"Take matters into your own hands",
+"Go bananas"
+],
+"correct": 3,
+"explanation": "'Go bananas' = to go extremely happy/ excited/ crazy over something. Example: \"The crowd went bananas when their favorite band took the stage, clapping and cheering nonstop for over 10 minutes\"",
+"term": "Go bananas"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: a serious problem/ issue that people are avoiding to talk about.",
+"options": [
+"Throw in the towel",
+"Call it a day",
+"Elephant in the room",
+"A blessing in disguise"
+],
+"correct": 2,
+"explanation": "'Elephant in the room' = a serious problem/ issue that people are avoiding to talk about. Example: \"We need to address the elephant in the room and discuss the budget cuts\"",
+"term": "Elephant in the room"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to fail or suffer a defeat.",
+"options": [
+"Bite the dust",
+"Turn the other cheek",
+"See eye to eye",
+"Bite the bullet"
+],
+"correct": 0,
+"explanation": "'Bite the dust' = to fail or suffer a defeat. Example: \"After weeks of intense competition, the other team won and ours bit the dust\"",
+"term": "Bite the dust"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: go to bed/ head to sleep.",
+"options": [
+"Elephant in the room",
+"Cut someone some slack",
+"Have a run-in with",
+"Hit the hay"
+],
+"correct": 3,
+"explanation": "'Hit the hay' = go to bed/ head to sleep. Example: \"It's been a long day of work, I'm ready to hit the hay\"",
+"term": "Hit the hay"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: pretend not to see something.",
+"options": [
+"Piece of cake",
+"Give someone the benefit of the doubt",
+"Turn a blind eye",
+"Turn the other cheek"
+],
+"correct": 2,
+"explanation": "'Turn a blind eye' = pretend not to see something. Example: \"The manager decided to turn a blind eye to the minor rule violation and not report it\"",
+"term": "Turn a blind eye"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to feel nervous / hesitant about a decision or action.",
+"options": [
+"Get cold feet",
+"Get out of hand",
+"Best thing since sliced bread",
+"Speak of the devil"
+],
+"correct": 0,
+"explanation": "'Get cold feet' = to feel nervous / hesitant about a decision or action. Example: \"On the day of the wedding, it's very common for the groom or bride to get cold feet and have second thoughts\"",
+"term": "Get cold feet"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to endure a difficult situation.",
+"options": [
+"Steal someone's thunder",
+"Method to someone's madness",
+"Hit the nail on the head",
+"Weather the storm"
+],
+"correct": 3,
+"explanation": "'Weather the storm' = to endure a difficult situation. Example: \"The business went through tough times, but we managed to weather the storm and keep operating\"",
+"term": "Weather the storm"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to slow down, stop and think about what you're doing.",
+"options": [
+"Elephant in the room",
+"Go bananas",
+"Hold your horses",
+"Throw in the towel"
+],
+"correct": 2,
+"explanation": "'Hold your horses' = to slow down, stop and think about what you're doing. Example: \"I don't think you're doing it right, you should hold your horses for a minute and redo it\"",
+"term": "Hold your horses"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: something is no longer being offered.",
+"options": [
+"Off the table",
+"Have a run-in with",
+"A blessing in disguise",
+"Don't cry over spilled milk"
+],
+"correct": 0,
+"explanation": "'Off the table' = something is no longer being offered. Example: \"Before we begin this debate, let me clarify that you are both to focus solely on the question of the economy; all other topics are off the table.\"",
+"term": "Off the table"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: nonliteral meaning, rhetorical effect.",
+"options": [
+"Curiosity killed the cat",
+"Figure of speech",
+"Beat around the bush",
+"Elephant in the room"
+],
+"correct": 1,
+"explanation": "'Figure of speech' = nonliteral meaning, rhetorical effect. Example: \"Bob: \"Does eating an apple a day really keep doctors away from you?\" Doug: \"Don't take it so literally, Bob, it's just a figure of speech.\"",
+"term": "Figure of speech"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to decide not to do anything to hurt someone who has hurt you.",
+"options": [
+"Two peas in a pod",
+"Off the table",
+"Don't put all your eggs in one basket",
+"Turn the other cheek"
+],
+"correct": 3,
+"explanation": "'Turn the other cheek' = to decide not to do anything to hurt someone who has hurt you. Example: \"I know it's frustrating, but it's often best to turn the other cheek. Fighting won't solve the problem.\"",
+"term": "Turn the other cheek"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: when someone writes or says something incorrect.",
+"options": [
+"Weather the storm",
+"Be off the mark",
+"Go bananas",
+"Bite the bullet"
+],
+"correct": 1,
+"explanation": "'Be off the mark' = when someone writes or says something incorrect. Example: \"His criticism is always way off the mark.\"",
+"term": "Be off the mark"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to deliberately deceive someone who is trying to find out the truth about something, by making them believe something that is not true.",
+"options": [
+"Curiosity killed the cat",
+"Be off the mark",
+"Full of beans",
+"Throw someone off the scent"
+],
+"correct": 3,
+"explanation": "'Throw someone off the scent' = to deliberately deceive someone who is trying to find out the truth about something, by making them believe something that is not true. Example: \"The murderer tried to throw the cops off the scent by claiming that he saw another man attacking the woman.\"",
+"term": "Throw someone off the scent"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to help someone to think about a situation in a reasonable way.",
+"options": [
+"Talk sense into someone",
+"Can't judge a book by its cover",
+"Bite the bullet",
+"Best thing since sliced bread"
+],
+"correct": 0,
+"explanation": "'Talk sense into someone' = to help someone to think about a situation in a reasonable way. Example: \"She won't listen to me - can you try to talk some sense into her?\"",
+"term": "Talk sense into someone"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: maintains a feeling of anger toward someone for something they did.",
+"options": [
+"Talk sense into someone",
+"Curiosity killed the cat",
+"Hold a grudge against someone",
+"It takes two to tango"
+],
+"correct": 2,
+"explanation": "'Hold a grudge against someone' = maintains a feeling of anger toward someone for something they did. Example: \"If you still hold a grudge against someone for what they did to you a year prior, grow up. Let it go. Move on past it instead of holding onto it\"",
+"term": "Hold a grudge against someone"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: maintains a feeling of anger toward someone for something they did.",
+"options": [
+"Blow off steam",
+"Have a run-in with",
+"Be off the mark",
+"Hit the nail on the head"
+],
+"correct": 1,
+"explanation": "'Have a run-in with' = maintains a feeling of anger toward someone for something they did. Example: \"I had a run-in with my brother yesterday over whose turn it was to borrow the car\"",
+"term": "Have a run-in with"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: tell someone you cannot accept an invitation now, but would like to do it at a later time.",
+"options": [
+"Head over heels",
+"Don't give up your day job",
+"Raincheck someone",
+"Your guess is as good as mine"
+],
+"correct": 2,
+"explanation": "'Raincheck someone' = tell someone you cannot accept an invitation now, but would like to do it at a later time. Example: \"How many times will you keep rainchecking me?\"",
+"term": "Raincheck someone"
+},
+{
+"section": "Idioms",
+"level": "C1",
+"text": "Which idiom means: to not be so critical, too harsh.",
+"options": [
+"Bark up the wrong tree",
+"Can't judge a book by its cover",
+"Piece of cake",
+"Cut someone some slack"
+],
+"correct": 3,
+"explanation": "'Cut someone some slack' = to not be so critical, too harsh. Example: \"C'mon Johnny, cut me some slack in here, you know it's been complicated for me lately\"",
+"term": "Cut someone some slack"
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "… are found on the surface of the moon.",
+"options": [
+"Craters and waterless seas that",
+"Craters and waterless seas",
+"Since craters and waterless seas"
+],
+"correct": 1,
+"explanation": "Correct answer: Craters and waterless seas.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "A child in the first grade tends to be … all of his colleagues in the class.",
+"options": [
+"as old like",
+"the same old to",
+"the same age as"
+],
+"correct": 2,
+"explanation": "Correct answer: the same age as.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The teacher told me that an equilateral triangle is a triangle … and three angles of equal size.",
+"options": [
+"that has three sides of equal length",
+"that have three sides of equal length",
+"that has three sides of equal length"
+],
+"correct": 2,
+"explanation": "Correct answer: that has three sides of equal length.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'm … to succeed.",
+"options": [
+"determined",
+"determine",
+"determinant"
+],
+"correct": 0,
+"explanation": "Correct answer: determined.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Students set confused … having to suffer long and had years before they obtain success.",
+"options": [
+"of",
+"with",
+"about"
+],
+"correct": 2,
+"explanation": "Correct answer: about.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "His … made him cry.",
+"options": [
+"fearless",
+"fearful",
+"fearfulness"
+],
+"correct": 2,
+"explanation": "Correct answer: fearfulness.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He is considered … greatest painter in the Europe.",
+"options": [
+"that he was",
+"the",
+"as he was"
+],
+"correct": 1,
+"explanation": "Correct answer: the.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "An egg is such an efficient structure for protecting the embryo inside … difficult for the hatchling to break.",
+"options": [
+"that it is",
+"that",
+"and is"
+],
+"correct": 0,
+"explanation": "Correct answer: that it is.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "… two waves pass a given point simultaneously, they will have no effect on each other.",
+"options": [
+"That",
+"So that",
+"If"
+],
+"correct": 2,
+"explanation": "Correct answer: If.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The detonator for a nuclear device may be made of … .",
+"options": [
+"two equipment pieces",
+"two pieces of equipment",
+"two pieces of equipments"
+],
+"correct": 1,
+"explanation": "Correct answer: two pieces of equipment.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Having … the topics for their project, they started working.",
+"options": [
+"chosen",
+"chose",
+"choice"
+],
+"correct": 0,
+"explanation": "Correct answer: chosen.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "… that the English settled in this town.",
+"options": [
+"In 1500 that it was",
+"Because in 1500",
+"It was in 1500"
+],
+"correct": 2,
+"explanation": "Correct answer: It was in 1500.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Some students are so afraid … failing that they deny all job interviews.",
+"options": [
+"at",
+"of",
+"about"
+],
+"correct": 1,
+"explanation": "Correct answer: of.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Please state your name, age and … .",
+"options": [
+"occupied",
+"occupation",
+"occupied"
+],
+"correct": 1,
+"explanation": "Correct answer: occupation.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Staying in a hotel costs … renting a room in a dormitory.",
+"options": [
+"twice as much as",
+"twice more than",
+"as much as twice"
+],
+"correct": 0,
+"explanation": "Correct answer: twice as much as.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "When friends insist on … gifts, it makes me uncomfortable.",
+"options": [
+"I accepting",
+"I accept",
+"my accepting"
+],
+"correct": 2,
+"explanation": "Correct answer: my accepting.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Wild roses have large flowers, which usually smell … .",
+"options": [
+"sweet",
+"sweetly",
+"sweetish"
+],
+"correct": 0,
+"explanation": "Correct answer: sweet.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "It is important that the office … an applicant's registration.",
+"options": [
+"confirms",
+"confirm",
+"will confirm"
+],
+"correct": 1,
+"explanation": "Correct answer: confirm.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Deserts are often formed … they are cut off from rain-bearing winds.",
+"options": [
+"so",
+"due to",
+"because"
+],
+"correct": 2,
+"explanation": "Correct answer: because.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Do any of these paints … you?",
+"options": [
+"attract",
+"attractive",
+"attractively"
+],
+"correct": 0,
+"explanation": "Correct answer: attract.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "You must decide and … up your mind.",
+"options": [
+"get",
+"do",
+"make"
+],
+"correct": 2,
+"explanation": "Correct answer: make.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "What time do you … up in the morning?",
+"options": [
+"take",
+"get",
+"do"
+],
+"correct": 1,
+"explanation": "Correct answer: get.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "At the moment we are trying to … for the town centre.",
+"options": [
+"make",
+"do",
+"take"
+],
+"correct": 0,
+"explanation": "Correct answer: make.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "After they had shouted at each other, they decided to … it up.",
+"options": [
+"make",
+"do",
+"get"
+],
+"correct": 0,
+"explanation": "Correct answer: make.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They are good friends and … on well with each other.",
+"options": [
+"make",
+"take",
+"get"
+],
+"correct": 2,
+"explanation": "Correct answer: get.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The firm has expanded and they want to … on extra staff.",
+"options": [
+"do",
+"take",
+"get"
+],
+"correct": 1,
+"explanation": "Correct answer: take.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She is good at writing stories for children and is keen to … up new plots.",
+"options": [
+"make",
+"take",
+"do"
+],
+"correct": 0,
+"explanation": "Correct answer: make.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "As I don't have much money at the moment, I've decided to … without certain luxuries.",
+"options": [
+"make",
+"take",
+"do"
+],
+"correct": 2,
+"explanation": "Correct answer: do.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Today is when the new boss is going to … over.",
+"options": [
+"get",
+"take",
+"make"
+],
+"correct": 1,
+"explanation": "Correct answer: take.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "All lines were destroyed in the storm last night and so it's impossible to … through to anybody today.",
+"options": [
+"take",
+"get",
+"make"
+],
+"correct": 1,
+"explanation": "Correct answer: get.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He had two sons both of whom were not very … and avoided work if they could.",
+"options": [
+"industry",
+"industrial",
+"industrious"
+],
+"correct": 2,
+"explanation": "Correct answer: industrious.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "One day the old man knew that he was dying and called his two sons to his bed … .",
+"options": [
+"side",
+"wall",
+"corner"
+],
+"correct": 0,
+"explanation": "Correct answer: side.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He wanted his son to pay as much … to the cultivation of the farm as he had done many years before.",
+"options": [
+"care",
+"thought",
+"attention"
+],
+"correct": 2,
+"explanation": "Correct answer: attention.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She told him that there was a … treasure in the land.",
+"options": [
+"unseen",
+"hidden",
+"obscured"
+],
+"correct": 1,
+"explanation": "Correct answer: hidden.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He told them that they would find the basket in one of his 5 vine … .",
+"options": [
+"areas",
+"spaces",
+"yards"
+],
+"correct": 2,
+"explanation": "Correct answer: yards.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They assured him that they would work hard to … out the treasure.",
+"options": [
+"sort",
+"find",
+"seek"
+],
+"correct": 1,
+"explanation": "Correct answer: find.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "In the end their father died and been …",
+"options": [
+"earthed",
+"buried",
+"confined"
+],
+"correct": 1,
+"explanation": "Correct answer: buried.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "We worked hard and dug every single … meter of the land.",
+"options": [
+"square",
+"cube",
+"block"
+],
+"correct": 0,
+"explanation": "Correct answer: square.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "However hard we worked, we … to find the smallest bit of treasure.",
+"options": [
+"missed",
+"lacked",
+"failed"
+],
+"correct": 2,
+"explanation": "Correct answer: failed.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "All the work they had done on the land ensured that they had the best … for years.",
+"options": [
+"crop",
+"production",
+"yielding"
+],
+"correct": 0,
+"explanation": "Correct answer: crop.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Yesterday he … to an archeological site.",
+"options": [
+"visited",
+"go",
+"went"
+],
+"correct": 2,
+"explanation": "Correct answer: went.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The problems she has … the language are to do with spelling.",
+"options": [
+"on",
+"to",
+"with"
+],
+"correct": 2,
+"explanation": "Correct answer: with.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If I want to pass my exams, I … study very hard.",
+"options": [
+"can",
+"must",
+"will"
+],
+"correct": 1,
+"explanation": "Correct answer: must.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The … thing of all difficulties in a language is vocabulary.",
+"options": [
+"bad",
+"worse",
+"worst"
+],
+"correct": 2,
+"explanation": "Correct answer: worst.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Ann has been … English for 7 years.",
+"options": [
+"trying",
+"studied",
+"learning"
+],
+"correct": 2,
+"explanation": "Correct answer: learning.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "When I walked there, I saw that the students were working very … .",
+"options": [
+"hard",
+"easy",
+"hardly"
+],
+"correct": 0,
+"explanation": "Correct answer: hard.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Most people don't want to study Latin because it is a … language.",
+"options": [
+"old",
+"dead",
+"death"
+],
+"correct": 1,
+"explanation": "Correct answer: dead.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I've forgotten the name of my teacher but I think it is something like … .",
+"options": [
+"Brown",
+"john",
+"smith"
+],
+"correct": 0,
+"explanation": "Correct answer: Brown.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "What is the name of the … you put tea into?",
+"options": [
+"think",
+"thinking",
+"thing"
+],
+"correct": 2,
+"explanation": "Correct answer: thing.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I … a lot of presents for my birthday.",
+"options": [
+"became",
+"got",
+"become"
+],
+"correct": 1,
+"explanation": "Correct answer: got.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Shall we … across this field?",
+"options": [
+"set",
+"take",
+"go"
+],
+"correct": 2,
+"explanation": "Correct answer: go.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "… him two hours to do his homework.",
+"options": [
+"Taking it",
+"It takes",
+"It must"
+],
+"correct": 1,
+"explanation": "Correct answer: It takes.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Have you read any books … by him?",
+"options": [
+"written",
+"wrote",
+"writing"
+],
+"correct": 0,
+"explanation": "Correct answer: written.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "My parents visited … .",
+"options": [
+"Spain and United Kingdom",
+"the Spain and the United Kingdom",
+"Spain and the United Kingdom"
+],
+"correct": 2,
+"explanation": "Correct answer: Spain and the United Kingdom.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She likes to … the crossword puzzle in the newspaper every day.",
+"options": [
+"answer",
+"fill",
+"do"
+],
+"correct": 2,
+"explanation": "Correct answer: do.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The more running water you use, … .",
+"options": [
+"will be higher your bill",
+"the higher your bill will be",
+"your bill will be higher"
+],
+"correct": 1,
+"explanation": "Correct answer: the higher your bill will be.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He can make a delicious … out of almost anything.",
+"options": [
+"meal",
+"plate",
+"food"
+],
+"correct": 0,
+"explanation": "Correct answer: meal.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Is he watching TV? He's … to be washing the car.",
+"options": [
+"expected",
+"hoped",
+"supposed"
+],
+"correct": 2,
+"explanation": "Correct answer: supposed.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Are you looking forward … your family again?",
+"options": [
+"to see",
+"to seeing",
+"seeing"
+],
+"correct": 1,
+"explanation": "Correct answer: to seeing.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I asked two strangers the way to the shop but … of them knew.",
+"options": [
+"none",
+"neither",
+"either"
+],
+"correct": 1,
+"explanation": "Correct answer: neither.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "We will stop now … you have any further questions.",
+"options": [
+"unless",
+"in spite of",
+"if"
+],
+"correct": 2,
+"explanation": "Correct answer: if.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "During the exam, he wasted … time searching for his pen.",
+"options": [
+"costly",
+"expensive",
+"valuable"
+],
+"correct": 2,
+"explanation": "Correct answer: valuable.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I've known him … I left college.",
+"options": [
+"when",
+"until",
+"since"
+],
+"correct": 2,
+"explanation": "Correct answer: since.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "There was no … in continuing. The race was over for her.",
+"options": [
+"point",
+"value",
+"profit"
+],
+"correct": 0,
+"explanation": "Correct answer: point.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I travelled … 8:00 train, arriving at 10:00.",
+"options": [
+"in the",
+"on the",
+"by"
+],
+"correct": 1,
+"explanation": "Correct answer: on the.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I don't know for certain what time he's coming back but I'm sure he'll be back … Friday.",
+"options": [
+"by",
+"in",
+"at"
+],
+"correct": 0,
+"explanation": "Correct answer: by.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She … out after dinner and she's just come back.",
+"options": [
+"had gone",
+"went",
+"is gone"
+],
+"correct": 1,
+"explanation": "Correct answer: went.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She … a new laptop.",
+"options": [
+"suggested that I should buy",
+"suggested that I bought",
+"suggest I buy"
+],
+"correct": 0,
+"explanation": "Correct answer: suggested that I should buy.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He was wearing a heavy sweater to … himself against the cold.",
+"options": [
+"wrap",
+"cover",
+"protect"
+],
+"correct": 2,
+"explanation": "Correct answer: protect.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The exam was quite easy; … I expected.",
+"options": [
+"easier than",
+"easier as",
+"more easy that"
+],
+"correct": 0,
+"explanation": "Correct answer: easier than.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Nowadays … don't need an ink pot.",
+"options": [
+"most pupils",
+"they the most pupils",
+"most of they pupils"
+],
+"correct": 0,
+"explanation": "Correct answer: most pupils.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The play lasted four hours with … of fifteen minutes between scenes.",
+"options": [
+"a pause",
+"a stop",
+"an interval"
+],
+"correct": 2,
+"explanation": "Correct answer: an interval.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "My manager is busy at the moment so it may take a … time to answer.",
+"options": [
+"few",
+"small",
+"little"
+],
+"correct": 2,
+"explanation": "Correct answer: little.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I don't get tired … watching TV every night.",
+"options": [
+"by",
+"of",
+"with"
+],
+"correct": 1,
+"explanation": "Correct answer: of.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "When I first came here, they … this bridge yet.",
+"options": [
+"had built",
+"hadn't built",
+"haven't built"
+],
+"correct": 1,
+"explanation": "Correct answer: hadn't built.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He has to go to work on foot today because his car is being … .",
+"options": [
+"broken",
+"rented",
+"serviced"
+],
+"correct": 2,
+"explanation": "Correct answer: serviced.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'd rather … with us.",
+"options": [
+"you came",
+"you to come",
+"you would come"
+],
+"correct": 0,
+"explanation": "Correct answer: you came.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "When … invented?",
+"options": [
+"was washing machine",
+"were the washing machines",
+"was the washing machine"
+],
+"correct": 2,
+"explanation": "Correct answer: was the washing machine.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "It's two years … Brian.",
+"options": [
+"since I saw",
+"since I didn't see",
+"that I don't see"
+],
+"correct": 0,
+"explanation": "Correct answer: since I saw.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "What a great party last night! You … come.",
+"options": [
+"must have",
+"should have",
+"had to"
+],
+"correct": 1,
+"explanation": "Correct answer: should have.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'll call you when I _______ home.",
+"options": [
+"will get",
+"get",
+"got"
+],
+"correct": 1,
+"explanation": "Correct answer: get.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If I _______ more time, I would learn another language.",
+"options": [
+"have",
+"had",
+"will have"
+],
+"correct": 1,
+"explanation": "Correct answer: had.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She's looking forward to _______ her new job.",
+"options": [
+"start",
+"starting",
+"to start"
+],
+"correct": 1,
+"explanation": "Correct answer: starting.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The film was so boring that we decided _______ early.",
+"options": [
+"to leave",
+"leaving",
+"leave"
+],
+"correct": 0,
+"explanation": "Correct answer: to leave.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I wish I _______ how to play the piano.",
+"options": [
+"know",
+"knew",
+"have known"
+],
+"correct": 1,
+"explanation": "Correct answer: knew.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The train had already left _______ we arrived at the station.",
+"options": [
+"during",
+"until",
+"when"
+],
+"correct": 2,
+"explanation": "Correct answer: when.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They've lived here _______ ten years.",
+"options": [
+"since",
+"for",
+"during"
+],
+"correct": 1,
+"explanation": "Correct answer: for.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I can't stand _______ in long queues.",
+"options": [
+"to wait",
+"wait",
+"waiting"
+],
+"correct": 2,
+"explanation": "Correct answer: waiting.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She speaks English very _______.",
+"options": [
+"good",
+"well",
+"betterly"
+],
+"correct": 1,
+"explanation": "Correct answer: well.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "We won't go unless it _______ raining.",
+"options": [
+"stops",
+"stop",
+"will stop"
+],
+"correct": 0,
+"explanation": "Correct answer: stops.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "By this time next year, they _______ their exams.",
+"options": [
+"have finished",
+"will have finished",
+"finish"
+],
+"correct": 1,
+"explanation": "Correct answer: will have finished.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "This is the man _______ car was stolen.",
+"options": [
+"who",
+"which",
+"whose"
+],
+"correct": 2,
+"explanation": "Correct answer: whose.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "You don't have to come if you don't want to, _______?",
+"options": [
+"do you",
+"don't you",
+"have you"
+],
+"correct": 0,
+"explanation": "Correct answer: do you.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She's not used to _______ up early.",
+"options": [
+"getting",
+"get",
+"to get"
+],
+"correct": 0,
+"explanation": "Correct answer: getting.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The room was cleaned yesterday, _______?",
+"options": [
+"did it",
+"wasn't it",
+"wasn't the room"
+],
+"correct": 1,
+"explanation": "Correct answer: wasn't it.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Let's go out, _______?",
+"options": [
+"will we",
+"shall we",
+"do we"
+],
+"correct": 1,
+"explanation": "Correct answer: shall we.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I can't remember where I _______ my keys.",
+"options": [
+"put",
+"have put",
+"had put"
+],
+"correct": 0,
+"explanation": "Correct answer: put.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I didn't see the film because I _______ dinner.",
+"options": [
+"was cooking",
+"cooked",
+"am cooking"
+],
+"correct": 0,
+"explanation": "Correct answer: was cooking.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "That's the restaurant _______ we met last year.",
+"options": [
+"where",
+"which",
+"who"
+],
+"correct": 0,
+"explanation": "Correct answer: where.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He apologized _______ being late.",
+"options": [
+"about",
+"for",
+"of"
+],
+"correct": 1,
+"explanation": "Correct answer: for.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If she ______ earlier, she wouldn't have missed the bus.",
+"options": [
+"leaves",
+"had left",
+"would leave",
+"was leaving"
+],
+"correct": 1,
+"explanation": "Correct answer: had left.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'm not used ______ in such large groups.",
+"options": [
+"work",
+"working",
+"to work",
+"to working"
+],
+"correct": 3,
+"explanation": "Correct answer: to working.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They denied ______ anything about the missing documents.",
+"options": [
+"knowing",
+"to know",
+"know",
+"having know"
+],
+"correct": 0,
+"explanation": "Correct answer: knowing.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He managed to finish the report ______ the tight deadline.",
+"options": [
+"in spite",
+"although",
+"despite",
+"even"
+],
+"correct": 2,
+"explanation": "Correct answer: despite.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "By this time next year, they ______ in their new house.",
+"options": [
+"will live",
+"are living",
+"will be living",
+"lived"
+],
+"correct": 2,
+"explanation": "Correct answer: will be living.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The project was cancelled ______ lack of funding.",
+"options": [
+"because",
+"due to",
+"so",
+"even though"
+],
+"correct": 1,
+"explanation": "Correct answer: due to.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'd rather you ______ the car tonight.",
+"options": [
+"don't take",
+"didn't take",
+"won't take",
+"haven't taken"
+],
+"correct": 1,
+"explanation": "Correct answer: didn't take.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She speaks Italian fluently and can ______ understand Spanish.",
+"options": [
+"as well",
+"even",
+"also",
+"still"
+],
+"correct": 2,
+"explanation": "Correct answer: also.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He refused to participate, ______ surprised everyone.",
+"options": [
+"that",
+"which",
+"what",
+"whose"
+],
+"correct": 1,
+"explanation": "Correct answer: which.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The manager insisted ______ the plan before making any decisions.",
+"options": [
+"to review",
+"at reviewing",
+"on reviewing",
+"for reviewing"
+],
+"correct": 2,
+"explanation": "Correct answer: on reviewing.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She apologized ______ late to the meeting.",
+"options": [
+"for being",
+"to be",
+"for to be",
+"being"
+],
+"correct": 0,
+"explanation": "Correct answer: for being.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They are considering ______ abroad next year.",
+"options": [
+"move",
+"having moved",
+"moving",
+"moved"
+],
+"correct": 2,
+"explanation": "Correct answer: moving.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If you heat ice, it ______.",
+"options": [
+"melts",
+"would melt",
+"is melting",
+"melted"
+],
+"correct": 0,
+"explanation": "Correct answer: melts.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "We should leave early ______ we get stuck in traffic.",
+"options": [
+"so that",
+"in order",
+"unless",
+"in case"
+],
+"correct": 3,
+"explanation": "Correct answer: in case.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The results were far ______ than we had expected.",
+"options": [
+"good",
+"better",
+"the best",
+"well"
+],
+"correct": 1,
+"explanation": "Correct answer: better.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'll join you for dinner, but I only have time for a ______ snack.",
+"options": [
+"quick",
+"fast",
+"speedy",
+"brisk"
+],
+"correct": 0,
+"explanation": "Correct answer: quick.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She took the job ______ the lower salary.",
+"options": [
+"in spite of",
+"even",
+"although",
+"because"
+],
+"correct": 0,
+"explanation": "Correct answer: in spite of.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He has been working here ______ 2015.",
+"options": [
+"during",
+"since",
+"for",
+"by"
+],
+"correct": 1,
+"explanation": "Correct answer: since.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They ______ to announce the winners by the end of the week.",
+"options": [
+"are expected",
+"expect",
+"have expected",
+"are expecting for"
+],
+"correct": 0,
+"explanation": "Correct answer: are expected.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The book was so interesting that I couldn't ______ reading it.",
+"options": [
+"stop",
+"avoid",
+"prevent",
+"deny"
+],
+"correct": 0,
+"explanation": "Correct answer: stop.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence is correct?",
+"options": [
+"She don't like swimming.",
+"She doesn't likes swimming.",
+"She doesn't like swimming.",
+"She not like swimming."
+],
+"correct": 2,
+"explanation": "Correct answer: She doesn't like swimming..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If I ______ enough money, I would buy that car.",
+"options": [
+"have",
+"had",
+"will have",
+"would have"
+],
+"correct": 1,
+"explanation": "Correct answer: had.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "You need to practice every day ______ you want to improve your skills.",
+"options": [
+"so",
+"but",
+"if",
+"although"
+],
+"correct": 2,
+"explanation": "Correct answer: if.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "The project ______ by the end of next week.",
+"options": [
+"will complete",
+"will have been completed",
+"will be completed",
+"will completing"
+],
+"correct": 2,
+"explanation": "Correct answer: will be completed.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I wish I ______ to the party last night.",
+"options": [
+"went",
+"had gone",
+"go",
+"was going"
+],
+"correct": 1,
+"explanation": "Correct answer: had gone.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "This is the book ______ I was telling you about.",
+"options": [
+"who",
+"which",
+"whose",
+"whom"
+],
+"correct": 1,
+"explanation": "Correct answer: which.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She ______ be at work; her car is not in the parking lot.",
+"options": [
+"can't",
+"mustn't",
+"wouldn't",
+"shouldn't"
+],
+"correct": 0,
+"explanation": "Correct answer: can't.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "If he ______ earlier, he wouldn't have missed the train.",
+"options": [
+"left",
+"had left",
+"would leave",
+"would have left"
+],
+"correct": 1,
+"explanation": "Correct answer: had left.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They are ______ their vacation plans due to bad weather.",
+"options": [
+"calling off",
+"calling up",
+"calling over",
+"calling in"
+],
+"correct": 0,
+"explanation": "Correct answer: calling off.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "______ I call you tomorrow, or will you call me?",
+"options": [
+"Should",
+"Must",
+"Shall",
+"Will"
+],
+"correct": 2,
+"explanation": "Correct answer: Shall.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "By the time you arrive, the meeting ______.",
+"options": [
+"will start",
+"will be started",
+"will have started",
+"will starting"
+],
+"correct": 2,
+"explanation": "Correct answer: will have started.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She prefers ______ tea to coffee.",
+"options": [
+"drinking",
+"to drink",
+"drink",
+"to drinking"
+],
+"correct": 0,
+"explanation": "Correct answer: drinking.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Let's ______ a taxi instead of walking.",
+"options": [
+"take",
+"taking",
+"to take",
+"took"
+],
+"correct": 0,
+"explanation": "Correct answer: take.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "They spent the whole afternoon ______ the garden.",
+"options": [
+"to clean",
+"cleaning",
+"clean",
+"cleaned"
+],
+"correct": 1,
+"explanation": "Correct answer: cleaning.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I've lived here ______ 2018.",
+"options": [
+"for",
+"since",
+"from",
+"in"
+],
+"correct": 1,
+"explanation": "Correct answer: since.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "I'd rather you ______ now.",
+"options": [
+"leave",
+"to leave",
+"left",
+"leaving"
+],
+"correct": 2,
+"explanation": "Correct answer: left.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "He suggested ______ to the museum on Sunday.",
+"options": [
+"go",
+"to go",
+"going",
+"went"
+],
+"correct": 2,
+"explanation": "Correct answer: going.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Neither John ______ Sarah was able to attend the meeting.",
+"options": [
+"or",
+"nor",
+"and",
+"bu"
+],
+"correct": 1,
+"explanation": "Correct answer: nor.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "She hasn't called me ______.",
+"options": [
+"already",
+"yet",
+"still",
+"until"
+],
+"correct": 1,
+"explanation": "Correct answer: yet.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "My cousin, ______ lives in London, is coming to visit next week.",
+"options": [
+"who",
+"which",
+"whom",
+"where"
+],
+"correct": 0,
+"explanation": "Correct answer: who.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the correct past simple sentence.",
+"options": [
+"She buyed a new dress yesterday.",
+"She bought a new dress yesterday.",
+"She buys a new dress yesterday.",
+"She buying a new dress yesterday."
+],
+"correct": 1,
+"explanation": "Correct answer: She bought a new dress yesterday..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the correct future form?",
+"options": [
+"I will go to the park tomorrow.",
+"I go to the park tomorrow.",
+"I will going to the park tomorrow.",
+"I gone to the park tomorrow."
+],
+"correct": 0,
+"explanation": "Correct answer: I will go to the park tomorrow..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence with correct subject-verb agreement.",
+"options": [
+"The team are playing well this season.",
+"The team is playing well this season.",
+"The team playing well this season.",
+"The team were playing well this season."
+],
+"correct": 1,
+"explanation": "Correct answer: The team is playing well this season..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the present continuous correctly?",
+"options": [
+"She is working on a new project right now.",
+"She working on a new project right now.",
+"She is work on a new project right now.",
+"She worked on a new project right now."
+],
+"correct": 0,
+"explanation": "Correct answer: She is working on a new project right now..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the sentence with the correct comparative form.",
+"options": [
+"This house is more bigger than mine.",
+"This house is bigger than mine.",
+"This house is more bigger.",
+"This house is biggest than mine."
+],
+"correct": 1,
+"explanation": "Correct answer: This house is bigger than mine..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the correct use of the first conditional.",
+"options": [
+"If it rains, I would stay home.",
+"If it rains, I will stay home.",
+"If it rains, I stayed home.",
+"If it rains, I stay home."
+],
+"correct": 1,
+"explanation": "Correct answer: If it rains, I will stay home..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the correct modal verb?",
+"options": [
+"You must to study harder for the test.",
+"You can't open the window; it's stuck.",
+"He should studying more.",
+"They will can visit us tomorrow."
+],
+"correct": 1,
+"explanation": "Correct answer: You can't open the window; it's stuck..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the sentence with the correct article usage.",
+"options": [
+"She has an idea for the project.",
+"She has a idea for the project.",
+"She has the idea for the project.",
+"She has idea for the project."
+],
+"correct": 0,
+"explanation": "Correct answer: She has an idea for the project..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence with correct pronoun usage.",
+"options": [
+"This is my friend who I told you about.",
+"This is my friend whom I told you about.",
+"This is my friend whose I told you about.",
+"This is my friend which I told you about."
+],
+"correct": 1,
+"explanation": "Correct answer: This is my friend whom I told you about..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the present perfect correctly?",
+"options": [
+"She has lived in Paris since five years.",
+"She has lived in Paris for five years.",
+"She lived in Paris since five years.",
+"She living in Paris for five years."
+],
+"correct": 1,
+"explanation": "Correct answer: She has lived in Paris for five years..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the sentence with the correct preposition usage.",
+"options": [
+"She depends in her parents for support.",
+"She depends to her parents for support.",
+"She depends on her parents for support.",
+"She depends with her parents for support."
+],
+"correct": 2,
+"explanation": "Correct answer: She depends on her parents for support..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence with the correct order of adjectives.",
+"options": [
+"He bought a red beautiful old car.",
+"He bought an old beautiful red car.",
+"He bought a beautiful old red car.",
+"He bought a beautiful red old car."
+],
+"correct": 2,
+"explanation": "Correct answer: He bought a beautiful old red car..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the passive voice correctly?",
+"options": [
+"The cake was baked by my mom.",
+"The cake baked by my mom.",
+"The cake has bake by my mom.",
+"The cake bakes by my mom."
+],
+"correct": 0,
+"explanation": "Correct answer: The cake was baked by my mom..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the correct indirect question.",
+"options": [
+"Could you tell me where is the station?",
+"Could you tell me where the station is?",
+"Could you tell me where was the station?",
+"Could you tell me where the station be?"
+],
+"correct": 1,
+"explanation": "Correct answer: Could you tell me where the station is?.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the correct relative clause sentence.",
+"options": [
+"The boy that has a red car lives next door.",
+"The boy who has a red car lives next door.",
+"The boy whose has a red car lives next door.",
+"Both a and b are correct."
+],
+"correct": 1,
+"explanation": "Correct answer: The boy who has a red car lives next door..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses a gerund correctly?",
+"options": [
+"She enjoys to swim in the morning.",
+"She enjoys swimming in the morning.",
+"She enjoys swim in the morning.",
+"She enjoys swims in the morning."
+],
+"correct": 1,
+"explanation": "Correct answer: She enjoys swimming in the morning..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the sentence with correct reported speech.",
+"options": [
+"He said, \"I am busy.\" -> He said he is busy.",
+"He said, \"I am busy.\" -> He said he was busy.",
+"He said, \"I am busy.\" -> He said he had been busy.",
+"He said, \"I am busy.\" -> He said he has been busy."
+],
+"correct": 1,
+"explanation": "Correct answer: He said, \"I am busy.\" -> He said he was busy..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence with correct word order.",
+"options": [
+"She always is on time for meetings.",
+"She is always on time for meetings.",
+"She is on time always for meetings.",
+"She on time is always for meetings."
+],
+"correct": 1,
+"explanation": "Correct answer: She is always on time for meetings..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses a phrasal verb correctly?",
+"options": [
+"Please turn on the lights when you leave.",
+"Please turn off the lights when you leave.",
+"Both a and b are correct.",
+"Neither a nor b are correct."
+],
+"correct": 2,
+"explanation": "Correct answer: Both a and b are correct..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the sentence with correct past continuous usage.",
+"options": [
+"She was cooking dinner when the phone rang.",
+"She cooking dinner when the phone rang.",
+"She was cook dinner when the phone rang.",
+"She cooks dinner when the phone rang."
+],
+"correct": 0,
+"explanation": "Correct answer: She was cooking dinner when the phone rang..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the gap with the correct verb form: If she ______ harder, she might have passed the exam.",
+"options": [
+"studies",
+"had studied",
+"will study",
+"was studying"
+],
+"correct": 1,
+"explanation": "Correct answer: had studied.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Spot the mistake in the sentence below: He didn't need to call me because I already knowed about the meeting.",
+"options": [
+"didn't need",
+"call",
+"knowed",
+"about"
+],
+"correct": 2,
+"explanation": "Correct answer: knowed.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which option correctly completes the sentence below? By the time we got to the theater, the movie ______.",
+"options": [
+"has already started",
+"had already started",
+"was already starting",
+"already starts"
+],
+"correct": 1,
+"explanation": "Correct answer: had already started.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the blank with the appropriate preposition: She's been waiting ______ a reply for over a week.",
+"options": [
+"for",
+"about",
+"with",
+"in"
+],
+"correct": 0,
+"explanation": "Correct answer: for.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence that is grammatically correct:",
+"options": [
+"I wish I know how to play the piano.",
+"I wish I had known how to play the piano.",
+"I wish I will know how to play the piano.",
+"I wish I would know how to play the piano."
+],
+"correct": 1,
+"explanation": "Correct answer: I wish I had known how to play the piano..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the word that fits the context best: This movie is ______ exciting than I expected it to be.",
+"options": [
+"more",
+"most",
+"much",
+"so"
+],
+"correct": 0,
+"explanation": "Correct answer: more.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which sentence uses the passive voice correctly?",
+"options": [
+"The documents were sent by email yesterday.",
+"The documents sent by email yesterday.",
+"The documents were sending by email yesterday.",
+"The documents have sent by email yesterday."
+],
+"correct": 0,
+"explanation": "Correct answer: The documents were sent by email yesterday..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the blank with the correct modal verb: He ______ finished his homework by now; it was due two hours ago.",
+"options": [
+"must have",
+"should have",
+"might have",
+"can't have"
+],
+"correct": 1,
+"explanation": "Correct answer: should have.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Spot the error in the following sentence: If I was you, I wouldn't take that job.",
+"options": [
+"If",
+"was",
+"wouldn't",
+"take"
+],
+"correct": 1,
+"explanation": "Correct answer: was.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the correct phrasal verb to complete the sentence: They ______ the meeting because the manager was ill.",
+"options": [
+"put off",
+"put up",
+"put in",
+"put down"
+],
+"correct": 0,
+"explanation": "Correct answer: put off.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the blank with the correct tense: He ______ breakfast when I called him this morning.",
+"options": [
+"is having",
+"was having",
+"had",
+"has"
+],
+"correct": 1,
+"explanation": "Correct answer: was having.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the correct sentence:",
+"options": [
+"He has lived in this city since ten years.",
+"He has been living in this city for ten years.",
+"He is living in this city for ten years.",
+"He had lived in this city since ten years."
+],
+"correct": 1,
+"explanation": "Correct answer: He has been living in this city for ten years..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which option completes the sentence correctly? We'll go for a walk later, ______ it doesn't rain.",
+"options": [
+"even if",
+"as long as",
+"despite",
+"unless"
+],
+"correct": 1,
+"explanation": "Correct answer: as long as.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Spot the mistake in the sentence below: The reason why she left is because she wasn't happy with her job.",
+"options": [
+"The reason",
+"why",
+"because",
+"she wasn't"
+],
+"correct": 2,
+"explanation": "Correct answer: because.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the blank with the appropriate preposition: This book was written ______ an author I admire greatly.",
+"options": [
+"by",
+"of",
+"from",
+"with"
+],
+"correct": 0,
+"explanation": "Correct answer: by.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Which word best completes the sentence? She spends a lot of time ______ her younger brother.",
+"options": [
+"taking care",
+"to take care of",
+"taking care of",
+"take care of"
+],
+"correct": 2,
+"explanation": "Correct answer: taking care of.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the correct conditional sentence:",
+"options": [
+"If you had told me earlier, I would help you.",
+"If you told me earlier, I would help you.",
+"If you had told me earlier, I would have helped you.",
+"If you would have told me earlier, I will have helped you."
+],
+"correct": 2,
+"explanation": "Correct answer: If you had told me earlier, I would have helped you..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Fill in the blank with the correct modal verb: You ______ smoke in this building; it's against the rules.",
+"options": [
+"don't have to",
+"shouldn't",
+"mustn't",
+"wouldn't"
+],
+"correct": 2,
+"explanation": "Correct answer: mustn't.",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Identify the sentence that is grammatically correct:",
+"options": [
+"Neither of the students have completed their homework.",
+"Neither of the students has completed their homework.",
+"Neither of the students are completing their homework.",
+"Neither of the students were completing their homework."
+],
+"correct": 1,
+"explanation": "Correct answer: Neither of the students has completed their homework..",
+"term": ""
+},
+{
+"section": "Grammar & Vocabulary",
+"level": "B1",
+"text": "Choose the phrasal verb that fits best: The company decided to ______ the new product launch until next year.",
+"options": [
+"put out",
+"put back",
+"put off",
+"put over"
+],
+"correct": 2,
+"explanation": "Correct answer: put off.",
+"term": ""
+}
+]
+}

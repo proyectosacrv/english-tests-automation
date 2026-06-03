@@ -270,7 +270,10 @@ textarea { resize: vertical; min-height: 70px; }
 
   <!-- MODE TABS -->
   <div class="mode-tabs">
-    <div class="mode-tab active" id="tab-ai" onclick="setMode('ai')">
+    <div class="mode-tab active" id="tab-bank" onclick="setMode('bank')">
+      <span class="mt-icon">📚</span>Question Bank
+    </div>
+    <div class="mode-tab" id="tab-ai" onclick="setMode('ai')">
       <span class="mt-icon">✨</span>Generate with AI
     </div>
     <div class="mode-tab" id="tab-pdf" onclick="setMode('pdf')">
@@ -278,6 +281,60 @@ textarea { resize: vertical; min-height: 70px; }
     </div>
     <div class="mode-tab" id="tab-excel" onclick="setMode('excel')">
       <span class="mt-icon">📊</span>Import from Excel
+    </div>
+  </div>
+
+  <!-- QUESTION BANK PANEL -->
+  <div class="panel" id="bank-panel">
+    <div class="panel-title">Build a test from the built-in question bank</div>
+    <div id="bank-stats" style="font-size:.82rem;color:#718096;margin-bottom:16px">Loading question bank…</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="bank-category" onchange="updateBankCount()">
+          <option value="all">All categories</option>
+          <option value="Grammar &amp; Vocabulary">Grammar &amp; Vocabulary (exams)</option>
+          <option value="Phrasal Verbs">Phrasal Verbs</option>
+          <option value="Idioms">Idioms</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cambridge Level</label>
+        <select id="bank-level" onchange="updateBankCount()">
+          <option value="all">All levels</option>
+          <option value="B1">B1 — Preliminary (PET)</option>
+          <option value="B2">B2 — First (FCE)</option>
+          <option value="C1">C1 — Advanced (CAE)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of questions</label>
+        <select id="bank-num">
+          <option value="10">10</option>
+          <option value="20" selected>20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="0">All available</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Question order</label>
+        <select id="bank-order">
+          <option value="random" selected>Shuffle (random)</option>
+          <option value="ordered">Original order</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Mode</label>
+        <div class="skill-grid" id="bank-mode-grid">
+          <span class="skill-chip active" data-bankmode="instant" onclick="setBankMode('instant')">⚡ Instant (from bank · no AI)</span>
+          <span class="skill-chip" data-bankmode="ai" onclick="setBankMode('ai')">✨ AI variations (new questions in same style)</span>
+        </div>
+      </div>
+    </div>
+    <div id="bank-avail" style="font-size:.8rem;color:#2b6cb0;font-weight:600;margin-top:12px"></div>
+    <div id="bank-ai-note" style="display:none;font-size:.78rem;color:#a0aec0;margin-top:8px;line-height:1.5">
+      AI variations use real bank questions as style examples and ask the AI to write brand-new questions calibrated to the selected Cambridge level. Requires an OpenRouter API key above.
     </div>
   </div>
 
@@ -325,11 +382,11 @@ textarea { resize: vertical; min-height: 70px; }
         <label>Target Level</label>
         <select id="level">
           <option value="A1">A1 — Beginner</option>
-          <option value="A2">A2 — Elementary</option>
-          <option value="B1">B1 — Intermediate</option>
-          <option value="B2" selected>B2 — Upper-Intermediate</option>
-          <option value="C1">C1 — Advanced</option>
-          <option value="C2">C2 — Proficient</option>
+          <option value="A2">A2 — Key (KET)</option>
+          <option value="B1">B1 — Preliminary (PET)</option>
+          <option value="B2" selected>B2 — First (FCE)</option>
+          <option value="C1">C1 — Advanced (CAE)</option>
+          <option value="C2">C2 — Proficiency (CPE)</option>
         </select>
       </div>
       <div class="form-group">
@@ -549,7 +606,25 @@ function downloadFromHistory(i) {
   downloadTest();
 }
 
-window.addEventListener('load', renderHistory);
+window.addEventListener('load', () => {
+  renderHistory();
+  loadBank();
+  // handle actions passed from index.html via sessionStorage + query string
+  const params = new URLSearchParams(location.search);
+  const redo = sessionStorage.getItem('redoTest');
+  const dl = sessionStorage.getItem('dlTest');
+  if (params.get('redo') && redo) {
+    sessionStorage.removeItem('redoTest');
+    try { TEST = JSON.parse(redo); renderTest(); showTest(); return; } catch(e){}
+  }
+  if (params.get('dl') && dl) {
+    sessionStorage.removeItem('dlTest');
+    try { TEST = JSON.parse(dl); downloadTest(); } catch(e){}
+  }
+  // default to bank mode (or mode from query)
+  const m = params.get('mode');
+  setMode(['bank','ai','pdf','excel'].includes(m) ? m : 'bank');
+});
 
 // ---- GOOGLE DRIVE SYNC ----
 const GD_CLIENT_ID = '249569076351-h9g696r3i0sn02g2qkp9g7bn137uvo30.apps.googleusercontent.com';
@@ -699,24 +774,150 @@ function toggleKey() {
 }
 
 // ---- generate ----
-// ---- MODE (AI / PDF) ----
-let currentMode = 'ai';
+// ---- MODE (bank / ai / pdf / excel) ----
+let currentMode = 'bank';
+let bankMode = 'instant';
 let pdfFiles = []; // [{name, text, status}]
 
 function setMode(mode) {
   currentMode = mode;
-  document.getElementById('tab-ai').classList.toggle('active', mode === 'ai');
-  document.getElementById('tab-pdf').classList.toggle('active', mode === 'pdf');
-  document.getElementById('tab-excel').classList.toggle('active', mode === 'excel');
+  ['bank','ai','pdf','excel'].forEach(m =>
+    document.getElementById('tab-'+m).classList.toggle('active', mode === m));
+  document.getElementById('bank-panel').style.display = mode === 'bank' ? 'block' : 'none';
   document.getElementById('pdf-panel').classList.toggle('show', mode === 'pdf');
   document.getElementById('excel-panel').style.display = mode === 'excel' ? 'block' : 'none';
-  // AI config + API key only needed for AI and PDF modes (Excel needs nothing)
+  // AI test-config only for the pure AI generator
   document.getElementById('options-panel').style.display = (mode === 'ai') ? '' : 'none';
-  document.getElementById('config-panel').style.display = (mode === 'excel') ? 'none' : '';
+  // API key needed for AI, PDF, and bank-AI variations
+  const needsKey = (mode === 'ai' || mode === 'pdf' || (mode === 'bank' && bankMode === 'ai'));
+  document.getElementById('config-panel').style.display = needsKey ? '' : 'none';
   const btn = document.getElementById('btn-gen');
-  if (mode === 'pdf') btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Convert PDFs to Tests';
-  else if (mode === 'excel') btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Build Tests from Excel';
-  else btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/></svg> Generate Test';
+  const ico = (p) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg> `;
+  if (mode === 'bank') btn.innerHTML = ico('<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>') + (bankMode==='ai' ? 'Generate AI Variations' : 'Build Test from Bank');
+  else if (mode === 'pdf') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Convert PDFs to Tests';
+  else if (mode === 'excel') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Build Tests from Excel';
+  else btn.innerHTML = ico('<polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/>') + 'Generate Test';
+}
+
+// ---- QUESTION BANK ----
+let BANK = [];
+function setBankMode(m) {
+  bankMode = m;
+  document.querySelectorAll('#bank-mode-grid .skill-chip').forEach(c =>
+    c.classList.toggle('active', c.dataset.bankmode === m));
+  document.getElementById('bank-ai-note').style.display = m === 'ai' ? 'block' : 'none';
+  setMode('bank'); // refresh button label + key visibility
+}
+
+async function loadBank() {
+  try {
+    const res = await fetch('questionbank.json', { cache: 'no-store' });
+    const data = await res.json();
+    BANK = data.questions || [];
+    const secs = {};
+    BANK.forEach(q => { secs[q.section] = (secs[q.section]||0)+1; });
+    document.getElementById('bank-stats').innerHTML =
+      `<strong>${BANK.length}</strong> questions available · ` +
+      Object.entries(secs).map(([s,n]) => `${s}: ${n}`).join(' · ');
+    updateBankCount();
+  } catch(e) {
+    document.getElementById('bank-stats').textContent = 'Could not load question bank: ' + e.message;
+  }
+}
+
+function filteredBank() {
+  const cat = document.getElementById('bank-category').value;
+  const lvl = document.getElementById('bank-level').value;
+  return BANK.filter(q =>
+    (cat === 'all' || q.section === cat) &&
+    (lvl === 'all' || q.level === lvl));
+}
+
+function updateBankCount() {
+  const n = filteredBank().length;
+  const el = document.getElementById('bank-avail');
+  el.textContent = n ? `✓ ${n} questions match your filters` : '⚠ No questions match these filters';
+}
+
+function shuffle(a) { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function buildBankTest() {
+  let pool = filteredBank();
+  if (!pool.length) { showError('No questions match your filters.'); return; }
+  const order = document.getElementById('bank-order').value;
+  let num = parseInt(document.getElementById('bank-num').value);
+  pool = (order === 'random') ? shuffle(pool) : pool.slice();
+  if (num > 0) pool = pool.slice(0, num);
+
+  const cat = document.getElementById('bank-category').value;
+  const lvl = document.getElementById('bank-level').value;
+  const catLabel = cat === 'all' ? 'Mixed' : cat;
+  const lvlLabel = lvl === 'all' ? 'All levels' : lvl;
+  // shuffle options within each question so the answer position varies
+  const questions = pool.map(q => {
+    const idxs = shuffle(q.options.map((_,i)=>i));
+    return {
+      skill: q.section,
+      text: q.text,
+      context: '',
+      options: idxs.map(i => q.options[i]),
+      correct: idxs.indexOf(q.correct),
+      explanation: q.explanation || ''
+    };
+  });
+  TEST = { title: `${catLabel} — ${lvlLabel}`, subtitle: `Question Bank · ${questions.length} questions`, questions };
+  renderTest();
+  showTest();
+}
+
+async function buildBankAiVariations() {
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) { showError('Enter your OpenRouter API key for AI variations (or use Instant mode).'); return; }
+  let pool = filteredBank();
+  if (!pool.length) { showError('No questions match your filters.'); return; }
+  const cat = document.getElementById('bank-category').value;
+  const lvl = document.getElementById('bank-level').value === 'all' ? 'B2' : document.getElementById('bank-level').value;
+  let num = parseInt(document.getElementById('bank-num').value) || 20;
+  if (num === 0) num = 20;
+  const examples = shuffle(pool).slice(0, 8);
+
+  setLoading(true);
+  fakeProgress();
+  try {
+    const prompt = buildBankAiPrompt(examples, cat, lvl, num);
+    const raw = await callGemini(key, prompt);
+    const data = parseResponse(raw);
+    const catLabel = cat === 'all' ? 'Mixed' : cat;
+    TEST = { title: `${catLabel} — ${lvl} (AI variations)`, subtitle: `AI · ${data.length} questions · ${lvl}`, questions: data };
+    setLoading(false);
+    renderTest();
+    showTest();
+  } catch(e) {
+    setLoading(false);
+    if (e.rateLimit) { showRateLimit(0); return; }
+    showError(e.message);
+  }
+}
+
+function buildBankAiPrompt(examples, cat, level, num) {
+  const ex = examples.map((q,i) =>
+    `${i+1}. ${q.text}\n   Options: ${q.options.join(' / ')}\n   Answer: ${q.options[q.correct]}`).join('\n');
+  const catText = cat === 'all' ? 'a mix of grammar, vocabulary, phrasal verbs and idioms' : cat;
+  return `You are an expert Cambridge English exam writer.
+Below are real example questions from a question bank. Study their STYLE and FORMAT, then write ${num} BRAND-NEW questions (do not copy the examples) about ${catText}.
+
+${CAMBRIDGE_RUBRIC[level] || ''}
+
+EXAMPLE QUESTIONS (for style only — create new ones):
+${ex}
+
+Rules:
+- Calibrate difficulty precisely to CEFR ${level} (Cambridge standard).
+- Each question: "skill", "text" (use … for the gap), "context" (empty string if not needed), "options" (3 or 4 choices), "correct" (0-based index), "explanation" (ONE short sentence, use single quotes inside).
+- Only one correct option. Vary the position of the correct answer.
+- Return a single JSON object: {"questions":[ ... ]}. No markdown, no code fences.
+
+Generate the JSON now:`;
 }
 
 // PDF.js worker
@@ -991,6 +1192,7 @@ function savePdfTest(test) {
 }
 
 async function generateTest() {
+  if (currentMode === 'bank') { bankMode === 'ai' ? buildBankAiVariations() : buildBankTest(); return; }
   if (currentMode === 'pdf') { convertPdf(); return; }
   if (currentMode === 'excel') { buildExcelTests(); return; }
   const key = document.getElementById('api-key').value.trim();
@@ -1033,8 +1235,18 @@ function showRateLimit(savedCount) {
   document.getElementById('status-text').textContent = msg;
 }
 
+// Precise Cambridge/CEFR difficulty rubric used by all AI prompts
+const CAMBRIDGE_RUBRIC = {
+  'A1': 'CEFR A1 (Cambridge Starters/Movers level). Very basic: present simple, to be, common everyday nouns/verbs, numbers, colours. Short simple sentences. High-frequency vocabulary only.',
+  'A2': 'CEFR A2 (Cambridge Key / KET). Elementary: present/past simple, going to, comparatives, basic modals (can/must), everyday topics (shopping, routines, travel). Common vocabulary, simple sentence structures.',
+  'B1': 'CEFR B1 (Cambridge Preliminary / PET). Intermediate: present perfect, past continuous, first/second conditional, common phrasal verbs, relative clauses. Familiar topics (work, study, free time). Some less common vocabulary.',
+  'B2': 'CEFR B2 (Cambridge First / FCE). Upper-intermediate: all conditionals, passive voice, reported speech, perfect aspects, a wide range of phrasal verbs and collocations, modals of deduction. Abstract topics. Distractors are plausible and require real understanding.',
+  'C1': 'CEFR C1 (Cambridge Advanced / CAE). Advanced: inversion, mixed conditionals, advanced phrasal verbs and idioms, nuanced collocations, formal/academic register, subtle distinctions in meaning. Distractors are very close in meaning; only precise knowledge separates them.',
+  'C2': 'CEFR C2 (Cambridge Proficiency / CPE). Near-native: rare idioms, sophisticated register shifts, literary and specialised vocabulary, highly nuanced connotation, complex syntactic structures. Distractors differ only in fine shades of meaning or register.'
+};
+
 function buildPrompt(topic, level, numQ, numOpts, skills, extra) {
-  return `You are an expert English language test designer.
+  return `You are an expert Cambridge English exam writer.
 Generate exactly ${numQ} multiple-choice questions for an English certification test.
 
 Topic/Exam style: ${topic}
@@ -1043,10 +1255,13 @@ Skills to cover: ${skills.join(', ')}
 Options per question: ${numOpts}
 ${extra ? `Extra instructions: ${extra}` : ''}
 
+DIFFICULTY CALIBRATION — match this level exactly:
+${CAMBRIDGE_RUBRIC[level] || ''}
+
 Rules:
 - Spread questions across the listed skills as evenly as possible.
 - Each question has exactly ${numOpts} options (A, B${numOpts >= 3 ? ', C' : ''}${numOpts === 4 ? ', D' : ''}).
-- Only ONE option is correct.
+- Only ONE option is correct. Vary the position of the correct answer across questions.
 - "correct" field is the 0-based index of the correct option.
 - "explanation" must explain WHY the correct answer is right AND briefly why others are wrong. Write in English, 2-3 sentences.
 - "context" is a sentence/phrase for the student to analyze. Leave as empty string "" if the question doesn't need one.
@@ -1132,20 +1347,24 @@ function parseResponse(raw) {
   let text = raw.trim();
   text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
 
-  // try full object first {"questions":[...]}
-  let arr = null;
-  const objParsed = tryParseObj(text) || tryParseObj(sanitiseJson(text));
-  if (objParsed && Array.isArray(objParsed.questions)) arr = objParsed.questions;
+  // Try every strategy and keep whichever yields the MOST questions
+  // (handles clean JSON, truncated JSON, smart quotes, and stray inner ] cuts)
+  const candidates = [];
+  const push = a => { if (Array.isArray(a) && a.length) candidates.push(a); };
 
-  // otherwise locate an array
-  if (!arr) {
-    const start = text.indexOf('[');
-    const end = text.lastIndexOf(']');
-    if (start !== -1 && end !== -1) {
-      let jsonStr = text.slice(start, end + 1);
-      arr = tryParse(jsonStr) || tryParse(sanitiseJson(jsonStr)) || extractObjects(jsonStr);
-    }
+  const obj = tryParseObj(text) || tryParseObj(sanitiseJson(text));
+  if (obj && Array.isArray(obj.questions)) push(obj.questions);
+
+  const start = text.indexOf('[');
+  const end = text.lastIndexOf(']');
+  if (start !== -1 && end > start) {
+    const slice = text.slice(start, end + 1);
+    push(tryParse(slice)); push(tryParse(sanitiseJson(slice)));
   }
+  // object-by-object salvage on the FULL text (best for truncated output)
+  push(extractObjects(text));
+
+  let arr = candidates.sort((a, b) => b.length - a.length)[0] || null;
 
   if (!arr || !Array.isArray(arr) || arr.length === 0)
     throw new Error('Could not parse the questions. Try again.');
