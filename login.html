@@ -26,12 +26,9 @@ p{color:#718096;font-size:0.92rem;line-height:1.6;margin-bottom:32px}
   <div class="logo">📚</div>
   <h1>English Test Battery</h1>
   <p>Sign in with your Google account to access the tests. Access is restricted to authorised users.</p>
-  <button class="btn-google" onclick="signIn()">
-    <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-    Sign in with Google
-  </button>
-  <div class="error" id="error"></div>
+  <div id="gbtn" style="display:flex;justify-content:center"></div>
   <div class="checking" id="checking">Verifying access…</div>
+  <div class="error" id="error"></div>
 </div>
 
 <script>
@@ -49,34 +46,48 @@ if (saved && ALLOWED.includes(saved.toLowerCase())) {
   window.location.href = dest;
 }
 
-function signIn() {
+// decode a JWT payload (the ID token from Google Sign-In)
+function decodeJwt(token) {
+  const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+  const json = decodeURIComponent(atob(part).split('').map(c =>
+    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+  return JSON.parse(json);
+}
+
+function handleCredential(response) {
   document.getElementById('error').classList.remove('show');
   document.getElementById('checking').classList.add('show');
-  const client = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope: 'https://www.googleapis.com/auth/userinfo.email',
-    callback: async (resp) => {
-      if (resp.error) { showError('Sign-in error: ' + resp.error); return; }
-      try {
-        const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { 'Authorization': 'Bearer ' + resp.access_token }
-        });
-        const info = await r.json();
-        const email = (info.email || '').toLowerCase();
-        if (!ALLOWED.includes(email)) {
-          showError(`Access denied for ${email}. Contact the administrator.`);
-          return;
-        }
-        sessionStorage.setItem('auth_email', email);
-        sessionStorage.setItem('auth_token', resp.access_token);
-        sessionStorage.setItem('auth_name', info.name || email);
-        const dest = sessionStorage.getItem('auth_dest') || 'index.html';
-        window.location.href = dest;
-      } catch(e) { showError('Verification error: ' + e.message); }
+  try {
+    const info = decodeJwt(response.credential);
+    const email = (info.email || '').toLowerCase();
+    if (!ALLOWED.includes(email)) {
+      showError(`Access denied for ${email}. Contact the administrator.`);
+      return;
     }
-  });
-  client.requestAccessToken();
+    sessionStorage.setItem('auth_email', email);
+    sessionStorage.setItem('auth_name', info.name || email);
+    if (info.picture) sessionStorage.setItem('auth_picture', info.picture);
+    const dest = sessionStorage.getItem('auth_dest') || 'index.html';
+    window.location.href = dest;
+  } catch(e) { showError('Sign-in error: ' + e.message); }
 }
+
+// initialise Google Identity Services (ID token flow — no sensitive scopes)
+function initGoogle() {
+  if (!window.google || !google.accounts || !google.accounts.id) {
+    setTimeout(initGoogle, 200); return;
+  }
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredential,
+    auto_select: false
+  });
+  google.accounts.id.renderButton(document.getElementById('gbtn'), {
+    theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', width: 280
+  });
+  google.accounts.id.prompt(); // optional One Tap
+}
+initGoogle();
 
 function showError(msg) {
   document.getElementById('checking').classList.remove('show');
