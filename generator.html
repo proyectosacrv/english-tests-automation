@@ -344,14 +344,14 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="drop-zone" id="excel-drop" onclick="document.getElementById('excel-input').click()">
       <div class="dz-icon">📊</div>
       <div class="dz-text">Click to choose Excel files or drag them here</div>
-      <div class="dz-sub">No AI needed — read instantly. Columns: Question | A | B | C | D | Correct letter | Correct text</div>
+      <div class="dz-sub">Sin IA — lectura instantánea. Columnas: Pregunta | Respuesta A | B | C | D | Respuesta correcta | Valor respuesta correcta</div>
     </div>
     <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" multiple style="display:none">
     <div id="excel-file-info"></div>
     <div style="font-size:.78rem;color:#718096;margin-top:12px;line-height:1.6">
-      <strong>Expected columns (first row = headers):</strong><br>
-      Column 1: Question text · Columns 2-5: Options A, B, C, D · Column 6: Correct letter (a/b/c/d) · Column 7: Correct answer text (optional)<br>
-      <span style="color:#a0aec0">Tip: an optional first column named "Skill"/"Context" is auto-detected. Empty option cells are skipped (works with 3-option tests too).</span>
+      <strong>Columnas esperadas (primera fila = cabeceras):</strong><br>
+      Pregunta · Respuesta A · Respuesta B · Respuesta C · Respuesta D · Respuesta correcta (letra a/b/c/d) · Valor respuesta correcta<br>
+      <span style="color:#a0aec0">Cada hoja es una temática (Idioms, Phrasal Verbs, Grammar &amp; Vocabulary). Se leen todas las hojas, se valida la temática por el nombre de la hoja (o columna Tipo/Tema) y cada pregunta se añade a su batería del banco. Las celdas de opción vacías se ignoran (sirve para tests de 3 opciones).</span>
     </div>
   </div>
 
@@ -813,7 +813,7 @@ async function loadBank() {
   try {
     const res = await fetch('questionbank.json', { cache: 'no-store' });
     const data = await res.json();
-    BANK = data.questions || [];
+    BANK = (data.questions || []).concat(getImportedBank());
     const secs = {};
     BANK.forEach(q => { secs[q.section] = (secs[q.section]||0)+1; });
     document.getElementById('bank-stats').innerHTML =
@@ -945,6 +945,16 @@ if (excelDrop) {
   excelInput.addEventListener('change', e => { handleExcels(e.target.files); });
 }
 
+// Valida la tematica de una pregunta a partir del nombre de hoja o columna.
+// Devuelve uno de los bancos conocidos, o null si no se reconoce.
+function normalizeSection(raw) {
+  const s = String(raw||'').toLowerCase();
+  if (/idiom/.test(s)) return 'Idioms';
+  if (/phrasal/.test(s)) return 'Phrasal Verbs';
+  if (/gramm|grammar|gramat|vocab|examen|exam/.test(s)) return 'Grammar & Vocabulary';
+  return null;
+}
+
 async function handleExcels(fileList) {
   for (const file of fileList) {
     const entry = { name: file.name, questions: [], status: 'Reading…' };
@@ -953,10 +963,17 @@ async function handleExcels(fileList) {
     try {
       const buf = await file.arrayBuffer();
       const wb = XLSX.read(buf, { type: 'array' });
-      const sheet = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false });
-      entry.questions = parseExcelRows(rows);
-      entry.status = entry.questions.length ? `${entry.questions.length} questions` : 'No questions found';
+      const all = [];
+      // Lee TODAS las hojas: cada hoja suele ser una tematica (Idioms, Phrasal Verbs, …)
+      for (const sheetName of wb.SheetNames) {
+        const sheet = wb.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false });
+        all.push(...parseExcelRows(rows, normalizeSection(sheetName)));
+      }
+      entry.questions = all;
+      const bySec = {};
+      all.forEach(q => bySec[q.section] = (bySec[q.section]||0)+1);
+      entry.status = all.length ? Object.entries(bySec).map(([s,n])=>`${s}: ${n}`).join(' · ') : 'No questions found';
     } catch (e) {
       entry.status = 'Error: ' + e.message;
     }
@@ -965,39 +982,39 @@ async function handleExcels(fileList) {
   excelInput.value = '';
 }
 
-// Parse rows into questions. Expected columns:
-// Question | A | B | C | D | CorrectLetter | CorrectText
-// Optional leading "Skill"/"Context" columns are auto-skipped by header detection.
-function parseExcelRows(rows) {
+// Parse rows into questions. Expected columns (combined format):
+// Pregunta | Respuesta A | B | C | D | Respuesta correcta (letra) | Valor respuesta correcta
+// sheetSection: tematica deducida del nombre de hoja (puede ser null).
+// Una columna Tipo/Tema/Seccion por fila tiene prioridad sobre sheetSection.
+function parseExcelRows(rows, sheetSection) {
   if (!rows.length) return [];
   // detect header row & column positions
   let header = rows[0].map(c => String(c||'').toLowerCase().trim());
   let dataStart = 1;
-  const looksLikeHeader = header.some(h => /question|pregunta|option|opci|correct|answer|respuesta|letter|letra/.test(h));
+  const looksLikeHeader = header.some(h => /question|pregunta|option|opci|correct|answer|respuesta|letter|letra|valor/.test(h));
   if (!looksLikeHeader) { header = []; dataStart = 0; }
 
   function findCol(...names){ for(const n of names){ const i=header.findIndex(h=>h.includes(n)); if(i!==-1) return i; } return -1; }
 
-  let qCol = findCol('question','pregunta');
-  let skillCol = findCol('skill','tema','categor');
-  let ctxCol = findCol('context','contexto');
-  let letterCol = findCol('letter','letra','correct letter','correcta');
-  let textCol = findCol('correct text','contenido','answer text','respuesta correcta');
+  let qCol = findCol('pregunta','question');
+  let secCol = findCol('tipo','tema','categor','secc','section','skill');
+  let valueCol = findCol('valor','value','correct text','answer text','contenido','texto');
+  // letra de la respuesta: columna "correct(a)/letter" que NO sea la del valor/texto
+  let letterCol = header.findIndex(h => /correct|correcta|letra|letter/.test(h) && !/texto|valor|value|text|contenido/.test(h));
+  if (letterCol === -1) letterCol = findCol('respuesta correcta','correct letter','letra','letter');
   let optCols = [];
-  ['a','b','c','d','e'].forEach(L=>{ const i=header.findIndex(h=>h===L||h==='option '+L||h==='opci'+L||h==='op'+L||h==='opt'+L); if(i!==-1) optCols.push(i); });
+  ['a','b','c','d','e'].forEach(L=>{ const i=header.findIndex(h=>h===L||h.endsWith(' '+L)||h==='opci'+L||h==='op'+L||h==='opt'+L); if(i!==-1) optCols.push(i); });
 
-  // fallback to positional layout: Question | A | B | C | D | Letter | Text
+  // fallback to positional layout: Question | A | B | C | D | Letter | Value
   if (qCol === -1) qCol = 0;
   if (!optCols.length) {
-    // options are columns between question and letter/text columns
     const maxCol = Math.max(...rows.map(r=>r.length));
-    const stopCol = (letterCol!==-1?letterCol:(textCol!==-1?textCol:maxCol));
-    for (let c = qCol+1; c < stopCol; c++) optCols.push(c);
+    const stopCol = (letterCol!==-1?letterCol:(valueCol!==-1?valueCol:maxCol));
+    for (let c = qCol+1; c < stopCol; c++) if (c!==secCol) optCols.push(c);
   }
-  if (letterCol === -1 && textCol === -1) {
-    // assume last two columns are letter then text
+  if (letterCol === -1 && valueCol === -1) {
     const last = Math.max(...rows.map(r=>r.length)) - 1;
-    letterCol = last - 1; textCol = last;
+    letterCol = last - 1; valueCol = last;
     optCols = optCols.filter(c => c < letterCol);
   }
 
@@ -1005,7 +1022,7 @@ function parseExcelRows(rows) {
   for (let r = dataStart; r < rows.length; r++) {
     const row = rows[r];
     if (!row || !row[qCol]) continue;
-    const options = optCols.map(c => row[c]).filter(v => v !== undefined && String(v).trim() !== '').map(v => String(v).trim());
+    const options = optCols.map(c => row[c]).filter(v => v !== undefined && v !== null && String(v).trim() !== '').map(v => String(v).trim());
     if (options.length < 2) continue;
 
     let correct = -1;
@@ -1014,23 +1031,17 @@ function parseExcelRows(rows) {
       const idx = 'abcde'.indexOf(letter[0]);
       if (idx !== -1 && idx < options.length) correct = idx;
     }
-    if (correct === -1 && textCol!==-1) {
-      const txt = String(row[textCol]||'').trim().toLowerCase().replace(/^[a-e]\)\s*/,'');
+    const value = valueCol!==-1 ? String(row[valueCol]||'').trim() : '';
+    if (correct === -1 && value) {
+      const txt = value.toLowerCase().replace(/^[a-e]\)\s*/,'');
       correct = options.findIndex(o => o.toLowerCase().replace(/^[a-e]\)\s*/,'') === txt);
     }
     if (correct === -1) correct = 0;
 
-    // strip leading "a) " from options for cleaner display
     const cleanOpts = options.map(o => o.replace(/^[a-eA-E]\)\s*/,''));
+    const section = (secCol!==-1 ? normalizeSection(row[secCol]) : null) || sheetSection || 'Sin clasificar';
 
-    out.push({
-      skill: skillCol!==-1 ? String(row[skillCol]||'General').trim() : 'General',
-      text: String(row[qCol]).trim(),
-      context: ctxCol!==-1 ? String(row[ctxCol]||'').trim() : '',
-      options: cleanOpts,
-      correct,
-      explanation: textCol!==-1 && row[textCol] ? `Correct answer: ${String(row[textCol]).trim()}` : ''
-    });
+    out.push({ section, text: String(row[qCol]).trim(), options: cleanOpts, correct, value });
   }
   return out;
 }
@@ -1044,22 +1055,53 @@ function renderExcelList() {
 }
 function removeExcel(i){ excelFiles.splice(i,1); renderExcelList(); }
 
+// Banco importado: persiste en localStorage y se fusiona con questionbank.json en loadBank()
+function getImportedBank(){ try{return JSON.parse(localStorage.getItem('importedBank')||'[]');}catch{return[];} }
+function mergeIntoImportedBank(bySec){
+  const bank = getImportedBank();
+  const seen = new Set(bank.map(q => q.section+'||'+String(q.text).toLowerCase()));
+  const added = {};
+  Object.entries(bySec).forEach(([sec,qs])=>{
+    qs.forEach(q=>{
+      const key = sec+'||'+q.text.toLowerCase();
+      if (seen.has(key)) return;
+      seen.add(key);
+      bank.push({ section: sec, level:'C1', text:q.text, options:q.options, correct:q.correct,
+                  explanation: q.value?`Correct answer: ${q.value}`:'', term:'' });
+      added[sec]=(added[sec]||0)+1;
+    });
+  });
+  localStorage.setItem('importedBank', JSON.stringify(bank));
+  return added;
+}
+
 function buildExcelTests() {
   const ready = excelFiles.filter(f => f.questions.length);
-  if (!ready.length) { showError('Upload at least one Excel with valid questions.'); return; }
+  if (!ready.length) { showError('Sube al menos un Excel con preguntas válidas.'); return; }
 
+  // Agrupa todas las preguntas por temática (segmentación por tipo)
+  const bySec = {};
+  ready.forEach(f => f.questions.forEach(q => { (bySec[q.section]=bySec[q.section]||[]).push(q); }));
+
+  // 1) Añade al banco persistente (cada temática a su batería)
+  const added = mergeIntoImportedBank(bySec);
+
+  // 2) Construye un test por temática y lo guarda en el historial
   const generated = [];
-  for (const f of ready) {
-    const cleanName = f.name.replace(/\.(xlsx|xls|csv)$/i, '');
-    const test = { title: cleanName, subtitle: `From Excel · ${f.questions.length} questions`, questions: f.questions };
+  Object.entries(bySec).forEach(([sec, qs]) => {
+    const questions = qs.map(q => ({ skill: sec, text: q.text, context:'', options: q.options,
+                                     correct: q.correct, explanation: q.value?`Correct answer: ${q.value}`:'' }));
+    const test = { title: sec, subtitle: `Importado de Excel · ${questions.length} preguntas`, questions };
     generated.push(test);
-    savePdfTest(test); // reuse the same history saver
-  }
+    savePdfTest(test);
+  });
 
+  loadBank(); // refresca el banco con las preguntas recién añadidas
   TEST = generated[0];
   renderTest();
   showTest();
-  if (generated.length > 1) setTimeout(()=>alert(`✓ ${generated.length} tests built from Excel and saved to history. Showing the first.`), 300);
+  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ') || 'sin preguntas nuevas (duplicadas)';
+  setTimeout(()=>alert(`✓ Añadidas al banco — ${summary}\n${generated.length} test(s) por temática guardados en el historial.`), 300);
 }
 
 async function handlePdfs(fileList) {

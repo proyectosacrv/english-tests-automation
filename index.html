@@ -791,7 +791,8 @@ async function loadBankStats(){
   try{
     const res=await fetch('questionbank.json',{cache:'no-store'});
     const data=await res.json();
-    const qs=data.questions||[];
+    let imported=[];try{imported=JSON.parse(localStorage.getItem('importedBank')||'[]');}catch{}
+    const qs=(data.questions||[]).concat(imported);
     document.getElementById('nav-bank-count').textContent=qs.length;
     // by section
     const secs={}, lvls={};
