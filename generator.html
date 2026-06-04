@@ -217,20 +217,106 @@ textarea { resize: vertical; min-height: 70px; }
 .pdf-file .pf-remove { background: none; border: none; color: #718096; cursor: pointer; font-size: 1.1rem; }
 .pdf-extracted { margin-top: 12px; font-size: 0.78rem; color: #718096; max-height: 120px; overflow-y: auto; background: #f7fafc; border-radius: 8px; padding: 10px 12px; white-space: pre-wrap; display: none; }
 .pdf-extracted.show { display: block; }
+
+/* ---- TOPBAR + SIDEBAR (shared nav, same as index) ---- */
+.topbar{background:#1a365d;color:#fff;height:56px;display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25);flex-shrink:0}
+.topbar-logo{font-size:1rem;font-weight:800;flex:1}
+.topbar-logo span{opacity:.6;font-weight:400;font-size:.8rem;margin-left:6px}
+.topbar-user{display:flex;align-items:center;gap:8px;font-size:.82rem;opacity:.85}
+.topbar-avatar{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.btn-menu{background:none;border:none;color:#fff;cursor:pointer;padding:6px;border-radius:6px;display:flex;align-items:center}
+.btn-menu:hover{background:rgba(255,255,255,.1)}
+.app-body{display:flex;flex:1;overflow:hidden}
+.sidebar{width:260px;background:#1e2a3a;color:#fff;display:flex;flex-direction:column;transition:transform .25s;flex-shrink:0;overflow-y:auto}
+.sidebar.open{transform:translateX(0)}
+.sidebar-section{padding:8px 0}
+.sidebar-section-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#4a6080;padding:10px 18px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;font-size:.88rem;color:#b0c4d8;border-left:3px solid transparent;transition:all .12s;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(66,153,225,.15);color:#90cdf4;border-left-color:#4299e1}
+.nav-item svg{flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-count{margin-left:auto;background:rgba(255,255,255,.1);color:#90cdf4;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:10px}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.06);margin:4px 0}
+.main-area{flex:1;overflow-y:auto}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:89}
+.overlay.show{display:block}
+.admin-hidden{display:none}
+@media(max-width:700px){
+  .sidebar{position:fixed;top:56px;left:0;height:calc(100vh - 56px);z-index:90;transform:translateX(-260px)}
+  .sidebar.open{transform:translateX(0)}
+}
 </style>
 </head>
 <body>
 <div class="app">
 
-<header>
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-  <div style="flex:1">
-    <h1>English Test Generator</h1>
-    <span>Powered by OpenRouter · Free models · No credit card</span>
-    <a href="index.html" style="color:white;opacity:.75;font-size:.8rem;text-decoration:none;white-space:nowrap">← Tests</a>
-  </div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <button class="btn-menu" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="topbar-logo">English Tests <span>Generator</span></div>
   <button class="history-toggle" onclick="toggleHistory()">📋 History (<span id="history-count">0</span>)</button>
-</header>
+  <div class="topbar-user">
+    <span id="tb-email"></span>
+    <div class="topbar-avatar" id="tb-avatar">?</div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="app-body">
+
+<!-- SIDEBAR -->
+<nav class="sidebar open" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Tests</div>
+    <a class="nav-item" href="index.html#bank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      Question Bank
+      <span class="nav-count" id="side-bank-count">…</span>
+    </a>
+    <a class="nav-item" href="index.html#static">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Static Tests
+      <span class="nav-count">20</span>
+    </a>
+    <a class="nav-item active" href="generator.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      AI Generator
+    </a>
+    <a class="nav-item" href="index.html#history">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-4.5"/><polyline points="3 3 3 9 9 9"/></svg>
+      History
+      <span class="nav-count" id="side-history-count">0</span>
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Account</div>
+    <a class="nav-item" href="index.html#settings">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </a>
+    <a class="nav-item admin-hidden" id="nav-admin" href="index.html#admin">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Users &amp; Access
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <a class="nav-item" onclick="signOut()" href="#" style="margin-top:auto;color:#fc8181">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    Sign Out
+  </a>
+</nav>
+
+<!-- MAIN AREA -->
+<div class="main-area">
 
 <!-- HISTORY PANEL -->
 <div class="content" style="padding-bottom:0">
@@ -475,6 +561,9 @@ textarea { resize: vertical; min-height: 70px; }
   </div>
 
 </div><!-- /content -->
+
+</div><!-- /main-area -->
+</div><!-- /app-body -->
 </div><!-- /app -->
 
 <!-- VIEW MODAL -->
@@ -492,6 +581,23 @@ textarea { resize: vertical; min-height: 70px; }
 </div>
 
 <script>
+// ---- sidebar / nav ----
+const NAV_ADMINS = ['proyectosacrv@gmail.com'];
+const navEmail = (sessionStorage.getItem('auth_email')||'').toLowerCase();
+const navName  = sessionStorage.getItem('auth_name') || navEmail;
+document.getElementById('tb-email').textContent = navName.split('@')[0];
+document.getElementById('tb-avatar').textContent = (navName[0]||'?').toUpperCase();
+if (NAV_ADMINS.includes(navEmail)) document.getElementById('nav-admin').style.display = 'flex';
+function signOut(){ sessionStorage.clear(); location.href='login.html'; }
+
+const sidebar = document.getElementById('sidebar');
+const sideOverlay = document.getElementById('overlay');
+let sidebarOpen = window.innerWidth > 700;
+if (!sidebarOpen) sidebar.classList.remove('open');
+function toggleSidebar(){ sidebarOpen=!sidebarOpen; sidebar.classList.toggle('open',sidebarOpen); sideOverlay.classList.toggle('show', sidebarOpen && window.innerWidth<=700); }
+function closeSidebar(){ sidebarOpen=false; sidebar.classList.remove('open'); sideOverlay.classList.remove('show'); }
+window.addEventListener('resize',()=>{ if(window.innerWidth>700){sidebar.classList.add('open');sideOverlay.classList.remove('show');} else {sidebar.classList.remove('open');} });
+
 // ---- state ----
 let TEST = null;
 let currentQ = 0;
@@ -527,6 +633,7 @@ function saveToHistory(correct, total, pct, level) {
 function renderHistory() {
   const h = getHistory();
   document.getElementById('history-count').textContent = h.length;
+  const _shc = document.getElementById('side-history-count'); if (_shc) _shc.textContent = h.length;
   const list = document.getElementById('history-list');
   if (!h.length) { list.innerHTML = '<div class="history-empty">No tests generated yet.</div>'; return; }
   list.innerHTML = h.map((item, i) => `
@@ -814,6 +921,7 @@ async function loadBank() {
     const res = await fetch('questionbank.json', { cache: 'no-store' });
     const data = await res.json();
     BANK = (data.questions || []).concat(getImportedBank());
+    const _sbc = document.getElementById('side-bank-count'); if (_sbc) _sbc.textContent = BANK.length;
     const secs = {};
     BANK.forEach(q => { secs[q.section] = (secs[q.section]||0)+1; });
     document.getElementById('bank-stats').innerHTML =

@@ -823,6 +823,14 @@ renderHistory();
 document.getElementById('nav-history-count').textContent=getHistory().length;
 loadBankStats();
 if(isAdmin) renderUserList();
+
+// open a section when arriving with a #hash (links from generator.html)
+(function(){
+  const h=location.hash.slice(1);
+  if(!h) return;
+  const item=[...document.querySelectorAll('.nav-item')].find(n=>(n.getAttribute('onclick')||'').includes("showSection('"+h+"'"));
+  if(item) item.click();
+})();
 </script>
 </body>
 </html>
