@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Test Generator</title>
 <script src="auth.js"></script>
+<script src="bank.js"></script>
 <script src="https://accounts.google.com/gsi/client" async></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -277,6 +278,10 @@ textarea { resize: vertical; min-height: 70px; }
       Question Bank
       <span class="nav-count" id="side-bank-count">…</span>
     </a>
+    <a class="nav-item" href="index.html#manage">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Bank Manager
+    </a>
     <a class="nav-item" href="index.html#static">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Static Tests
@@ -433,6 +438,27 @@ textarea { resize: vertical; min-height: 70px; }
       <div class="dz-sub">Sin IA — lectura instantánea. Columnas: Pregunta | Respuesta A | B | C | D | Respuesta correcta | Valor respuesta correcta</div>
     </div>
     <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" multiple style="display:none">
+    <div class="form-grid" style="margin-top:14px">
+      <div class="form-group">
+        <label>Categoría a asignar</label>
+        <select id="excel-cat">
+          <option value="__auto">Auto (por hoja / columna)</option>
+          <option>Grammar &amp; Vocabulary</option>
+          <option>Phrasal Verbs</option>
+          <option>Idioms</option>
+          <option>Sin clasificar</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Nivel a asignar</label>
+        <select id="excel-level">
+          <option>Sin nivel</option>
+          <option>B1</option>
+          <option>B2</option>
+          <option>C1</option>
+        </select>
+      </div>
+    </div>
     <div id="excel-file-info"></div>
     <div style="font-size:.78rem;color:#718096;margin-top:12px;line-height:1.6">
       <strong>Columnas esperadas (primera fila = cabeceras):</strong><br>
@@ -450,6 +476,27 @@ textarea { resize: vertical; min-height: 70px; }
       <div class="dz-sub">Sube varios a la vez — la IA extrae las preguntas y las añade al banco (clasificadas por temática)</div>
     </div>
     <input type="file" id="pdf-input" accept="application/pdf" multiple style="display:none">
+    <div class="form-grid" style="margin-top:14px">
+      <div class="form-group">
+        <label>Categoría a asignar</label>
+        <select id="pdf-cat">
+          <option value="__auto">Auto (clasifica la IA)</option>
+          <option>Grammar &amp; Vocabulary</option>
+          <option>Phrasal Verbs</option>
+          <option>Idioms</option>
+          <option>Sin clasificar</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Nivel a asignar</label>
+        <select id="pdf-level">
+          <option>Sin nivel</option>
+          <option>B1</option>
+          <option>B2</option>
+          <option>C1</option>
+        </select>
+      </div>
+    </div>
     <div id="pdf-file-info"></div>
     <div class="form-group full" style="margin-top:14px">
       <label>Extra instructions <span style="font-weight:400;color:#a0aec0">(optional)</span></label>
@@ -918,9 +965,7 @@ function setBankMode(m) {
 
 async function loadBank() {
   try {
-    const res = await fetch('questionbank.json', { cache: 'no-store' });
-    const data = await res.json();
-    BANK = (data.questions || []).concat(getImportedBank());
+    BANK = await BankStore.getEffective();
     const _sbc = document.getElementById('side-bank-count'); if (_sbc) _sbc.textContent = BANK.length;
     const secs = {};
     BANK.forEach(q => { secs[q.section] = (secs[q.section]||0)+1; });
@@ -1163,45 +1208,36 @@ function renderExcelList() {
 }
 function removeExcel(i){ excelFiles.splice(i,1); renderExcelList(); }
 
-// Banco importado: persiste en localStorage y se fusiona con questionbank.json en loadBank()
-function getImportedBank(){ try{return JSON.parse(localStorage.getItem('importedBank')||'[]');}catch{return[];} }
-function mergeIntoImportedBank(bySec){
-  const bank = getImportedBank();
-  const seen = new Set(bank.map(q => q.section+'||'+String(q.text).toLowerCase()));
-  const added = {};
-  Object.entries(bySec).forEach(([sec,qs])=>{
-    qs.forEach(q=>{
-      const key = sec+'||'+q.text.toLowerCase();
-      if (seen.has(key)) return;
-      seen.add(key);
-      bank.push({ section: sec, level: q.level||'C1', text:q.text, options:q.options, correct:q.correct,
-                  explanation: q.explanation || (q.value?`Correct answer: ${q.value}`:''), term:'' });
-      added[sec]=(added[sec]||0)+1;
-    });
-  });
-  localStorage.setItem('importedBank', JSON.stringify(bank));
-  return added;
+// Importar = guardar directamente en el banco (repositorio). No se hace el test;
+// los tests se juegan desde "Question Bank". La categoría y el nivel se eligen aquí.
+function importSummary(added, total, extra){
+  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ');
+  let msg = total ? `✓ ${total} pregunta(s) añadidas al banco — ${summary}.\nJuégalas desde "Question Bank" o edítalas en "Bank Manager".`
+                  : `Sin preguntas nuevas (ya estaban en el banco).`;
+  if (extra) msg += '\n' + extra;
+  setTimeout(()=>alert(msg), 200);
 }
 
-// Importar = guardar directamente en el banco (repositorio). No se hace el test;
-// los tests se juegan desde "Question Bank".
 function buildExcelTests() {
   const ready = excelFiles.filter(f => f.questions.length);
   if (!ready.length) { showError('Sube al menos un Excel con preguntas válidas.'); return; }
 
-  const bySec = {};
-  ready.forEach(f => f.questions.forEach(q => { (bySec[q.section]=bySec[q.section]||[]).push(q); }));
+  const forceCat = document.getElementById('excel-cat').value;
+  const level = document.getElementById('excel-level').value;
+  const qs = [];
+  ready.forEach(f => f.questions.forEach(q => {
+    qs.push({
+      section: forceCat === '__auto' ? q.section : forceCat,
+      level,
+      text: q.text, options: q.options, correct: q.correct,
+      explanation: q.value ? `Correct answer: ${q.value}` : ''
+    });
+  }));
 
-  const added = mergeIntoImportedBank(bySec);
-  loadBank(); // refresca el banco con las preguntas recién añadidas
-
-  excelFiles = [];
-  renderExcelList();
-  const total = Object.values(added).reduce((a,b)=>a+b,0);
-  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ');
-  setTimeout(()=>alert(total
-    ? `✓ ${total} pregunta(s) añadidas al banco — ${summary}.\nJuega los tests desde "Question Bank".`
-    : `Sin preguntas nuevas (ya estaban en el banco).`), 200);
+  const added = BankStore.addImported(qs);
+  loadBank();
+  excelFiles = []; renderExcelList();
+  importSummary(added, Object.values(added).reduce((a,b)=>a+b,0));
 }
 
 async function handlePdfs(fileList) {
@@ -1299,23 +1335,21 @@ async function convertPdf() {
     return;
   }
 
-  // Importar = guardar directamente en el banco, clasificando por temática
-  const bySec = {};
-  allQs.forEach(q => {
-    const sec = normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar');
-    (bySec[sec]=bySec[sec]||[]).push({ text: q.text, options: q.options, correct: q.correct, explanation: q.explanation||'' });
-  });
-  const added = mergeIntoImportedBank(bySec);
+  // Importar = guardar directamente en el banco con la categoría/nivel elegidos
+  const forceCat = document.getElementById('pdf-cat').value;
+  const level = document.getElementById('pdf-level').value;
+  const qs = allQs.map(q => ({
+    section: forceCat === '__auto'
+      ? (normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar'))
+      : forceCat,
+    level,
+    text: q.text, options: q.options, correct: q.correct, explanation: q.explanation || ''
+  }));
+  const added = BankStore.addImported(qs);
   loadBank();
 
-  pdfFiles = [];
-  renderPdfList();
-  const total = Object.values(added).reduce((a,b)=>a+b,0);
-  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ');
-  let msg = total ? `✓ ${total} pregunta(s) añadidas al banco — ${summary}.\nJuega los tests desde "Question Bank".`
-                  : `Sin preguntas nuevas (ya estaban en el banco).`;
-  if (failed.length) msg += `\n${failed.length} PDF(s) fallaron.`;
-  setTimeout(() => alert(msg), 200);
+  pdfFiles = []; renderPdfList();
+  importSummary(added, Object.values(added).reduce((a,b)=>a+b,0), failed.length ? `${failed.length} PDF(s) fallaron.` : '');
 }
 
 // save a PDF-generated test to history without needing to complete it

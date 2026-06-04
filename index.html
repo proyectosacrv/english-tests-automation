@@ -10,6 +10,7 @@ const ADMINS=['proyectosacrv@gmail.com'];
 const email=sessionStorage.getItem('auth_email');
 if(!email||!ALLOWED.includes(email.toLowerCase())){sessionStorage.setItem('auth_dest','index.html');window.location.href='login.html';}
 </script>
+<script src="bank.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;color:#2d3748;min-height:100vh;display:flex;flex-direction:column}
@@ -158,6 +159,40 @@ input.add-email:focus{outline:none;border-color:#4299e1}
 .btn-gdrive{padding:6px 14px;border:2px solid #e2e8f0;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;background:white;color:#4a5568;white-space:nowrap}
 .btn-gdrive.connected{border-color:#38a169;color:#276749;background:#f0fff4}
 
+/* ── BANK MANAGER ── */
+.mg-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.mg-toolbar select,.mg-toolbar input{padding:8px 10px;border:2px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit;color:#2d3748}
+.mg-toolbar input{flex:1;min-width:180px}
+.mg-toolbar input:focus,.mg-toolbar select:focus{outline:none;border-color:#4299e1}
+.mg-count{font-size:.8rem;color:#718096;font-weight:600;white-space:nowrap}
+.mg-q{background:white;border:2px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.mg-q-top{display:flex;gap:10px;align-items:flex-start}
+.mg-q-text{flex:1;font-size:.9rem;font-weight:600;line-height:1.5}
+.mg-q-actions{display:flex;gap:6px;flex-shrink:0}
+.mg-opts{margin-top:8px;display:flex;flex-direction:column;gap:2px}
+.mg-opt{font-size:.82rem;color:#718096;padding:1px 0}
+.mg-opt.correct{color:#276749;font-weight:700}
+.mg-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.mg-badge{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:10px;background:#edf2f7;color:#4a5568}
+.mg-badge.cat{background:#bee3f8;color:#2c5282}
+.mg-badge.lvl{background:#e9d8fd;color:#553c9a}
+.mg-empty{color:#a0aec0;text-align:center;padding:36px 0;font-size:.9rem}
+/* edit modal */
+.ed-field{margin-bottom:14px}
+.ed-field>label{display:block;font-size:.72rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.ed-field textarea,.ed-field input,.ed-field select{width:100%;padding:9px 11px;border:2px solid #e2e8f0;border-radius:8px;font-size:.88rem;font-family:inherit;color:#2d3748}
+.ed-field textarea{resize:vertical;min-height:54px}
+.ed-field textarea:focus,.ed-field input:focus,.ed-field select:focus{outline:none;border-color:#4299e1}
+.ed-opt-row{display:flex;gap:8px;align-items:center;margin-bottom:7px}
+.ed-opt-row input[type=text]{flex:1}
+.ed-correct{display:flex;align-items:center;gap:4px;font-size:.73rem;color:#718096;white-space:nowrap}
+.ed-opt-del{background:#fed7d7;color:#c53030;border:none;border-radius:6px;width:30px;height:34px;cursor:pointer;flex-shrink:0;font-size:.9rem}
+.ed-add-opt{background:#ebf8ff;color:#2c5282;border:2px dashed #90cdf4;border-radius:8px;padding:8px;font-size:.8rem;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
+.ed-row2{display:flex;gap:10px}.ed-row2 .ed-field{flex:1}
+.ed-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.ed-btn{padding:9px 18px;border:none;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer}
+.ed-btn.save{background:#2b6cb0;color:#fff}.ed-btn.cancel{background:#e2e8f0;color:#4a5568}
+
 /* ── RESPONSIVE ── */
 @media(max-width:700px){
   .sidebar{position:fixed;top:56px;left:0;height:calc(100vh - 56px);z-index:90;transform:translateX(-260px)}
@@ -199,6 +234,11 @@ input.add-email:focus{outline:none;border-color:#4299e1}
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       Question Bank
       <span class="nav-count" id="nav-bank-count">…</span>
+    </a>
+    <a class="nav-item" id="nav-manage" onclick="showSection('manage')" href="#">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Bank Manager
+      <span class="nav-count" id="nav-manage-count">…</span>
     </a>
     <a class="nav-item" onclick="showSection('static')" href="#">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -257,6 +297,27 @@ input.add-email:focus{outline:none;border-color:#4299e1}
       </div>
     </div>
     <div class="bank-levels" id="bank-levels"></div>
+  </div>
+
+  <!-- BANK MANAGER -->
+  <div class="section" id="section-manage">
+    <div class="section-header">
+      <h1>Bank Manager</h1>
+      <p>Toda la batería de preguntas, por categoría. Busca por palabra del enunciado o de las respuestas, edita textos/respuestas, cambia categoría y nivel, o borra preguntas.</p>
+    </div>
+    <div class="mg-toolbar">
+      <select id="mg-cat" onchange="applyManagerFilter()"></select>
+      <select id="mg-level" onchange="applyManagerFilter()">
+        <option value="all">Todos los niveles</option>
+        <option value="B1">B1</option>
+        <option value="B2">B2</option>
+        <option value="C1">C1</option>
+        <option value="Sin nivel">Sin nivel</option>
+      </select>
+      <input id="mg-search" type="search" placeholder="Buscar en enunciado o respuestas…" oninput="applyManagerFilter()">
+      <span class="mg-count" id="mg-count"></span>
+    </div>
+    <div id="mg-list"></div>
   </div>
 
   <!-- STATIC TESTS -->
@@ -533,6 +594,31 @@ input.add-email:focus{outline:none;border-color:#4299e1}
   </div>
 </div>
 
+<!-- EDIT QUESTION MODAL -->
+<div class="modal-overlay" id="edit-modal" onclick="if(event.target===this)closeEdit()">
+  <div class="modal">
+    <div class="modal-head">
+      <div><h2>Editar pregunta</h2><div class="mh-meta" id="ed-meta"></div></div>
+      <button class="modal-close" onclick="closeEdit()">✕</button>
+    </div>
+    <div class="ed-field"><label>Enunciado</label><textarea id="ed-text"></textarea></div>
+    <div class="ed-field">
+      <label>Respuestas (marca la correcta)</label>
+      <div id="ed-opts"></div>
+      <button class="ed-add-opt" onclick="addOpt()">+ Añadir respuesta</button>
+    </div>
+    <div class="ed-row2">
+      <div class="ed-field"><label>Categoría</label><select id="ed-cat"></select></div>
+      <div class="ed-field"><label>Nivel</label><select id="ed-level"></select></div>
+    </div>
+    <div class="ed-field"><label>Explicación (opcional)</label><textarea id="ed-exp"></textarea></div>
+    <div class="ed-actions">
+      <button class="ed-btn cancel" onclick="closeEdit()">Cancelar</button>
+      <button class="ed-btn save" onclick="saveEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://accounts.google.com/gsi/client" async></script>
 <script>
 // ── AUTH ──
@@ -581,7 +667,119 @@ function showSection(name){
   event.currentTarget.classList.add('active');
   if(name==='history') renderHistory();
   if(name==='generated') renderGenHistory();
+  if(name==='manage') renderManager();
   if(window.innerWidth<=700) closeSidebar();
+}
+
+// ── BANK MANAGER ──
+let MG = [];
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function renderManager(){
+  MG = await BankStore.getEffective();
+  document.getElementById('nav-manage-count').textContent = MG.length;
+  const cats = [...new Set(MG.map(q=>q.section))].sort();
+  const sel = document.getElementById('mg-cat');
+  const cur = sel.value || 'all';
+  sel.innerHTML = '<option value="all">Todas las categorías</option>' + cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  sel.value = [...sel.options].some(o=>o.value===cur) ? cur : 'all';
+  applyManagerFilter();
+}
+
+function applyManagerFilter(){
+  if(!MG.length){ document.getElementById('mg-list').innerHTML='<div class="mg-empty">El banco está vacío.</div>'; document.getElementById('mg-count').textContent=''; return; }
+  const cat = document.getElementById('mg-cat').value;
+  const lvl = document.getElementById('mg-level').value;
+  const term = document.getElementById('mg-search').value.trim().toLowerCase();
+  const list = MG.filter(q=>{
+    if(cat!=='all' && q.section!==cat) return false;
+    if(lvl!=='all' && (q.level||'Sin nivel')!==lvl) return false;
+    if(term){
+      const inText = (q.text||'').toLowerCase().includes(term);
+      const inOpts = (q.options||[]).some(o=>String(o).toLowerCase().includes(term));
+      if(!inText && !inOpts) return false;
+    }
+    return true;
+  });
+  document.getElementById('mg-count').textContent = `${list.length} / ${MG.length}`;
+  const el = document.getElementById('mg-list');
+  if(!list.length){ el.innerHTML='<div class="mg-empty">No hay preguntas que coincidan.</div>'; return; }
+  const L=['A','B','C','D','E','F'];
+  el.innerHTML = list.map(q=>`
+    <div class="mg-q">
+      <div class="mg-q-top">
+        <div class="mg-q-text">${esc(q.text)}</div>
+        <div class="mg-q-actions">
+          <button class="h-btn h-btn-redo" onclick="openEdit('${q.id}')">✎ Editar</button>
+          <button class="h-btn h-btn-del" onclick="deleteQ('${q.id}')">✕</button>
+        </div>
+      </div>
+      <div class="mg-opts">${(q.options||[]).map((o,i)=>`<div class="mg-opt ${i===q.correct?'correct':''}">${L[i]||'?'}) ${esc(o)}${i===q.correct?' ✓':''}</div>`).join('')}</div>
+      <div class="mg-badges">
+        <span class="mg-badge cat">${esc(q.section)}</span>
+        <span class="mg-badge lvl">${esc(q.level||'Sin nivel')}</span>
+        ${q._src==='imported'?'<span class="mg-badge">importada</span>':''}
+      </div>
+    </div>`).join('');
+}
+
+function deleteQ(id){
+  if(!confirm('¿Borrar esta pregunta del banco?')) return;
+  BankStore.deleteQuestion(id);
+  renderManager(); loadBankStats();
+}
+
+// ── EDIT MODAL ──
+let _editId=null;
+function optRow(val, correct){
+  const div=document.createElement('div'); div.className='ed-opt-row';
+  const inp=document.createElement('input'); inp.type='text'; inp.className='ed-opt-in'; inp.value=val||'';
+  const lab=document.createElement('label'); lab.className='ed-correct';
+  const rad=document.createElement('input'); rad.type='radio'; rad.name='ed-correct'; if(correct) rad.checked=true;
+  lab.appendChild(rad); lab.appendChild(document.createTextNode(' correcta'));
+  const del=document.createElement('button'); del.className='ed-opt-del'; del.textContent='✕'; del.onclick=()=>div.remove();
+  div.appendChild(inp); div.appendChild(lab); div.appendChild(del);
+  return div;
+}
+function addOpt(){ document.getElementById('ed-opts').appendChild(optRow('',false)); }
+
+function openEdit(id){
+  const q=MG.find(x=>x.id===id); if(!q) return;
+  _editId=id;
+  document.getElementById('ed-meta').textContent = q._src==='imported' ? 'Pregunta importada' : 'Pregunta del banco base';
+  document.getElementById('ed-text').value=q.text||'';
+  const wrap=document.getElementById('ed-opts'); wrap.innerHTML='';
+  (q.options||[]).forEach((o,i)=>wrap.appendChild(optRow(o, i===q.correct)));
+  if(!q.options||!q.options.length){ wrap.appendChild(optRow('',true)); wrap.appendChild(optRow('',false)); }
+  const cats=[...new Set([...BankStore.CATEGORIES, BankStore.NO_CAT, ...MG.map(x=>x.section), q.section])];
+  document.getElementById('ed-cat').innerHTML=cats.map(c=>`<option ${c===q.section?'selected':''}>${esc(c)}</option>`).join('');
+  const lvls=[...BankStore.LEVELS, BankStore.NO_LEVEL];
+  document.getElementById('ed-level').innerHTML=lvls.map(l=>`<option ${l===(q.level||'Sin nivel')?'selected':''}>${l}</option>`).join('');
+  document.getElementById('ed-exp').value=q.explanation||'';
+  document.getElementById('edit-modal').classList.add('show'); document.body.style.overflow='hidden';
+}
+function closeEdit(){ document.getElementById('edit-modal').classList.remove('show'); document.body.style.overflow=''; _editId=null; }
+
+function saveEdit(){
+  if(_editId==null) return;
+  const text=document.getElementById('ed-text').value.trim();
+  if(!text){ alert('El enunciado no puede estar vacío.'); return; }
+  const rows=[...document.querySelectorAll('#ed-opts .ed-opt-row')];
+  const options=[]; let correct=0;
+  rows.forEach(r=>{
+    const v=r.querySelector('.ed-opt-in').value.trim();
+    if(v==='') return;
+    if(r.querySelector('input[type=radio]').checked) correct=options.length;
+    options.push(v);
+  });
+  if(options.length<2){ alert('Debe haber al menos 2 respuestas.'); return; }
+  BankStore.editQuestion(_editId, {
+    text, options, correct,
+    section: document.getElementById('ed-cat').value,
+    level: document.getElementById('ed-level').value,
+    explanation: document.getElementById('ed-exp').value.trim()
+  });
+  closeEdit(); renderManager(); loadBankStats();
 }
 
 // ── HISTORY ──
@@ -789,11 +987,9 @@ function updateGDUI(connected,name,status){
 // ── QUESTION BANK STATS ──
 async function loadBankStats(){
   try{
-    const res=await fetch('questionbank.json',{cache:'no-store'});
-    const data=await res.json();
-    let imported=[];try{imported=JSON.parse(localStorage.getItem('importedBank')||'[]');}catch{}
-    const qs=(data.questions||[]).concat(imported);
+    const qs=await BankStore.getEffective();
     document.getElementById('nav-bank-count').textContent=qs.length;
+    const nm=document.getElementById('nav-manage-count'); if(nm) nm.textContent=qs.length;
     // by section
     const secs={}, lvls={};
     qs.forEach(q=>{secs[q.section]=(secs[q.section]||0)+1; lvls[q.level]=(lvls[q.level]||0)+1;});
