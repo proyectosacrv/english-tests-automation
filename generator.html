@@ -447,7 +447,7 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="drop-zone" id="drop-zone" onclick="document.getElementById('pdf-input').click()">
       <div class="dz-icon">📄</div>
       <div class="dz-text">Click to choose PDFs or drag them here</div>
-      <div class="dz-sub">Upload several at once — the AI rebuilds each one as a separate interactive test</div>
+      <div class="dz-sub">Sube varios a la vez — la IA extrae las preguntas y las añade al banco (clasificadas por temática)</div>
     </div>
     <input type="file" id="pdf-input" accept="application/pdf" multiple style="display:none">
     <div id="pdf-file-info"></div>
@@ -901,8 +901,8 @@ function setMode(mode) {
   const btn = document.getElementById('btn-gen');
   const ico = (p) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg> `;
   if (mode === 'bank') btn.innerHTML = ico('<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>') + (bankMode==='ai' ? 'Generate AI Variations' : 'Build Test from Bank');
-  else if (mode === 'pdf') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Convert PDFs to Tests';
-  else if (mode === 'excel') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Build Tests from Excel';
+  else if (mode === 'pdf') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Añadir PDF al banco';
+  else if (mode === 'excel') btn.innerHTML = ico('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>') + 'Añadir Excel al banco';
   else btn.innerHTML = ico('<polyline points="13 2 13 9 20 9"/><path d="M2 22L13 11 22 2"/>') + 'Generate Test';
 }
 
@@ -1174,8 +1174,8 @@ function mergeIntoImportedBank(bySec){
       const key = sec+'||'+q.text.toLowerCase();
       if (seen.has(key)) return;
       seen.add(key);
-      bank.push({ section: sec, level:'C1', text:q.text, options:q.options, correct:q.correct,
-                  explanation: q.value?`Correct answer: ${q.value}`:'', term:'' });
+      bank.push({ section: sec, level: q.level||'C1', text:q.text, options:q.options, correct:q.correct,
+                  explanation: q.explanation || (q.value?`Correct answer: ${q.value}`:''), term:'' });
       added[sec]=(added[sec]||0)+1;
     });
   });
@@ -1183,33 +1183,25 @@ function mergeIntoImportedBank(bySec){
   return added;
 }
 
+// Importar = guardar directamente en el banco (repositorio). No se hace el test;
+// los tests se juegan desde "Question Bank".
 function buildExcelTests() {
   const ready = excelFiles.filter(f => f.questions.length);
   if (!ready.length) { showError('Sube al menos un Excel con preguntas válidas.'); return; }
 
-  // Agrupa todas las preguntas por temática (segmentación por tipo)
   const bySec = {};
   ready.forEach(f => f.questions.forEach(q => { (bySec[q.section]=bySec[q.section]||[]).push(q); }));
 
-  // 1) Añade al banco persistente (cada temática a su batería)
   const added = mergeIntoImportedBank(bySec);
-
-  // 2) Construye un test por temática y lo guarda en el historial
-  const generated = [];
-  Object.entries(bySec).forEach(([sec, qs]) => {
-    const questions = qs.map(q => ({ skill: sec, text: q.text, context:'', options: q.options,
-                                     correct: q.correct, explanation: q.value?`Correct answer: ${q.value}`:'' }));
-    const test = { title: sec, subtitle: `Importado de Excel · ${questions.length} preguntas`, questions };
-    generated.push(test);
-    savePdfTest(test);
-  });
-
   loadBank(); // refresca el banco con las preguntas recién añadidas
-  TEST = generated[0];
-  renderTest();
-  showTest();
-  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ') || 'sin preguntas nuevas (duplicadas)';
-  setTimeout(()=>alert(`✓ Añadidas al banco — ${summary}\n${generated.length} test(s) por temática guardados en el historial.`), 300);
+
+  excelFiles = [];
+  renderExcelList();
+  const total = Object.values(added).reduce((a,b)=>a+b,0);
+  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ');
+  setTimeout(()=>alert(total
+    ? `✓ ${total} pregunta(s) añadidas al banco — ${summary}.\nJuega los tests desde "Question Bank".`
+    : `Sin preguntas nuevas (ya estaban en el banco).`), 200);
 }
 
 async function handlePdfs(fileList) {
@@ -1285,40 +1277,45 @@ async function convertPdf() {
   setLoading(true);
   fakeProgress();
 
-  const generated = [];
+  const allQs = [];
   const failed = [];
   for (let i = 0; i < ready.length; i++) {
     const f = ready[i];
-    document.getElementById('status-text').textContent = `Converting PDF ${i+1}/${ready.length}: ${f.name}…`;
+    document.getElementById('status-text').textContent = `Leyendo PDF ${i+1}/${ready.length}: ${f.name}…`;
     try {
       const raw = await callGemini(key, buildPdfPrompt(f.text, extra));
       const data = parseResponse(raw);
-      const cleanName = f.name.replace(/\.pdf$/i, '');
-      const test = { title: cleanName, subtitle: `From PDF · ${data.length} questions`, questions: data };
-      generated.push(test);
-      savePdfTest(test); // save to history immediately
+      allQs.push(...data);
     } catch (e) {
-      if (e.rateLimit) { setLoading(false); showRateLimit(generated.length); return; }
+      if (e.rateLimit) { setLoading(false); showRateLimit(0); return; }
       failed.push(`${f.name}: ${e.message}`);
     }
   }
 
   setLoading(false);
 
-  if (!generated.length) {
-    showError('No tests could be generated. ' + failed.join(' · '));
+  if (!allQs.length) {
+    showError('No se pudieron extraer preguntas. ' + failed.join(' · '));
     return;
   }
 
-  // load the first generated test to play now; the rest are in history
-  TEST = generated[0];
-  renderTest();
-  showTest();
+  // Importar = guardar directamente en el banco, clasificando por temática
+  const bySec = {};
+  allQs.forEach(q => {
+    const sec = normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar');
+    (bySec[sec]=bySec[sec]||[]).push({ text: q.text, options: q.options, correct: q.correct, explanation: q.explanation||'' });
+  });
+  const added = mergeIntoImportedBank(bySec);
+  loadBank();
 
-  let msg = `✓ ${generated.length} test${generated.length>1?'s':''} generated and saved to history.`;
-  if (failed.length) msg += ` ${failed.length} failed.`;
-  if (generated.length > 1) msg += ` Showing the first — open History to play the others.`;
-  setTimeout(() => alert(msg), 300);
+  pdfFiles = [];
+  renderPdfList();
+  const total = Object.values(added).reduce((a,b)=>a+b,0);
+  const summary = Object.entries(added).map(([s,n])=>`${s}: +${n}`).join(' · ');
+  let msg = total ? `✓ ${total} pregunta(s) añadidas al banco — ${summary}.\nJuega los tests desde "Question Bank".`
+                  : `Sin preguntas nuevas (ya estaban en el banco).`;
+  if (failed.length) msg += `\n${failed.length} PDF(s) fallaron.`;
+  setTimeout(() => alert(msg), 200);
 }
 
 // save a PDF-generated test to history without needing to complete it
