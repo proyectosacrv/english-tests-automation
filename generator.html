@@ -571,6 +571,7 @@ textarea { resize: vertical; min-height: 70px; }
       <h2 id="test-heading">English Test</h2>
       <div style="display:flex;gap:8px">
         <button class="btn-sm" id="btn-save-test" onclick="saveWholeTest()">💾 Save test</button>
+        <button class="btn-sm" id="btn-save-questions" onclick="saveAllQuestionsToBank()">💾 Save all questions</button>
         <button class="btn-sm" onclick="regenerate()">↻ New test</button>
         <button class="btn-sm primary" onclick="skipToResults()">See Results</button>
       </div>
@@ -1615,7 +1616,6 @@ function renderTest() {
         <div class="feedback" id="fb-${qi}"></div>
         <div class="q-nav">
           <button class="btn-nav btn-back" onclick="navQ(-1)" ${qi === 0 ? 'disabled' : ''}>← Back</button>
-          <button class="btn-nav" id="save-q-${qi}" onclick="saveQuestionToBank(${qi})" title="Guardar solo esta pregunta en el banco">💾 Save question</button>
           ${isLast
             ? `<button class="btn-nav btn-next" id="btn-next-${qi}" disabled style="display:none">Next →</button>
                <button class="btn-nav btn-finish-q" onclick="showResults()" id="btn-finish-${qi}" style="display:none">See Results</button>`
@@ -1656,13 +1656,12 @@ function saveWholeTest() {
   setTimeout(() => alert(`✓ Test guardado (${TEST.questions.length} preguntas). Lo verás en "History".`), 100);
 }
 
-// saves a single question into the question bank (the pool random tests are drawn from)
-function saveQuestionToBank(qi) {
-  const added = BankStore.addImported([toBankQuestion(TEST.questions[qi])]);
+// saves every question of the generated test into the question bank (the pool random tests are drawn from)
+function saveAllQuestionsToBank() {
+  if (!TEST || !TEST.questions.length) return;
+  const added = BankStore.addImported(TEST.questions.map(toBankQuestion));
   loadBank();
-  const total = Object.values(added).reduce((a,b)=>a+b,0);
-  const btn = document.getElementById(`save-q-${qi}`);
-  if (btn) { btn.textContent = total ? '✓ Saved' : '— Already in bank'; btn.disabled = true; }
+  importSummary(added, Object.values(added).reduce((a,b)=>a+b,0));
 }
 
 function showQCard(idx) {
