@@ -570,6 +570,7 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="test-header">
       <h2 id="test-heading">English Test</h2>
       <div style="display:flex;gap:8px">
+        <button class="btn-sm" id="btn-save-test" onclick="saveTestToBank()">💾 Save test to bank</button>
         <button class="btn-sm" onclick="regenerate()">↻ New test</button>
         <button class="btn-sm primary" onclick="skipToResults()">See Results</button>
       </div>
@@ -1011,6 +1012,7 @@ function buildBankTest() {
     const idxs = shuffle(q.options.map((_,i)=>i));
     return {
       skill: q.section,
+      level: q.level,
       text: q.text,
       context: '',
       options: idxs.map(i => q.options[i]),
@@ -1041,7 +1043,7 @@ async function buildBankAiVariations() {
     const raw = await callGemini(key, prompt);
     const data = parseResponse(raw);
     const catLabel = cat === 'all' ? 'Mixed' : cat;
-    TEST = { title: `${catLabel} — ${lvl} (AI variations)`, subtitle: `AI · ${data.length} questions · ${lvl}`, questions: data };
+    TEST = { title: `${catLabel} — ${lvl} (AI variations)`, subtitle: `AI · ${data.length} questions · ${lvl}`, level: lvl, questions: data };
     setLoading(false);
     renderTest();
     showTest();
@@ -1396,7 +1398,7 @@ async function generateTest() {
   try {
     const raw = await callGemini(key, prompt);
     const data = parseResponse(raw);
-    TEST = { title: `${topic} — ${level}`, subtitle: `${numQ} questions · ${skills.join(', ')}`, questions: data };
+    TEST = { title: `${topic} — ${level}`, subtitle: `${numQ} questions · ${skills.join(', ')}`, level, questions: data };
     setLoading(false);
     renderTest();
     showTest();
@@ -1612,6 +1614,7 @@ function renderTest() {
         <div class="feedback" id="fb-${qi}"></div>
         <div class="q-nav">
           <button class="btn-nav btn-back" onclick="navQ(-1)" ${qi === 0 ? 'disabled' : ''}>← Back</button>
+          <button class="btn-nav" id="save-q-${qi}" onclick="saveQuestionToBank(${qi})" title="Guardar solo esta pregunta en el banco">💾 Save question</button>
           ${isLast
             ? `<button class="btn-nav btn-next" id="btn-next-${qi}" disabled style="display:none">Next →</button>
                <button class="btn-nav btn-finish-q" onclick="showResults()" id="btn-finish-${qi}" style="display:none">See Results</button>`
@@ -1622,6 +1625,30 @@ function renderTest() {
 
   document.getElementById('test-heading').textContent = TEST.title;
   showQCard(0);
+}
+
+// ---- save generated questions to the bank ----
+function toBankQuestion(q) {
+  const section = normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar');
+  return {
+    section, level: q.level || TEST.level || BankStore.NO_LEVEL,
+    text: q.text, options: q.options, correct: q.correct, explanation: q.explanation || ''
+  };
+}
+
+function saveTestToBank() {
+  if (!TEST || !TEST.questions.length) return;
+  const added = BankStore.addImported(TEST.questions.map(toBankQuestion));
+  loadBank();
+  importSummary(added, Object.values(added).reduce((a,b)=>a+b,0));
+}
+
+function saveQuestionToBank(qi) {
+  const added = BankStore.addImported([toBankQuestion(TEST.questions[qi])]);
+  loadBank();
+  const total = Object.values(added).reduce((a,b)=>a+b,0);
+  const btn = document.getElementById(`save-q-${qi}`);
+  if (btn) { btn.textContent = total ? '✓ Saved' : '— Already in bank'; btn.disabled = true; }
 }
 
 function showQCard(idx) {
