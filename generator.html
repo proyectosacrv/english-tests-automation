@@ -1543,7 +1543,14 @@ function parseResponse(raw) {
   // keep only well-formed questions
   const valid = arr.filter(q => q && q.text && Array.isArray(q.options) && q.options.length >= 2 && typeof q.correct === 'number');
   if (!valid.length) throw new Error('No valid questions found. Try again.');
-  return valid.map((q, i) => ({ id: i + 1, context: q.context || '', skill: q.skill || 'General', explanation: q.explanation || '', ...q }));
+  return valid.map((q, i) => {
+    const idxs = shuffle(q.options.map((_, oi) => oi));
+    return {
+      id: i + 1, context: q.context || '', skill: q.skill || 'General', explanation: q.explanation || '', ...q,
+      options: idxs.map(oi => q.options[oi]),
+      correct: idxs.indexOf(q.correct)
+    };
+  });
 }
 
 function tryParse(s) { try { const a = JSON.parse(s); return Array.isArray(a) ? a : null; } catch { return null; } }
