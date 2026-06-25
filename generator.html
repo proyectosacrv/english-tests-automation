@@ -919,6 +919,14 @@ function toggleKey() {
   else { inp.type = 'password'; btn.textContent = 'Show'; }
 }
 
+// guarda la API key en este navegador para no tener que pegarla cada vez
+(function() {
+  const inp = document.getElementById('api-key');
+  const saved = localStorage.getItem('geminiApiKey');
+  if (saved) inp.value = saved;
+  inp.addEventListener('input', () => localStorage.setItem('geminiApiKey', inp.value.trim()));
+})();
+
 // ---- generate ----
 // ---- MODE (bank / ai / pdf / excel) ----
 let currentMode = 'bank';
