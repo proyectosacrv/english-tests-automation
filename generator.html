@@ -570,7 +570,7 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="test-header">
       <h2 id="test-heading">English Test</h2>
       <div style="display:flex;gap:8px">
-        <button class="btn-sm" id="btn-save-test" onclick="saveTestToBank()">💾 Save test to bank</button>
+        <button class="btn-sm" id="btn-save-test" onclick="saveWholeTest()">💾 Save test</button>
         <button class="btn-sm" onclick="regenerate()">↻ New test</button>
         <button class="btn-sm primary" onclick="skipToResults()">See Results</button>
       </div>
@@ -653,10 +653,8 @@ function saveHistory(h) { localStorage.setItem('testHistory', JSON.stringify(h))
 
 function saveToHistory(correct, total, pct, level) {
   const h = getHistory();
-  // avoid duplicate if test already saved
-  if (h.length && h[0].id === TEST._id) return;
-  TEST._id = Date.now();
-  h.unshift({
+  TEST._id = TEST._id || Date.now();
+  const entry = {
     id: TEST._id,
     title: TEST.title,
     subtitle: TEST.subtitle,
@@ -666,7 +664,10 @@ function saveToHistory(correct, total, pct, level) {
     level,
     questions: TEST.questions,
     userAnswers: {...answers}
-  });
+  };
+  // if this test was already saved (e.g. via "Save test" before playing), update that entry instead of duplicating
+  const idx = h.findIndex(x => x.id === TEST._id);
+  if (idx !== -1) h[idx] = entry; else h.unshift(entry);
   if (h.length > 50) h.pop(); // keep last 50
   saveHistory(h);
   renderHistory();
@@ -685,10 +686,10 @@ function renderHistory() {
         <div class="h-title">${item.title}</div>
         <div class="h-meta">${item.date} · ${item.subtitle}</div>
       </div>
-      <span class="h-score">${item.score} · ${item.level}</span>
+      <span class="h-score">${item.score || 'Sin jugar'} · ${item.level || ''}</span>
       <div class="h-actions">
         <button class="h-btn h-btn-view" onclick="viewFromHistory(${i})">👁 View</button>
-        <button class="h-btn h-btn-redo" onclick="redoTest(${i})">↺ Redo</button>
+        <button class="h-btn h-btn-redo" onclick="redoTest(${i})">${item.score ? '↺ Redo' : '▶ Play'}</button>
         <button class="h-btn h-btn-dl" onclick="downloadFromHistory(${i})">↓ HTML</button>
         <button class="h-btn h-btn-del" onclick="deleteFromHistory(${i})">✕</button>
       </div>
@@ -1636,13 +1637,26 @@ function toBankQuestion(q) {
   };
 }
 
-function saveTestToBank() {
+// saves the whole generated test (as a test, with its question order) into the tests repository (History)
+function saveWholeTest() {
   if (!TEST || !TEST.questions.length) return;
-  const added = BankStore.addImported(TEST.questions.map(toBankQuestion));
-  loadBank();
-  importSummary(added, Object.values(added).reduce((a,b)=>a+b,0));
+  const h = getHistory();
+  TEST._id = TEST._id || Date.now();
+  if (h.some(x => x.id === TEST._id)) { alert('Este test ya está guardado.'); return; }
+  h.unshift({
+    id: TEST._id, title: TEST.title, subtitle: TEST.subtitle,
+    date: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+    score: null, pct: null, level: TEST.level || '',
+    questions: TEST.questions, userAnswers: {}
+  });
+  if (h.length > 50) h.pop();
+  saveHistory(h);
+  renderHistory();
+  gdrivePush();
+  setTimeout(() => alert(`✓ Test guardado (${TEST.questions.length} preguntas). Lo verás en "History".`), 100);
 }
 
+// saves a single question into the question bank (the pool random tests are drawn from)
 function saveQuestionToBank(qi) {
   const added = BankStore.addImported([toBankQuestion(TEST.questions[qi])]);
   loadBank();
