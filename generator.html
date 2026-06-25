@@ -1314,6 +1314,7 @@ async function convertPdf() {
   if (!key) { showError('Please enter your Google AI Studio API key.'); return; }
   const ready = pdfFiles.filter(f => f.text);
   if (!ready.length) { showError('Please upload at least one PDF.'); return; }
+  await loadBank(); // make sure duplicate-checking has the current bank, not a stale/empty one
 
   const extra = document.getElementById('pdf-extra').value.trim();
   setLoading(true);
@@ -1384,6 +1385,7 @@ async function generateTest() {
   if (currentMode === 'excel') { buildExcelTests(); return; }
   const key = document.getElementById('api-key').value.trim();
   if (!key) { showError('Please enter your Google AI Studio API key.'); return; }
+  await loadBank(); // make sure duplicate-checking has the current bank, not a stale/empty one
 
   const topic = document.getElementById('topic').value.trim() || 'General English';
   const level = document.getElementById('level').value;
@@ -1579,7 +1581,11 @@ function parseResponse(raw) {
 }
 
 function normText(s) { return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
-function questionKey(q) { return normText([q.text, q.context, ...(q.options||[])].join(' ')); }
+function questionKey(q) {
+  // options sorted so the same question with options in a different order still matches
+  const opts = (q.options || []).map(normText).sort().join('|');
+  return normText([q.text, q.context].join(' ')) + '::' + opts;
+}
 function getSeenAiTexts() { try { return new Set(JSON.parse(localStorage.getItem('aiSeenTexts') || '[]')); } catch { return new Set(); } }
 function saveSeenAiTexts(set) { localStorage.setItem('aiSeenTexts', JSON.stringify([...set].slice(-3000))); }
 
