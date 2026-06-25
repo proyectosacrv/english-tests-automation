@@ -1350,7 +1350,7 @@ async function convertPdf() {
       ? (normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar'))
       : forceCat,
     level,
-    text: q.text, options: q.options, correct: q.correct, explanation: q.explanation || ''
+    text: mergeQText(q), options: q.options, correct: q.correct, explanation: q.explanation || ''
   }));
   const added = BankStore.addImported(qs);
   loadBank();
@@ -1665,9 +1665,13 @@ function toBankQuestion(q) {
   const section = normalizeSection(q.skill) || (q.skill ? String(q.skill).trim() : 'Sin clasificar');
   return {
     section, level: q.level || TEST.level || BankStore.NO_LEVEL,
-    text: q.text, options: q.options, correct: q.correct, explanation: q.explanation || ''
+    text: mergeQText(q), options: q.options, correct: q.correct, explanation: q.explanation || ''
   };
 }
+
+// the bank has no separate "context" field — it's just one "text" per question, so the
+// real content (often in q.context for AI-generated questions) must be folded into it
+function mergeQText(q) { return q.context ? `${q.text} ${q.context}`.trim() : q.text; }
 
 // saves the whole generated test (as a test, with its question order) into the tests repository (History)
 function saveWholeTest() {
